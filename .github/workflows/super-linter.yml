@@ -19,11 +19,15 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Copy HTMLHint configuration
+        run: |
+          mkdir -p .github/linters
+          cp .htmlhintrc .github/linters/.htmlhintrc.json
+
       - name: Super-Linter
         uses: super-linter/super-linter@v6.3.0
         env:
           VALIDATE_ALL_CODEBASE: true
           DEFAULT_BRANCH: "main"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          LINTER_RULES_PATH: /github/workspace/
           VALIDATE_CHECKOV: false
