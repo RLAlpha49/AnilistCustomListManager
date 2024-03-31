@@ -1,9 +1,6 @@
 .footer-div {
-    width: calc(100% - 64px);
-    position: absolute;
+    width: auto;
     bottom: 0;
-    margin-top: 40px;
-    flex-shrink: 0;
     background-color: #171723;
     color: #c5c6c7;
     text-align: center;

@@ -25,6 +25,12 @@ body,
     position: relative;
 }
 
+.main {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  height: 100vh; /* This ensures that .main takes up the full viewport height */
+}
+
 .container, .main {
     width: 100vw;
     min-height: 100vh;
@@ -42,10 +48,8 @@ p {
 }
 
 .center-container {
-    flex-grow: 1;
-    text-align: center;
-    flex-wrap: wrap;
-    padding: 0 5%;
+    overflow: auto;
+    padding: 20px;
 }
 
 h1 {

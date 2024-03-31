@@ -3,6 +3,8 @@
     <SidebarComponent />
     <div class="main">
       <HeaderComponent />
+      <div class="center-container">
+      </div>
       <!-- Add your main content here -->
       <SpeedInsights />
       <inject />
