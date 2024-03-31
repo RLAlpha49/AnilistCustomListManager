@@ -1,0 +1,6 @@
+version: "1.0"
+linter: jetbrains/qodana-js:2023.3
+exclude:
+  - name: All
+    paths:
+      - src/assets/scripts/loadImages.js

@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 /* global MutationObserver */
 
 // Function to load an image when the sidebar is expanded

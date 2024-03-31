@@ -80,8 +80,8 @@
 </template>
 
 <script>
-import { loadImage, loadImages } from '../assets/scripts/loadImages.js'
-import addSidebarToggleEventListener from '../assets/scripts/sidebarExpanded.js'
+import { loadImage, loadImages } from '@/assets/scripts/loadImages.js'
+import addSidebarToggleEventListener from '@/assets/scripts/sidebarExpanded.js'
 
 export default {
   name: 'SidebarComponent',
