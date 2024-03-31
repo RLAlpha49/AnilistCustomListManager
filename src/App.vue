@@ -5,6 +5,7 @@
       <HeaderComponent />
       <!-- Add your main content here -->
       <SpeedInsights />
+      <inject />
       <FooterComponent />
     </div>
   </div>
@@ -15,6 +16,7 @@ import SidebarComponent from './components/SidebarComponent.vue'
 import HeaderComponent from './components/HeaderComponent.vue'
 import FooterComponent from './components/FooterComponent.vue'
 import { SpeedInsights } from '@vercel/speed-insights/vue'
+import { inject } from "@vercel/analytics"
 
 export default {
   name: 'App',
@@ -22,7 +24,8 @@ export default {
     SidebarComponent,
     HeaderComponent,
     FooterComponent,
-    SpeedInsights
+    SpeedInsights,
+    inject
   }
 }
 </script>
