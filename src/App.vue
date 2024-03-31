@@ -4,6 +4,7 @@
     <div class="main">
       <HeaderComponent />
       <!-- Add your main content here -->
+      <SpeedInsights />
       <FooterComponent />
     </div>
   </div>
@@ -13,13 +14,15 @@
 import SidebarComponent from './components/SidebarComponent.vue'
 import HeaderComponent from './components/HeaderComponent.vue'
 import FooterComponent from './components/FooterComponent.vue'
+import { SpeedInsights } from '@vercel/speed-insights/vue'
 
 export default {
   name: 'App',
   components: {
     SidebarComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    SpeedInsights
   }
 }
 </script>
