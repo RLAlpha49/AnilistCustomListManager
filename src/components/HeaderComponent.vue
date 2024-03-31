@@ -1,6 +1,19 @@
 <template>
   <header>
-    <h1>Your App Name</h1>
+    <div id="arrow">
+      <img
+          src="/images/sidebar-arrow.webp"
+          alt="Sidebar Expand Arrow"
+      />
+    </div>
+    <p>
+      <a
+          class="changelog-link"
+          href="https://docs.alpha49.com/"
+          target="_blank"
+      >Changelog</a
+      >
+    </p>
   </header>
 </template>
 
@@ -11,9 +24,5 @@ export default {
 </script>
 
 <style scoped>
-header {
-  background-color: #f8f9fa;
-  padding: 20px;
-  text-align: center;
-}
+@import '../assets/styles/header.css';
 </style>
