@@ -1,12 +1,12 @@
 // Filename: public/scripts/sidebarExpanded.js
 
 // Add a click event listener to the element with id 'arrow'
-export default function addSidebarToggleEventListener() {
-  const arrow = document.getElementById('arrow');
+export default function addSidebarToggleEventListener () {
+  const arrow = document.getElementById('arrow')
   if (arrow) {
     arrow.addEventListener('click', function () {
-      const sidebar = document.getElementsByClassName('sidebar')[0];
-      const footer = document.getElementsByClassName('footer-div')[0];
+      const sidebar = document.getElementsByClassName('sidebar')[0]
+      const footer = document.getElementsByClassName('footer-div')[0]
 
       if (sidebar.classList.contains('expanded')) {
         sidebar.classList.remove('expanded')
@@ -68,6 +68,6 @@ export default function addSidebarToggleEventListener() {
       }
     })
   } else {
-    console.log('Element with id "arrow" was not found in the DOM.');
+    console.log('Element with id "arrow" was not found in the DOM.')
   }
 }
