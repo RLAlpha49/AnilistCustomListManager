@@ -11,16 +11,16 @@ const router = createRouter({
       name: 'home',
       component: HomePage
     },
-      {
-          path: '/anilist-login',
-          name: 'AniListLogin',
-          component: AniListLogin
-      },
-      {
-          path: '/anilist-redirect',
-          name: 'AniListRedirect',
-          component: AniListRedirect
-      }
+    {
+      path: '/anilist-login',
+      name: 'AniListLogin',
+      component: AniListLogin
+    },
+    {
+      path: '/anilist-redirect',
+      name: 'AniListRedirect',
+      component: AniListRedirect
+    }
   ]
 })
 
