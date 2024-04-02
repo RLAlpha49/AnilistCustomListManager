@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <!-- You can display a loading spinner or a message here -->
-  </div>
+  <div class="spinner"></div>
 </template>
 
 <script>
@@ -9,10 +7,8 @@ export default {
   name: 'AniListRedirect',
   mounted() {
     const urlHash = new URL(window.location.href).hash;
-    console.log('URL hash:', urlHash);
 
     const accessToken = urlHash.split('=')[1];
-    console.log('Access token:', accessToken);
 
     if (accessToken) {
       // Store the access token securely
@@ -27,3 +23,23 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.spinner {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+</style>

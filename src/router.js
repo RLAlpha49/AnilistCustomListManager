@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomePage from './components/HomePage.vue'
+import CustomListManager from './components/CustomListManager.vue'
 import AniListLogin from './components/AniListLogin.vue'
 import AniListRedirect from './components/AniListRedirect.vue'
 
@@ -7,9 +7,9 @@ const router = createRouter({
   history: createWebHistory(),
   routes: [
     {
-      path: '/',
-      name: 'home',
-      component: HomePage
+      path: '/custom-list-manager',
+      name: 'CustomListManager',
+      component: CustomListManager
     },
     {
       path: '/anilist-login',

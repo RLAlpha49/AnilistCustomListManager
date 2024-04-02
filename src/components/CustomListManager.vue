@@ -20,9 +20,14 @@
         <p>Filter entries by specific tags</p>
       </div>
     </div>
-    <router-link to="/anilist-login">
-      <button>Next Step</button>
-    </router-link>
+    <div class="navigation-buttons">
+      <router-link to="/">
+        <button>Back</button>
+      </router-link>
+      <router-link to="/anilist-login">
+        <button>Next Step</button>
+      </router-link>
+    </div>
   </div>
 </template>
 
@@ -41,7 +46,7 @@ export default {
   background-color: #1b1d25;
   color: #c5c6c7;
   border-radius: 10px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 .homepage h1 {
@@ -76,7 +81,7 @@ export default {
 
 .feature-card:hover {
   transform: scale(1.05);
-  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
 .feature-card h2 {
@@ -103,5 +108,11 @@ export default {
 
 .homepage button:hover {
   background-color: #45a29e;
+}
+
+.navigation-buttons {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 }
 </style>
