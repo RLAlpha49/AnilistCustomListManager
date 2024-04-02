@@ -25,8 +25,15 @@ export default {
   },
   mounted() {
     const accessToken = localStorage.getItem('anilistToken');
-    if (accessToken) {
-      // User is already logged in
+    const expirationTime = localStorage.getItem('anilistTokenExpiration');
+
+    if (new Date().getTime() > expirationTime) {
+      // Token has expired, remove it from local storage
+      localStorage.removeItem('anilistToken');
+      localStorage.removeItem('anilistTokenExpiration');
+      this.isLoggedIn = false;
+    } else if (accessToken) {
+      // Token is still valid
       this.isLoggedIn = true;
     }
   },
@@ -40,8 +47,9 @@ export default {
       window.location.href = url;
     },
     logout() {
-      // Remove the access token from local storage
+      // Remove the access token and its expiration time from local storage
       localStorage.removeItem('anilistToken');
+      localStorage.removeItem('anilistTokenExpiration');
 
       // Update the isLoggedIn state
       this.isLoggedIn = false;
