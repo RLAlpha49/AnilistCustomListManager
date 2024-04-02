@@ -1,7 +1,5 @@
 import { createApp } from 'vue'
 import App from './App.vue'
+import router from './router'
 
-require('./assets/scripts/lazyLoadImages.js')
-require('./assets/scripts/sidebarHover.js')
-
-createApp(App).mount('#app')
+createApp(App).use(router).mount('#app')
