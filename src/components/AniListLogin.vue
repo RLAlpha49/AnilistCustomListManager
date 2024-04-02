@@ -5,11 +5,11 @@
     <p v-if="isLoggedIn">You are logged in.</p>
     <p v-else>You are not logged in.</p>
     <div class="navigation-buttons">
-      <router-link to="/">
+      <router-link to="/custom-list-manager">
         <button>Back</button>
       </router-link>
-      <router-link v-if="isLoggedIn" to="/next-page">
-        <button>Next</button>
+      <router-link :to="isLoggedIn ? '/next-page' : ''">
+        <button :class="{ 'button-disabled': !isLoggedIn }">Next</button>
       </router-link>
     </div>
   </div>
@@ -59,7 +59,13 @@ export default {
   background-color: #1b1d25;
   color: #c5c6c7;
   border-radius: 10px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.button-disabled {
+  background-color: #ccc !important;
+  color: #888 !important;
+  cursor: not-allowed !important;
 }
 
 .anilist-login h1 {

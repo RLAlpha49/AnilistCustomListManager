@@ -10,7 +10,7 @@
                   src="/images/favicon.webp"
                   alt="Site Sidebar Icon"
               />
-              <span class="link-text">AniCards</span>
+              <span class="link-text">List Manager</span>
             </div>
           </a>
         </li>
@@ -26,13 +26,13 @@
           </a>
         </li>
         <li>
-          <a href="/StatCards/">
+          <a href="/custom-list-manager">
             <div class="link-content">
               <img
-                  src="/images/stat-cards.webp"
+                  src="/images/custom-list.webp"
                   alt="Stat Cards Sidebar Icon"
               />
-              <span class="link-text">Stat Cards</span>
+              <span class="link-text">Custom Lists</span>
             </div>
           </a>
         </li>
