@@ -4,8 +4,8 @@
     <div class="main">
       <HeaderComponent />
       <div class="center-container">
+        <router-view />
       </div>
-      <!-- Add your main content here -->
       <SpeedInsights />
       <inject />
       <FooterComponent />
@@ -33,5 +33,73 @@ export default {
 </script>
 
 <style>
-@import './assets/styles/home.css';
+/* Hide scrollbar for Chrome, Safari and Opera */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+html {
+  scrollbar-width: none; /* For Firefox */
+  -ms-overflow-style: none; /* For Internet Explorer and Edge */
+}
+
+body, html {
+  height: 100%;
+  padding: 0;
+  overflow: hidden;
+}
+
+body {
+  margin: 0;
+  font-family: "Helvetica Neue", sans-serif;
+  background-color: #1b1d25;
+}
+
+body,
+.center-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #c5c6c7;
+}
+
+.container, #app {
+  display: flex;
+  flex: 1 0 auto;
+  position: relative;
+}
+
+.main {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  height: 100vh;
+}
+
+.container, .main {
+  width: 100vw;
+  min-height: 100vh;
+}
+
+.main-content {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+p {
+  margin-bottom: 20px;
+  font-size: 1.2em;
+  padding: 10px 20px;
+}
+
+.center-container {
+  overflow: auto;
+  padding: 20px;
+}
+
+h1 {
+  color: #66fcf1;
+  font-size: 2.5em;
+}
 </style>
