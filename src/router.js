@@ -5,7 +5,6 @@ import AniListRedirect from './components/AniListRedirect.vue'
 
 const router = createRouter({
   history: createWebHistory(),
-  mode: 'history',
   routes: [
     {
       path: '/custom-list-manager/custom-list-home',

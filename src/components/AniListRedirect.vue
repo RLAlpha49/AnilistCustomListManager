@@ -1,7 +1,3 @@
-<template>
-  <div class="spinner"></div>
-</template>
-
 <script>
 export default {
   name: 'AniListRedirect',
@@ -17,7 +13,7 @@ export default {
       this.saveToken(accessToken);
 
       // Redirect the user to another page
-      this.$router.push('/anilist-login')
+      this.$router.push('/custom-list-manager/anilist-login')
     } else {
       // Handle the error
       console.error('No access token found in URL hash')
@@ -30,28 +26,8 @@ export default {
 
       // Set the expiration time to the current time plus 24 hours
       const expirationTime = new Date().getTime() + 24 * 60 * 60 * 1000;
-      localStorage.setItem('anilistTokenExpiration', expirationTime);
+      localStorage.setItem('anilistTokenExpiration', expirationTime.toString());
     }
   }
 }
 </script>
-
-<style scoped>
-.spinner {
-  border: 16px solid #f3f3f3;
-  border-radius: 50%;
-  border-top: 16px solid #3498db;
-  width: 120px;
-  height: 120px;
-  animation: spin 2s linear infinite;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-</style>
