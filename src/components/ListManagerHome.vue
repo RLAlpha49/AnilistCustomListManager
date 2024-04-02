@@ -13,19 +13,15 @@
       </div>
       <div class="feature-card">
         <h2>Sort entries</h2>
-        <p>Sort entries based on status, score, rereads, and type (Manga, Manwha, Manhua)</p>
-      </div>
-      <div class="feature-card">
-        <h2>Filter entries</h2>
-        <p>Filter entries by specific tags</p>
+        <p>Sort entries based on status, score, rereads, tags, and type (Manga, Manwha, Manhua)</p>
       </div>
     </div>
     <div class="navigation-buttons">
       <router-link to="/">
         <button>Back</button>
       </router-link>
-      <router-link to="/anilist-login">
-        <button>Next Step</button>
+      <router-link to="/custom-list-manager/anilist-login">
+        <button>Next</button>
       </router-link>
     </div>
   </div>
@@ -39,10 +35,12 @@ export default {
 
 <style scoped>
 .homepage {
+  position: absolute;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 20px;
+  margin: 20px;
   background-color: #1b1d25;
   color: #c5c6c7;
   border-radius: 10px;

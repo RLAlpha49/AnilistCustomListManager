@@ -3,7 +3,7 @@
     <nav>
       <ul>
         <li class="site-icon-li">
-          <a href="/">
+          <router-link to="/">
             <div class="link-content">
               <img
                   class="site-icon"
@@ -12,10 +12,10 @@
               />
               <span class="link-text">List Manager</span>
             </div>
-          </a>
+          </router-link>
         </li>
         <li>
-          <a href="/">
+          <router-link to="/">
             <div class="link-content">
               <img
                   src="/images/home.webp"
@@ -23,10 +23,10 @@
               />
               <span class="link-text">Home</span>
             </div>
-          </a>
+          </router-link>
         </li>
         <li>
-          <a href="/custom-list-manager">
+          <router-link to="/custom-list-manager/custom-list-home">
             <div class="link-content">
               <img
                   src="/images/custom-list.webp"
@@ -34,10 +34,10 @@
               />
               <span class="link-text">Custom Lists</span>
             </div>
-          </a>
+          </router-link>
         </li>
         <li>
-          <a href="/faq">
+          <router-link to="/faq">
             <div class="link-content">
               <img
                   src="/images/faq.webp"
@@ -45,7 +45,7 @@
               />
               <span class="link-text">FAQ</span>
             </div>
-          </a>
+          </router-link>
         </li>
       </ul>
     </nav>
@@ -80,18 +80,72 @@
 </template>
 
 <script>
-import { loadImage, loadImages } from '@/assets/scripts/loadImages.js'
-import addSidebarToggleEventListener from '@/assets/scripts/sidebarExpanded.js'
-
 export default {
   name: 'SidebarComponent',
   mounted() {
-    addSidebarToggleEventListener();
-    loadImages();
+    this.addSidebarToggleEventListener();
+    this.loadImages();
+    this.addActiveLinkClass();
+  },
+  watch: {
+    '$route': 'addActiveLinkClass'
   },
   methods: {
-    loadImage,
-    loadImages,
+    loadImage(id) {
+      const img = document.getElementById(id)
+      if (img && !img.src) {
+        img.src = img.dataset.src
+      }
+    },
+    loadImages() {
+      this.loadImage('github-icon')
+      this.loadImage('kofi-icon')
+      // Add more calls to loadImage for the other images
+    },
+    addSidebarToggleEventListener () {
+      const arrow = document.getElementById('arrow')
+      if (arrow) {
+        arrow.addEventListener('click', function () {
+          const sidebar = document.getElementsByClassName('sidebar')[0]
+
+          if (sidebar.classList.contains('expanded')) {
+            sidebar.classList.remove('expanded')
+            arrow.classList.remove('expanded')
+          } else {
+            sidebar.classList.add('expanded')
+            arrow.classList.add('expanded')
+          }
+        })
+      } else {
+        console.log('Element with id "arrow" was not found in the DOM.')
+      }
+    },
+    addActiveLinkClass() {
+      // Get all the list items in the sidebar navigation
+      const listItems = document.querySelectorAll('.sidebar nav ul li')
+
+      // Loop over each list item
+      listItems.forEach(function (listItem) {
+        const link = listItem.querySelector('a')
+
+        // Check if the listItem is not the site icon
+        if (!listItem.classList.contains('site-icon-li')) {
+          // Check if the link's href starts with '/custom-list-manager/'
+          if (link.getAttribute('href').startsWith('/custom-list-manager/')) {
+            // Check if the current URL starts with '/custom-list-manager/'
+            if (window.location.pathname.startsWith('/custom-list-manager/')) {
+              listItem.classList.add('active-link')
+            } else {
+              listItem.classList.remove('active-link')
+            }
+          } else if (window.location.pathname === link.getAttribute('href')) {
+            listItem.classList.add('active-link')
+          } else {
+            listItem.classList.remove('active-link')
+          }
+        }
+      })
+    }
   },
   updated() {
     const sidebar = document.querySelector('.sidebar');

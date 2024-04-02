@@ -1,14 +1,14 @@
 <template>
   <div class="anilist-login">
     <button @click="login">Login with AniList</button>
-    <button v-if="isLoggedIn" @click="logout">Logout</button>
+    <button v-if="isLoggedIn" @click="logout">Clear Cached Token</button>
     <p v-if="isLoggedIn">You are logged in.</p>
     <p v-else>You are not logged in.</p>
     <div class="navigation-buttons">
-      <router-link to="/custom-list-manager">
+      <router-link to="/custom-list-manager/custom-list-home">
         <button>Back</button>
       </router-link>
-      <router-link :to="isLoggedIn ? '/next-page' : ''">
+      <router-link :to="isLoggedIn ? '/custom-list-manager/next-page' : ''">
         <button :class="{ 'button-disabled': !isLoggedIn }">Next</button>
       </router-link>
     </div>
@@ -60,10 +60,12 @@ export default {
 
 <style scoped>
 .anilist-login {
+  position: absolute;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 20px;
+  margin: 20px;
   background-color: #1b1d25;
   color: #c5c6c7;
   border-radius: 10px;

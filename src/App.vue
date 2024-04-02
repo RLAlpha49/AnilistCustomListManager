@@ -4,7 +4,11 @@
     <div class="main">
       <HeaderComponent />
       <div class="center-container">
-        <router-view />
+        <router-view v-slot="{ Component }">
+          <transition :name="transitionName">
+            <component :is="Component" :key="$route.fullPath" />
+          </transition>
+        </router-view>
       </div>
       <SpeedInsights />
       <inject />
@@ -28,6 +32,34 @@ export default {
     FooterComponent,
     SpeedInsights,
     inject
+  },
+  data() {
+    return {
+      direction: 'forward'
+    }
+  },
+  computed: {
+    transitionName() {
+      return this.direction === 'forward' ? 'slide-left' : 'slide-right';
+    }
+  },
+  watch: {
+    $route(to, from) {
+      const toIndex = ['/', '/custom-list-manager/custom-list-manager', '/custom-list-manager/anilist-login', '/custom-list-manager/next-page'].indexOf(to.path);
+      const fromIndex = ['/', '/custom-list-manager/custom-list-manager', '/custom-list-manager/anilist-login', '/custom-list-manager/next-page'].indexOf(from.path);
+      this.direction = toIndex > fromIndex ? 'forward' : 'backward';
+    }
+  },
+  mounted() {
+    this.lazyLoadImages();
+  },
+  methods: {
+    lazyLoadImages() {
+      const images = document.querySelectorAll('img')
+      images.forEach((img) => {
+        img.setAttribute('loading', 'lazy')
+      })
+    }
   }
 }
 </script>
@@ -101,5 +133,31 @@ p {
 h1 {
   color: #66fcf1;
   font-size: 2.5em;
+}
+
+.slide-left-enter-active, .slide-left-leave-active {
+  transition: transform 1s ease-in-out;
+}
+.slide-left-enter-from {
+  transform: translateX(100vw);
+}
+.slide-left-leave-to {
+  transform: translateX(-100vw);
+}
+.slide-left-enter-to {
+  transform: translateX(0);
+}
+
+.slide-right-enter-active, .slide-right-leave-active {
+  transition: transform 1s ease-in-out;
+}
+.slide-right-enter-from {
+  transform: translateX(-100vw);
+}
+.slide-right-leave-to {
+  transform: translateX(100vw);
+}
+.slide-right-enter-to {
+  transform: translateX(0);
 }
 </style>
