@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /
+Allow: /$
+Allow: /custom-list-manager/custom-list-home
