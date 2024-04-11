@@ -8,7 +8,7 @@
       <router-link to="/custom-list-manager/custom-list-home">
         <button>Back</button>
       </router-link>
-      <router-link :to="isLoggedIn ? '/custom-list-manager/next-page' : ''">
+      <router-link :to="isLoggedIn ? '/custom-list-manager/list-manager' : ''">
         <button :class="{ 'button-disabled': !isLoggedIn }">Next</button>
       </router-link>
     </div>
@@ -42,9 +42,7 @@ export default {
       const clientId = process.env.VUE_APP_ANILIST_CLIENT_ID;
       const responseType = 'token';
 
-      const url = `https://anilist.co/api/v2/oauth/authorize?client_id=${clientId}&response_type=${responseType}`;
-
-      window.location.href = url;
+      window.location.href = `https://anilist.co/api/v2/oauth/authorize?client_id=${clientId}&response_type=${responseType}`;
     },
     logout() {
       // Remove the access token and its expiration time from local storage

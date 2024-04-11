@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import CustomListManager from './components/ListManagerHome.vue'
 import AniListLogin from './components/AniListLogin.vue'
 import AniListRedirect from './components/AniListRedirect.vue'
+import ListManagerList from '@/components/ListManagerList.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -20,6 +21,11 @@ const router = createRouter({
       path: '/custom-list-manager/anilist-redirect',
       name: 'AniListRedirect',
       component: AniListRedirect
+    },
+    {
+      path: '/custom-list-manager/list-manager',
+      name: 'ListManager',
+      component: ListManagerList
     }
   ]
 })

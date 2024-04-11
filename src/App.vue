@@ -45,8 +45,8 @@ export default {
   },
   watch: {
     $route(to, from) {
-      const toIndex = ['/', '/custom-list-manager/custom-list-manager', '/custom-list-manager/anilist-login', '/custom-list-manager/next-page'].indexOf(to.path);
-      const fromIndex = ['/', '/custom-list-manager/custom-list-manager', '/custom-list-manager/anilist-login', '/custom-list-manager/next-page'].indexOf(from.path);
+      const toIndex = ['/', '/custom-list-manager/custom-list-manager', '/custom-list-manager/anilist-login', '/custom-list-manager/list-manager'].indexOf(to.path);
+      const fromIndex = ['/', '/custom-list-manager/custom-list-manager', '/custom-list-manager/anilist-login', '/custom-list-manager/list-manager'].indexOf(from.path);
       this.direction = toIndex > fromIndex ? 'forward' : 'backward';
     }
   },

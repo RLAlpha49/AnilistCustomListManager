@@ -3,7 +3,8 @@ export default {
   name: 'AniListRedirect',
   mounted() {
     const urlHash = new URL(window.location.href).hash;
-    const accessToken = urlHash.split('=')[1];
+    const params = new URLSearchParams(urlHash.substring(1)); // Remove the leading '#'
+    const accessToken = params.get('access_token');
 
     if (accessToken) {
       // Store the access token securely
