@@ -75,7 +75,7 @@ export default {
       try {
         const response = await this.fetchAniList(query);
         this.userId = response.data.Viewer.id;
-        this.fetchLists(this.listType);
+        await this.fetchLists(this.listType);
       } catch (error) {
         this.errorMessage = 'Error: ' + error.message;
       }
@@ -121,7 +121,7 @@ export default {
 
         // Check if the request was rate limited
         if (response.status === 429) {
-          throw new Error('Rate limit exceeded. Please try again later.');
+          this.errorMessage = 'Rate limit exceeded. Please try again later.';
         }
 
         return await response.json();
