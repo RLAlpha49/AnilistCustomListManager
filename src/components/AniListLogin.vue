@@ -58,7 +58,6 @@ export default {
 
 <style scoped>
 .anilist-login {
-  position: absolute;
   display: flex;
   flex-direction: column;
   align-items: center;

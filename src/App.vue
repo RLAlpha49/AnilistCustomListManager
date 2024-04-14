@@ -65,21 +65,40 @@ export default {
 </script>
 
 <style>
-/* Hide scrollbar for Chrome, Safari and Opera */
+/* Show scrollbar for Chrome, Safari and Opera */
 ::-webkit-scrollbar {
-  display: none;
+  display: block;
 }
 
-/* Hide scrollbar for IE, Edge and Firefox */
+/* Show scrollbar for IE, Edge and Firefox */
 html {
-  scrollbar-width: none; /* For Firefox */
-  -ms-overflow-style: none; /* For Internet Explorer and Edge */
+  scrollbar-width: auto; /* For Firefox */
+  -ms-overflow-style: auto; /* For Internet Explorer and Edge */
 }
 
 body, html {
   height: 100%;
   padding: 0;
-  overflow: hidden;
+  overflow-x: hidden; /* Hide horizontal scrollbar */
+  overflow-y: auto; /* Show vertical scrollbar when needed */
+}
+
+/* Style the scrollbar */
+::-webkit-scrollbar {
+  width: 10px; /* Width of the scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: #1b1d25; /* Color of the track */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #66fcf1; /* Color of the scroll thumb */
+  border-radius: 5px; /* Radius of the scroll thumb */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #1b1d25; /* Color of the scroll thumb when hovered */
 }
 
 body {
@@ -92,7 +111,7 @@ body,
 .center-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   color: #c5c6c7;
 }
@@ -126,7 +145,8 @@ p {
 }
 
 .center-container {
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
   padding: 20px;
 }
 

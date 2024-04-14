@@ -35,7 +35,6 @@ export default {
 
 <style scoped>
 .homepage {
-  position: absolute;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -51,6 +50,7 @@ export default {
   color: #66fcf1;
   font-size: 2.5em;
   margin-bottom: 20px;
+  text-align: center;
 }
 
 .homepage p {
