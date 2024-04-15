@@ -155,29 +155,21 @@ h1 {
   font-size: 2.5em;
 }
 
-.slide-left-enter-active, .slide-left-leave-active {
-  transition: transform 1s ease-in-out;
-}
-.slide-left-enter-from {
-  transform: translateX(100vw);
-}
-.slide-left-leave-to {
-  transform: translateX(-100vw);
-}
-.slide-left-enter-to {
-  transform: translateX(0);
-}
-
+.slide-left-enter-active, .slide-left-leave-active,
 .slide-right-enter-active, .slide-right-leave-active {
   transition: transform 1s ease-in-out;
+  position: absolute;
 }
-.slide-right-enter-from {
-  transform: translateX(-100vw);
-}
-.slide-right-leave-to {
+
+.slide-left-enter-from, .slide-right-leave-to {
   transform: translateX(100vw);
 }
-.slide-right-enter-to {
+
+.slide-left-leave-to, .slide-right-enter-from {
+  transform: translateX(-100vw);
+}
+
+.slide-left-enter-to, .slide-right-enter-to {
   transform: translateX(0);
 }
 </style>

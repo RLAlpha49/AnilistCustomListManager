@@ -63,6 +63,16 @@ export default {
     this.fetchViewerId();
   },
   methods: {
+    sortLists() {
+      const categoriesAnime = ["watching", "completed", "paused", "planning", "dropped", "rewatched", "10", "9", "8", "7", "6", "5", "4", "3", "2", "1"];
+      const categoriesManga = ["reading", "completed", "paused", "planning", "dropped", "reread", "10", "9", "8", "7", "6", "5", "4", "3", "2", "1"]; // Modify this as per your requirements
+      const categories = this.listType === 'ANIME' ? categoriesAnime : categoriesManga;
+      this.lists.sort((a, b) => {
+        const aCategoryIndex = categories.findIndex(category => a.name.toLowerCase().includes(category));
+        const bCategoryIndex = categories.findIndex(category => b.name.toLowerCase().includes(category));
+        return (aCategoryIndex === -1 ? categories.length : aCategoryIndex) - (bCategoryIndex === -1 ? categories.length : bCategoryIndex);
+      });
+    },
     async fetchViewerId() {
       const query = `
         query {
@@ -97,6 +107,8 @@ export default {
       try {
         const response = await this.fetchAniList(query);
         this.lists = response.data.MediaListCollection.lists.filter(list => list.isCustomList);
+        console.log(this.lists)
+        this.sortLists();
         this.loading = false;
       } catch (error) {
         this.errorMessage = 'Error: ' + error.message;
