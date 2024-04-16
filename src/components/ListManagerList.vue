@@ -2,6 +2,7 @@
   <div id="list-manager-list">
     <div class="manager">
       <h1 style="text-align: center">{{ title }}</h1>
+      <p style="text-align: center">The order of the list does not affect the functionality.<br> Select the option in the dropdowns to be assocaited with the custom list.<br> For example if you want all anime/manga with the completed status to be set a certain custom list.</p>
       <div class="button-container">
         <button @click="fetchLists('ANIME')">Anime Lists</button>
         <button @click="fetchLists('MANGA')">Manga Lists</button>
@@ -19,6 +20,7 @@
             <div class="list-item">
               <div class="drag-handle">&#x2630;</div>
               <div class="list-content">{{element.name}}</div>
+              <p-dropdown class="custom-dropdown" :options="getOptions(listType)" v-model="element.selectedOption" />
             </div>
           </template>
         </draggable>
@@ -37,11 +39,13 @@
 
 <script>
 import draggable from 'vuedraggable';
+import Dropdown from 'primevue/dropdown';
 
 export default {
   name: 'ListManagerList',
   components: {
-    draggable
+    draggable,
+    'p-dropdown': Dropdown
   },
   data() {
     return {
@@ -72,6 +76,13 @@ export default {
         const bCategoryIndex = categories.findIndex(category => b.name.toLowerCase().includes(category));
         return (aCategoryIndex === -1 ? categories.length : aCategoryIndex) - (bCategoryIndex === -1 ? categories.length : bCategoryIndex);
       });
+    },
+    getOptions(type) {
+      if (type === 'ANIME') {
+        return ['None', 'Status set to Watching', 'Status set to Completed', 'Status set to Paused', 'Status set to Planning', 'Status set to Dropped', 'Rewatched', 'Score set to 10', 'Score set to 9', 'Score set to 8', 'Score set to 7', 'Score set to 6', 'Score set to 5', 'Score set to 4', 'Score set to 3', 'Score set to 2', 'Score set to 1', 'Score below 5'];
+      } else if (type === 'MANGA') {
+        return ['None', 'Status set to Reading', 'Status set to Completed', 'Status set to Paused', 'Status set to Planning', 'Status set to Dropped', 'Reread', 'Score set to 10', 'Score set to 9', 'Score set to 8', 'Score set to 7', 'Score set to 6', 'Score set to 5', 'Score set to 4', 'Score set to 3', 'Score set to 2', 'Score set to 1', 'Score below 5'];
+      }
     },
     async fetchViewerId() {
       const query = `
@@ -106,7 +117,7 @@ export default {
 
       try {
         const response = await this.fetchAniList(query);
-        this.lists = response.data.MediaListCollection.lists.filter(list => list.isCustomList);
+        this.lists = response.data.MediaListCollection.lists.filter(list => list.isCustomList).map(list => ({ ...list, selectedOption: null }));
         console.log(this.lists)
         this.sortLists();
         this.loading = false;
@@ -226,6 +237,32 @@ button:hover {
 .list-item:hover {
   transform: scale(1.05);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.custom-dropdown {
+  margin-left: auto;
+  background-color: #1b1d25;
+  color: #c5c6c7;
+  border: 1px solid #66fcf1;
+  transition-duration: 0.4s;
+}
+
+.custom-dropdown .p-dropdown-label {
+  color: #ffffff;
+}
+
+.p-dropdown-panel {
+  background-color: #1b1d25;
+  color: #c5c6c7;
+}
+
+.p-dropdown-item {
+  color: #c5c6c7;
+}
+
+.p-dropdown-item.p-highlight {
+  background-color: #66fcf1;
+  color: #1b1d25;
 }
 
 .drag-handle {
