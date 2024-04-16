@@ -22,7 +22,9 @@
             <div class="list-item">
               <div class="drag-handle">&#x2630;</div>
               <div class="list-content">{{ element.name }}</div>
-              <Dropdown v-model="element.selectedOption" :options="getOptions(listType)" filter optionLabel="label"
+              <Dropdown v-model="element.selectedOption" :options="getOptions(listType)" filter showClear
+                        optionLabel="label"
+                        option-value="value"
                         optionGroupLabel="label" optionGroupChildren="items" placeholder="Select a Status or Score"
                         class="custom-dropdown">
                 <template #optiongroup="slotProps">
@@ -78,8 +80,8 @@ export default {
   },
   methods: {
     sortLists() {
-      const categoriesAnime = ["watching", "completed", "paused", "planning", "dropped", "rewatched", "10", "9", "8", "7", "6", "5", "4", "3", "2", "1"];
-      const categoriesManga = ["reading", "completed", "paused", "planning", "dropped", "reread", "10", "9", "8", "7", "6", "5", "4", "3", "2", "1"]; // Modify this as per your requirements
+      const categoriesAnime = ["watching", "completed", "paused", "planning", "dropped", "rewatched", "10", "9", "8", "7", "6", "5", "<5", "4", "3", "2", "1"];
+      const categoriesManga = ["reading", "completed", "paused", "planning", "dropped", "reread", "10", "9", "8", "7", "6", "5", "<5", "4", "3", "2", "1"];
       const categories = this.listType === 'ANIME' ? categoriesAnime : categoriesManga;
       this.lists.sort((a, b) => {
         const aCategoryIndex = categories.findIndex(category => a.name.toLowerCase().includes(category));
@@ -91,7 +93,7 @@ export default {
       let statusItems = ['Watching', 'Completed', 'Paused', 'Planning', 'Dropped', 'Rewatched'];
       const scoreItems = ['10', '9', '8', '7', '6', '5', '4', '3', '2', '1', 'below 5'];
 
-      const createOptionObjects = items => items.map(item => ({label: item}));
+      const createOptionObjects = items => items.map(item => ({label: item, value: item}));
 
       if (type === 'ANIME') {
         return [
@@ -117,6 +119,27 @@ export default {
           }
         ];
       }
+    },
+    getDefaultOption(listName) {
+      const statusItems = ['watching', 'completed', 'paused', 'planning', 'dropped'];
+      const scoreItems = ['10', '9', '8', '7', '6', '5', '4', '3', '2', '1'];
+      const allItems = [...statusItems, ...scoreItems];
+
+      if (listName.includes('<5')) {
+        return `Score set to below 5`;
+      }
+
+      for (const item of allItems) {
+        if (listName.toLowerCase().includes(item)) {
+          if (statusItems.includes(item)) {
+            return `Status set to ${item.charAt(0).toUpperCase() + item.slice(1)}`;
+          } else if (scoreItems.includes(item)) {
+            return `Score set to ${item}`;
+          }
+        }
+      }
+
+      return null;
     },
     async fetchViewerId() {
       const query = `
@@ -153,7 +176,7 @@ export default {
         const response = await this.fetchAniList(query);
         this.lists = response.data.MediaListCollection.lists.filter(list => list.isCustomList).map(list => ({
           ...list,
-          selectedOption: null
+          selectedOption: this.getDefaultOption(list.name)
         }));
         console.log(this.lists)
         this.sortLists();
