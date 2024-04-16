@@ -2,7 +2,9 @@
   <div id="list-manager-list">
     <div class="manager">
       <h1 style="text-align: center">{{ title }}</h1>
-      <p style="text-align: center">The order of the list does not affect the functionality.<br> Select the option in the dropdowns to be assocaited with the custom list.<br> For example if you want all anime/manga with the completed status to be set a certain custom list.</p>
+      <p style="text-align: center">The order of the list does not affect the functionality.<br> Select the option in
+        the dropdowns to be assocaited with the custom list.<br> For example if you want all anime/manga with the
+        completed status to be set a certain custom list.</p>
       <div class="button-container">
         <button @click="fetchLists('ANIME')">Anime Lists</button>
         <button @click="fetchLists('MANGA')">Manga Lists</button>
@@ -19,13 +21,15 @@
           <template #item="{element}">
             <div class="list-item">
               <div class="drag-handle">&#x2630;</div>
-              <div class="list-content">{{element.name}}</div>
-              <Dropdown v-model="element.selectedOption" :options="getOptions(listType)" filter optionLabel="label" optionGroupLabel="label" optionGroupChildren="items" placeholder="Select a Status or Score" class="custom-dropdown">
-                  <template #optiongroup="slotProps">
-                      <div class="flex align-items-center">
-                          <div>{{ slotProps.option.label }}</div>
-                      </div>
-                  </template>
+              <div class="list-content">{{ element.name }}</div>
+              <Dropdown v-model="element.selectedOption" :options="getOptions(listType)" filter optionLabel="label"
+                        optionGroupLabel="label" optionGroupChildren="items" placeholder="Select a Status or Score"
+                        class="custom-dropdown">
+                <template #optiongroup="slotProps">
+                  <div class="flex align-items-center">
+                    <div>{{ slotProps.option.label }}</div>
+                  </div>
+                </template>
               </Dropdown>
             </div>
           </template>
@@ -87,7 +91,7 @@ export default {
       let statusItems = ['Watching', 'Completed', 'Paused', 'Planning', 'Dropped', 'Rewatched'];
       const scoreItems = ['10', '9', '8', '7', '6', '5', '4', '3', '2', '1', 'below 5'];
 
-      const createOptionObjects = items => items.map(item => ({ label: item }));
+      const createOptionObjects = items => items.map(item => ({label: item}));
 
       if (type === 'ANIME') {
         return [
@@ -147,7 +151,10 @@ export default {
 
       try {
         const response = await this.fetchAniList(query);
-        this.lists = response.data.MediaListCollection.lists.filter(list => list.isCustomList).map(list => ({ ...list, selectedOption: null }));
+        this.lists = response.data.MediaListCollection.lists.filter(list => list.isCustomList).map(list => ({
+          ...list,
+          selectedOption: null
+        }));
         console.log(this.lists)
         this.sortLists();
         this.loading = false;
@@ -249,8 +256,12 @@ button:hover {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .list-item {

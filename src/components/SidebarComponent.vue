@@ -102,7 +102,7 @@ export default {
       this.loadImage('kofi-icon')
       // Add more calls to loadImage for the other images
     },
-    addSidebarToggleEventListener () {
+    addSidebarToggleEventListener() {
       const arrow = document.getElementById('arrow')
       if (arrow) {
         arrow.addEventListener('click', function () {

@@ -1,18 +1,18 @@
 <template>
   <div class="container">
-    <SidebarComponent />
+    <SidebarComponent/>
     <div class="main">
-      <HeaderComponent />
+      <HeaderComponent/>
       <div class="center-container">
         <router-view v-slot="{ Component }">
           <transition :name="transitionName">
-            <component :is="Component" :key="$route.fullPath" />
+            <component :is="Component" :key="$route.fullPath"/>
           </transition>
         </router-view>
       </div>
-      <SpeedInsights />
-      <inject />
-      <FooterComponent />
+      <SpeedInsights/>
+      <inject/>
+      <FooterComponent/>
     </div>
   </div>
 </template>
@@ -21,8 +21,8 @@
 import SidebarComponent from './components/SidebarComponent.vue'
 import HeaderComponent from './components/HeaderComponent.vue'
 import FooterComponent from './components/FooterComponent.vue'
-import { SpeedInsights } from '@vercel/speed-insights/vue'
-import { inject } from "@vercel/analytics"
+import {SpeedInsights} from '@vercel/speed-insights/vue'
+import {inject} from "@vercel/analytics"
 
 export default {
   name: 'App',
