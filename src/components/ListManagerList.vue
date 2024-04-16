@@ -20,7 +20,13 @@
             <div class="list-item">
               <div class="drag-handle">&#x2630;</div>
               <div class="list-content">{{element.name}}</div>
-              <p-dropdown class="custom-dropdown" :options="getOptions(listType)" v-model="element.selectedOption" />
+              <Dropdown v-model="element.selectedOption" :options="getOptions(listType)" filter optionLabel="label" optionGroupLabel="label" optionGroupChildren="items" placeholder="Select a Status or Score" class="custom-dropdown">
+                  <template #optiongroup="slotProps">
+                      <div class="flex align-items-center">
+                          <div>{{ slotProps.option.label }}</div>
+                      </div>
+                  </template>
+              </Dropdown>
             </div>
           </template>
         </draggable>
@@ -45,7 +51,7 @@ export default {
   name: 'ListManagerList',
   components: {
     draggable,
-    'p-dropdown': Dropdown
+    Dropdown
   },
   data() {
     return {
@@ -78,10 +84,34 @@ export default {
       });
     },
     getOptions(type) {
+      let statusItems = ['Watching', 'Completed', 'Paused', 'Planning', 'Dropped', 'Rewatched'];
+      const scoreItems = ['10', '9', '8', '7', '6', '5', '4', '3', '2', '1', 'below 5'];
+
+      const createOptionObjects = items => items.map(item => ({ label: item }));
+
       if (type === 'ANIME') {
-        return ['None', 'Status set to Watching', 'Status set to Completed', 'Status set to Paused', 'Status set to Planning', 'Status set to Dropped', 'Rewatched', 'Score set to 10', 'Score set to 9', 'Score set to 8', 'Score set to 7', 'Score set to 6', 'Score set to 5', 'Score set to 4', 'Score set to 3', 'Score set to 2', 'Score set to 1', 'Score below 5'];
+        return [
+          {
+            label: 'Status',
+            items: createOptionObjects(statusItems.map(status => `Status set to ${status}`))
+          },
+          {
+            label: 'Score',
+            items: createOptionObjects(scoreItems.map(score => `Score set to ${score}`))
+          }
+        ];
       } else if (type === 'MANGA') {
-        return ['None', 'Status set to Reading', 'Status set to Completed', 'Status set to Paused', 'Status set to Planning', 'Status set to Dropped', 'Reread', 'Score set to 10', 'Score set to 9', 'Score set to 8', 'Score set to 7', 'Score set to 6', 'Score set to 5', 'Score set to 4', 'Score set to 3', 'Score set to 2', 'Score set to 1', 'Score below 5'];
+        statusItems = ['Reading', 'Completed', 'Paused', 'Planning', 'Dropped', 'Reread'];
+        return [
+          {
+            label: 'Status',
+            items: createOptionObjects(statusItems.map(status => status === 'Reread' ? 'Reread' : `Status set to ${status}`))
+          },
+          {
+            label: 'Score',
+            items: createOptionObjects(scoreItems.map(score => `Score set to ${score}`))
+          }
+        ];
       }
     },
     async fetchViewerId() {
@@ -247,8 +277,24 @@ button:hover {
   transition-duration: 0.4s;
 }
 
+.p-dropdown-header {
+  background-color: #242631;
+}
+
+.p-dropdown-filter {
+  background-color: #1b1d25;
+  color: #c5c6c7;
+}
+
+.p-dropdown-item-group {
+  background-color: #242631;
+  color: #c5c6c7;
+}
+
 .custom-dropdown .p-dropdown-label {
   color: #ffffff;
+  white-space: normal;
+  word-wrap: break-word;
 }
 
 .p-dropdown-panel {
@@ -258,6 +304,13 @@ button:hover {
 
 .p-dropdown-item {
   color: #c5c6c7;
+  white-space: normal;
+  word-wrap: break-word;
+}
+
+.p-dropdown-item.p-focus {
+  background-color: #66fcf1;
+  color: #1b1d25;
 }
 
 .p-dropdown-item.p-highlight {

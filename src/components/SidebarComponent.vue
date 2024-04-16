@@ -285,4 +285,134 @@ export default {
 .sidebar.expanded .bottom-link .link-content a:not(:first-child) {
   display: block;
 }
+
+@media (width <= 700px) {
+  .sidebar {
+    width: calc(64px * 0.9);
+  }
+
+  .sidebar.expanded {
+    width: calc(180px * 0.9);
+  }
+
+  .sidebar nav ul li a,
+  .sidebar .bottom-link a {
+    padding: calc(5px * 0.9) calc(15px * 0.9);
+  }
+
+  .sidebar nav ul li a img,
+  .sidebar .bottom-link a img {
+    width: calc(32px * 0.9);
+    height: calc(32px * 0.9);
+  }
+
+  .link-text {
+    padding-left: calc(10px * 0.9);
+    font-size: calc(1em * 0.95);
+  }
+}
+
+@media (width <= 550px) {
+  .sidebar {
+    width: calc(64px * 0.8);
+  }
+
+  .sidebar.expanded {
+    width: calc(180px * 0.8);
+  }
+
+  .sidebar nav ul li a,
+  .sidebar .bottom-link a {
+    padding: calc(5px * 0.8) calc(15px * 0.8);
+  }
+
+  .sidebar nav ul li a img,
+  .sidebar .bottom-link a img {
+    width: calc(32px * 0.8);
+    height: calc(32px * 0.8);
+  }
+
+  .link-text {
+    padding-left: calc(10px * 0.8);
+    font-size: calc(1em * 0.9);
+  }
+}
+
+@media (width <= 500px) {
+  .sidebar {
+    width: calc(64px * 0.7);
+  }
+
+  .sidebar.expanded {
+    width: calc(180px * 0.7);
+  }
+
+  .sidebar nav ul li a,
+  .sidebar .bottom-link a {
+    padding: calc(5px * 0.7) calc(15px * 0.7);
+  }
+
+  .sidebar nav ul li a img,
+  .sidebar .bottom-link a img {
+    width: calc(32px * 0.7);
+    height: calc(32px * 0.7);
+  }
+
+  .link-text {
+    padding-left: calc(10px * 0.7);
+    font-size: calc(1em * 0.85);
+  }
+}
+
+@media (width <= 450px) {
+  .sidebar {
+    width: calc(64px * 0.6);
+  }
+
+  .sidebar.expanded {
+    width: calc(180px * 0.6);
+  }
+
+  .sidebar nav ul li a,
+  .sidebar .bottom-link a {
+    padding: calc(5px * 0.6) calc(15px * 0.6);
+  }
+
+  .sidebar nav ul li a img,
+  .sidebar .bottom-link a img {
+    width: calc(32px * 0.6);
+    height: calc(32px * 0.6);
+  }
+
+  .link-text {
+    padding-left: calc(10px * 0.6);
+    font-size: calc(1em * 0.8);
+  }
+}
+
+@media (width <= 400px) {
+  .sidebar {
+    width: calc(64px * 0.5);
+  }
+
+  .sidebar.expanded {
+    width: calc(180px * 0.5);
+  }
+
+  .sidebar nav ul li a,
+  .sidebar .bottom-link a {
+    padding: calc(5px * 0.5) calc(15px * 0.5);
+  }
+
+  .sidebar nav ul li a img,
+  .sidebar .bottom-link a img {
+    width: calc(32px * 0.5);
+    height: calc(32px * 0.5);
+  }
+
+  .link-text {
+    padding-left: calc(10px * 0.5);
+    font-size: calc(1em * 0.7);
+  }
+}
 </style>

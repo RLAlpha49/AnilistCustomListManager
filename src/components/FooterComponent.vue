@@ -59,4 +59,39 @@ export default {
   justify-content: center;
   gap: 10px;
 }
+
+@media (width <= 700px) {
+  .footer-div {
+    margin-top: calc(40px * 0.9);
+    font-size: calc(0.8em * 0.95);
+  }
+}
+
+@media (width <= 550px) {
+  .footer-div {
+    margin-top: calc(40px * 0.8);
+    font-size: calc(0.8em * 0.9);
+  }
+}
+
+@media (width <= 500px) {
+  .footer-div {
+    margin-top: calc(40px * 0.7);
+    font-size: calc(0.8em * 0.7);
+  }
+}
+
+@media (width <= 450px) {
+  .footer-div {
+    margin-top: calc(40px * 0.6);
+    font-size: calc(0.8em * 0.8);
+  }
+}
+
+@media (width <= 400px) {
+  .footer-div {
+    margin-top: calc(40px * 0.5);
+    font-size: calc(0.8em * 0.75);
+  }
+}
 </style>

@@ -72,4 +72,79 @@ header {
 #arrow.expanded img {
   transform: rotate(180deg);
 }
+
+@media (width <= 700px) {
+  header {
+    height: calc(42px * 0.9);
+  }
+
+  #arrow img {
+    width: calc(32px * 0.9);
+    height: calc(32px * 0.9);
+  }
+
+  header p {
+    font-size: calc(1em * 0.9);
+  }
+}
+
+@media (width <= 550px) {
+  header {
+    height: calc(42px * 0.8);
+  }
+
+  #arrow img {
+    width: calc(32px * 0.8);
+    height: calc(32px * 0.8);
+  }
+
+  header p {
+    font-size: calc(1em * 0.8);
+  }
+}
+
+@media (width <= 500px) {
+  header {
+    height: calc(42px * 0.7);
+  }
+
+  #arrow img {
+    width: calc(32px * 0.7);
+    height: calc(32px * 0.7);
+  }
+
+  header p {
+    font-size: calc(1em * 0.7);
+  }
+}
+
+@media (width <= 450px) {
+  header {
+    height: calc(42px * 0.6);
+  }
+
+  #arrow img {
+    width: calc(32px * 0.6);
+    height: calc(32px * 0.6);
+  }
+
+  header p {
+    font-size: calc(1em * 0.6);
+  }
+}
+
+@media (width <= 400px) {
+  header {
+    height: calc(42px * 0.5);
+  }
+
+  #arrow img {
+    width: calc(32px * 0.5);
+    height: calc(32px * 0.5);
+  }
+
+  header p {
+    font-size: calc(1em * 0.5);
+  }
+}
 </style>
