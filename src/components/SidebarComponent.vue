@@ -3,7 +3,7 @@
     <nav>
       <ul>
         <li class="site-icon-li">
-          <router-link to="/">
+          <a href="https://anicards.alpha49.com" target="_blank">
             <div class="link-content">
               <img
                   class="site-icon"
@@ -12,10 +12,10 @@
               />
               <span class="link-text">List Manager</span>
             </div>
-          </router-link>
+          </a>
         </li>
         <li>
-          <router-link to="/">
+          <a href="https://anicards.alpha49.com" target="_blank">
             <div class="link-content">
               <img
                   src="/images/home.webp"
@@ -23,7 +23,7 @@
               />
               <span class="link-text">Home</span>
             </div>
-          </router-link>
+          </a>
         </li>
         <li>
           <router-link to="/custom-list-manager/custom-list-home">

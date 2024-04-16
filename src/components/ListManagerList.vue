@@ -41,7 +41,7 @@
         <router-link to="/custom-list-manager/anilist-login">
           <button>Back</button>
         </router-link>
-        <router-link to="/custom-list-manager/next-page">
+        <router-link to="/custom-list-manager/work-in-progress">
           <button>Next</button>
         </router-link>
       </div>
