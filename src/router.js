@@ -1,9 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import CustomListManager from './components/ListManagerHome.vue'
-import AniListLogin from './components/AniListLogin.vue'
-import AniListRedirect from './components/AniListRedirect.vue'
-import ListManagerList from '@/components/ListManagerList.vue'
-import WorkInProgress from '@/components/WorkInProgress.vue'
+import CustomListManager from './components/custom-lists/ListManagerHome.vue'
+import AniListLogin from './components/anilist/AniListLogin.vue'
+import AniListRedirect from './components/anilist/AniListRedirect.vue'
+import ListManagerList from './components/custom-lists/ListManagerList.vue'
+import WorkInProgress from './components/base/WorkInProgress.vue'
 
 const router = createRouter({
   history: createWebHistory(),

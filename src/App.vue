@@ -18,9 +18,9 @@
 </template>
 
 <script>
-import SidebarComponent from './components/SidebarComponent.vue'
-import HeaderComponent from './components/HeaderComponent.vue'
-import FooterComponent from './components/FooterComponent.vue'
+import SidebarComponent from './components/base/SidebarComponent.vue'
+import HeaderComponent from './components/base/HeaderComponent.vue'
+import FooterComponent from './components/base/FooterComponent.vue'
 import {SpeedInsights} from '@vercel/speed-insights/vue'
 import {inject} from "@vercel/analytics"
 
