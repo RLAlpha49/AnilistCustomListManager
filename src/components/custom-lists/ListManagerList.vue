@@ -25,7 +25,7 @@
               <Dropdown v-model="element.selectedOption" :options="getOptions(listType)" filter showClear
                         optionLabel="label"
                         option-value="value"
-                        optionGroupLabel="label" optionGroupChildren="items" placeholder="Select a Status or Score"
+                        optionGroupLabel="label" optionGroupChildren="items" placeholder="Select a Condition"
                         class="custom-dropdown">
                 <template #optiongroup="slotProps">
                   <div class="flex align-items-center">
@@ -41,9 +41,19 @@
         <router-link to="/custom-list-manager/anilist-login">
           <button>Back</button>
         </router-link>
-        <router-link to="/custom-list-manager/work-in-progress">
-          <button>Next</button>
-        </router-link>
+        <button @click="confirmAndNavigate">Next</button>
+      </div>
+      <div v-if="showPopup" class="popup">
+        <h2>Conditions:</h2>
+        <ul>
+          <li v-for="list in filteredLists" :key="list.name">
+            {{ list.name }}: {{ list.selectedOption }}
+          </li>
+        </ul>
+        <div class="navigation-buttons">
+          <button @click="showPopup = false">Cancel</button>
+          <button @click="proceedToNextStep">Confirm</button>
+        </div>
       </div>
     </div>
   </div>
@@ -66,12 +76,16 @@ export default {
       token: null,
       userId: null,
       listType: 'ANIME',
-      loading: false
+      loading: false,
+      showPopup: false
     }
   },
   computed: {
     title() {
       return `Your ${this.listType} Custom Lists`;
+    },
+    filteredLists() {
+      return this.lists.filter(list => list.selectedOption);
     }
   },
   mounted() {
@@ -79,6 +93,16 @@ export default {
     this.fetchViewerId();
   },
   methods: {
+    confirmAndNavigate() {
+      this.showConditions();
+    },
+    showConditions() {
+      this.showPopup = true;
+    },
+    proceedToNextStep() {
+      this.showPopup = false;
+      this.$router.push("/custom-list-manager/work-in-progress");
+    },
     sortLists() {
       const categoriesAnime = ["watching", "completed", "paused", "planning", "dropped", "rewatched", "10", "9", "8", "7", "6", "5", "<5", "4", "3", "2", "1"];
       const categoriesManga = ["reading", "completed", "paused", "planning", "dropped", "reread", "10", "9", "8", "7", "6", "5", "<5", "4", "3", "2", "1"];
@@ -90,12 +114,14 @@ export default {
       });
     },
     getOptions(type) {
-      let statusItems = ['Watching', 'Completed', 'Paused', 'Planning', 'Dropped', 'Rewatched'];
+      let statusItems = ['Watching', 'Completed', 'Paused', 'Planning', 'Dropped'];
       const scoreItems = ['10', '9', '8', '7', '6', '5', '4', '3', '2', '1', 'below 5'];
+      let miscItems = [];
 
       const createOptionObjects = items => items.map(item => ({label: item, value: item}));
 
       if (type === 'ANIME') {
+        miscItems = ['Rewatched'];
         return [
           {
             label: 'Status',
@@ -104,18 +130,27 @@ export default {
           {
             label: 'Score',
             items: createOptionObjects(scoreItems.map(score => `Score set to ${score}`))
+          },
+          {
+            label: 'Misc',
+            items: createOptionObjects(miscItems)
           }
         ];
       } else if (type === 'MANGA') {
-        statusItems = ['Reading', 'Completed', 'Paused', 'Planning', 'Dropped', 'Reread'];
+        statusItems = ['Reading', 'Completed', 'Paused', 'Planning', 'Dropped'];
+        miscItems = ['Reread'];
         return [
           {
             label: 'Status',
-            items: createOptionObjects(statusItems.map(status => status === 'Reread' ? 'Reread' : `Status set to ${status}`))
+            items: createOptionObjects(statusItems.map(status => `Status set to ${status}`))
           },
           {
             label: 'Score',
             items: createOptionObjects(scoreItems.map(score => `Score set to ${score}`))
+          },
+          {
+            label: 'Misc',
+            items: createOptionObjects(miscItems)
           }
         ];
       }
@@ -123,7 +158,8 @@ export default {
     getDefaultOption(listName) {
       const statusItems = ['watching', 'completed', 'paused', 'planning', 'dropped'];
       const scoreItems = ['10', '9', '8', '7', '6', '5', '4', '3', '2', '1'];
-      const allItems = [...statusItems, ...scoreItems];
+      const miscItems = ['rewatched', 'reread'];
+      const allItems = [...statusItems, ...scoreItems, ...miscItems];
 
       if (listName.includes('<5')) {
         return `Score set to below 5`;
@@ -135,6 +171,8 @@ export default {
             return `Status set to ${item.charAt(0).toUpperCase() + item.slice(1)}`;
           } else if (scoreItems.includes(item)) {
             return `Score set to ${item}`;
+          } else if (miscItems.includes(item)) {
+            return item.charAt(0).toUpperCase() + item.slice(1);
           }
         }
       }
@@ -361,5 +399,61 @@ button:hover {
   display: flex;
   justify-content: space-between;
   width: 100%;
+}
+
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -60%);
+  background-color: #1b1d25;
+  color: #c5c6c7;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.popup ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.popup li {
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #66fcf1;
+  background-color: #0b0c10;
+  color: #c5c6c7;
+  border-radius: 5px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.popup li:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.popup button {
+  background-color: #66fcf1;
+  color: #1b1d25;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition-duration: 0.4s;
+}
+
+.popup button:hover {
+  background-color: #1b1d25;
+  color: #66fcf1;
+  outline: 2px solid #66fcf1;
 }
 </style>
