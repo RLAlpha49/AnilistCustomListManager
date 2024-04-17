@@ -16,6 +16,8 @@
 </template>
 
 <script>
+import {EventBus} from "@/event-bus.js";
+
 export default {
   name: 'AniListLogin',
   data() {
@@ -45,12 +47,16 @@ export default {
       window.location.href = `https://anilist.co/api/v2/oauth/authorize?client_id=${clientId}&response_type=${responseType}`;
     },
     logout() {
-      // Remove the access token and its expiration time from local storage
-      localStorage.removeItem('anilistToken');
-      localStorage.removeItem('anilistTokenExpiration');
+      try {
+        // Remove the access token and its expiration time from local storage
+        localStorage.removeItem('anilistToken');
+        localStorage.removeItem('anilistTokenExpiration');
 
-      // Update the isLoggedIn state
-      this.isLoggedIn = false;
+        // Update the isLoggedIn state
+        this.isLoggedIn = false;
+      } catch (error) {
+        EventBus.emit('show-error', 'Failed to logout: ' + error.message);
+      }
     }
   }
 }

@@ -4,6 +4,7 @@
     <div class="main">
       <HeaderComponent/>
       <div class="center-container">
+        <ErrorModal :show="showError" :message="errorMessage" @close="clearError"/>
         <router-view v-slot="{ Component }">
           <transition :name="transitionName">
             <component :is="Component" :key="$route.fullPath"/>
@@ -21,6 +22,8 @@
 import SidebarComponent from './components/base/SidebarComponent.vue'
 import HeaderComponent from './components/base/HeaderComponent.vue'
 import FooterComponent from './components/base/FooterComponent.vue'
+import ErrorModal from './components/base/ErrorModal.vue'
+import {EventBus} from "@/event-bus.js";
 import {SpeedInsights} from '@vercel/speed-insights/vue'
 import {inject} from "@vercel/analytics"
 
@@ -30,13 +33,22 @@ export default {
     SidebarComponent,
     HeaderComponent,
     FooterComponent,
+    ErrorModal,
     SpeedInsights,
     inject
   },
   data() {
     return {
+      showError: false,
+      errorMessage: '',
       direction: 'forward'
     }
+  },
+  created() {
+    EventBus.on('show-error', message => {
+      this.errorMessage = message;
+      this.showError = true;
+    });
   },
   computed: {
     transitionName() {
@@ -59,7 +71,12 @@ export default {
       images.forEach((img) => {
         img.setAttribute('loading', 'lazy')
       })
-    }
+    },
+    clearError() {
+      this.errorMessage = '';
+      this.showError = false;
+      EventBus.off('show-error');
+    },
   }
 }
 </script>

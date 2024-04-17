@@ -9,7 +9,6 @@
         <button @click="fetchLists('ANIME')">Anime Lists</button>
         <button @click="fetchLists('MANGA')">Manga Lists</button>
       </div>
-      <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
       <div class="draggable-container">
         <div v-if="loading" class="spinner"></div>
         <draggable
@@ -62,6 +61,7 @@
 <script>
 import draggable from 'vuedraggable';
 import Dropdown from 'primevue/dropdown';
+import {EventBus} from "@/event-bus.js";
 
 export default {
   name: 'ListManagerList',
@@ -77,7 +77,8 @@ export default {
       userId: null,
       listType: 'ANIME',
       loading: false,
-      showPopup: false
+      showPopup: false,
+      errorMessage: null
     }
   },
   computed: {
@@ -90,10 +91,21 @@ export default {
   },
   mounted() {
     this.token = localStorage.getItem('anilistToken');
+    if (!this.token) {
+      EventBus.emit('show-error', 'Anilist token not found in local storage');
+      return;
+    }
     this.fetchViewerId();
   },
   methods: {
+    showError(message) {
+      EventBus.emit('show-error', message);
+    },
     confirmAndNavigate() {
+      if (typeof this.showConditions !== 'function') {
+        EventBus.emit('show-error', 'showConditions is not a function');
+        return;
+      }
       this.showConditions();
     },
     showConditions() {
@@ -193,7 +205,7 @@ export default {
         this.userId = response.data.Viewer.id;
         await this.fetchLists(this.listType);
       } catch (error) {
-        this.errorMessage = 'Error: ' + error.message;
+        EventBus.emit('show-error', error.message);
       }
     },
     async fetchLists(type) {
@@ -216,11 +228,11 @@ export default {
           ...list,
           selectedOption: this.getDefaultOption(list.name)
         }));
-        console.log(this.lists)
+        // console.log(this.lists)
         this.sortLists();
         this.loading = false;
       } catch (error) {
-        this.errorMessage = 'Error: ' + error.message;
+        EventBus.emit('show-error', error.message);
       }
     },
     async fetchAniList(query) {
@@ -239,15 +251,16 @@ export default {
 
       try {
         const response = await fetch(url, options);
-
-        // Check if the request was rate limited
-        if (response.status === 429) {
-          this.errorMessage = 'Rate limit exceeded. Please try again later.';
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
         }
-
-        return await response.json();
+        const data = await response.json();
+        if (data.errors) {
+          throw new Error(data.errors.map(error => error.message).join(', '));
+        }
+        return data;
       } catch (error) {
-        this.errorMessage = 'Error: ' + error.message;
+        EventBus.emit('show-error', error.message);
       }
     }
   }
