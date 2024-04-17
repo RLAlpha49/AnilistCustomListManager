@@ -4,3 +4,4 @@ exclude:
   - name: All
     paths:
       - src/assets/scripts/loadImages.js
+  - name: ExceptionCaughtLocallyJS
