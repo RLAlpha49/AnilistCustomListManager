@@ -9,12 +9,6 @@ import {EventBus} from "@/event-bus";
 
 export default {
   name: 'ListManagerUpdate',
-  props: {
-    lists: {
-      type: Array,
-      required: true
-    }
-  },
   data() {
     return {
       mediaList: [],
@@ -24,12 +18,18 @@ export default {
       customLists: []
     }
   },
+  computed: {
+    lists() {
+      return this.$store.state.lists;
+    }
+  },
   mounted() {
     this.token = localStorage.getItem('anilistToken');
     if (!this.token) {
       EventBus.emit('show-error', 'Anilist token not found in local storage');
       return;
     }
+    console.log('Lists:', this.lists)
     this.fetchMediaList();
   },
   methods: {
@@ -41,15 +41,9 @@ export default {
               entries {
                 score(format: POINT_10)
                 repeat
-                hiddenFromStatusLists
-                customLists
+                status
                 media {
                   id
-                  status
-                  title {
-                    romaji
-                    english
-                  }
                 }
               }
             }
@@ -74,6 +68,44 @@ export default {
         const duplicate = seen.has(entry.media.id);
         seen.add(entry.media.id);
         return !duplicate;
+      });
+
+      // Create an object to store the entries for each list
+      const listsData = {};
+      this.lists.forEach(list => {
+        listsData[list.name] = [];
+      });
+
+      entries = entries.map(entry => {
+        // Create a new property 'lists' for each entry
+        entry.lists = [];
+
+        // Check the status lists
+        this.lists.forEach(list => {
+          if (list.selectedOption.includes('Status set to')) {
+            const status = list.selectedOption.split(' ').slice(-1)[0].toUpperCase();
+            if (entry.status === status) {
+              entry.lists.push(list.name);
+            }
+          }
+
+          // Check the score lists
+          if (list.selectedOption.includes('Score set to')) {
+            const scoreCondition = list.selectedOption.split(' ').slice(-1)[0];
+            if (scoreCondition === 'below 5' && entry.score < 5) {
+              entry.lists.push(list.name);
+            } else if (entry.score === parseInt(scoreCondition)) {
+              entry.lists.push(list.name);
+            }
+          }
+
+          // Check the reread list
+          if (list.selectedOption === 'Reread' && entry.repeat > 0) {
+            entry.lists.push(list.name);
+          }
+        });
+
+        return entry;
       });
 
       this.mediaList = entries;
