@@ -171,7 +171,7 @@ export default {
       }
     },
     getDefaultOption(listName) {
-      const statusItems = ['watching', 'completed', 'paused', 'planning', 'dropped'];
+      const statusItems = ['watching', 'reading', 'completed', 'paused', 'planning', 'dropped'];
       const scoreItems = ['10', '9', '8', '7', '6', '5', '4', '3', '2', '1'];
       const miscItems = ['rewatched', 'reread'];
       const allItems = [...statusItems, ...scoreItems, ...miscItems];
