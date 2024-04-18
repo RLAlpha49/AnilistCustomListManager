@@ -4,7 +4,8 @@ export default createStore({
   state: {
     type: null,
     userId: null,
-    lists: []
+    lists: [],
+    hideDefaultStatusLists: false
   },
   mutations: {
     setLists (state, lists) {
@@ -15,7 +16,16 @@ export default createStore({
     },
     setUserId (state, userId) {
       state.userId = userId
+    },
+    setHideDefaultStatusLists (state, value) {
+      state.hideDefaultStatusLists = value
     }
+  },
+  getters: {
+    type: state => state.type,
+    userId: state => state.userId,
+    lists: state => state.lists,
+    hideDefaultStatusLists: state => state.hideDefaultStatusLists
   },
   actions: {},
   modules: {}

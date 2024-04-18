@@ -9,6 +9,14 @@
         <button @click="fetchLists('ANIME')">Anime Lists</button>
         <button @click="fetchLists('MANGA')">Manga Lists</button>
       </div>
+      <div style="text-align: center;">
+        <input type="checkbox" id="hideDefaultStatusLists" v-model="hideDefaultStatusLists">
+        <label for="hideDefaultStatusLists">Hide Default Status Lists</label>
+        <p style="color: #c5c6c7; font-size: 0.8em;">
+          This option is for hiding AniList's default status lists (Watching, Completed, Planning, etc).
+          It does not affect the custom lists.
+        </p>
+      </div>
       <div class="draggable-container">
         <div v-if="loading" class="spinner"></div>
         <draggable
@@ -44,6 +52,10 @@
       </div>
       <div v-if="showPopup" class="popup">
         <h2>Conditions:</h2>
+        <div>
+          <input type="checkbox" id="hideDefaultStatusLists" v-model="hideDefaultStatusLists">
+          <label for="hideDefaultStatusLists">Hide Default Status Lists</label>
+        </div>
         <ul>
           <li v-for="list in filteredLists" :key="list.name">
             {{ list.name }}: {{ list.selectedOption }}
@@ -78,7 +90,8 @@ export default {
       listType: 'ANIME',
       loading: false,
       showPopup: false,
-      errorMessage: null
+      errorMessage: null,
+      hideDefaultStatusLists: true,
     }
   },
   computed: {
@@ -314,6 +327,33 @@ button:hover {
   background-color: #1b1d25;
   color: #66fcf1;
   outline: 2px solid #66fcf1;
+}
+
+input[type="checkbox"] {
+  appearance: none;
+  background-color: #1b1d25;
+  border: 2px solid #66fcf1;
+  border-radius: 4px;
+  display: inline-block;
+  position: relative;
+  height: 20px;
+  width: 20px;
+  transition-duration: 0.3s;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+input[type="checkbox"]:checked {
+  background-color: #66fcf1;
+}
+
+input[type="checkbox"]:checked:after {
+  content: '\2713';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #1b1d25;
 }
 
 .draggable-container {

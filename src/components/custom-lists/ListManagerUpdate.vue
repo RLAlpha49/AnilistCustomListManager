@@ -5,22 +5,19 @@
 
 <script>
 import {EventBus} from "@/event-bus";
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'ListManagerUpdate',
   data() {
     return {
       mediaList: [],
-      type: this.$store.state.type,
-      userId: this.$store.state.userId,
       defaultLists: [],
       customLists: []
     }
   },
   computed: {
-    lists() {
-      return this.$store.state.lists;
-    }
+    ...mapGetters(['type', 'userId', 'lists', 'hideDefaultStatusLists'])
   },
   mounted() {
     this.token = localStorage.getItem('anilistToken');
@@ -28,7 +25,6 @@ export default {
       EventBus.emit('show-error', 'Anilist token not found in local storage');
       return;
     }
-    console.log('Lists:', this.lists)
     this.fetchMediaList();
   },
   methods: {
@@ -38,11 +34,15 @@ export default {
           MediaListCollection(userId: $userId, type: $type) {
             lists {
               entries {
+                hiddenFromStatusLists
                 score(format: POINT_10)
                 repeat
                 status
                 media {
                   id
+                  coverImage {
+                    large
+                  }
                 }
               }
             }
@@ -128,17 +128,19 @@ export default {
         })
       };
 
-      const response = await fetch(url, options);
-      console.log(response)
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+      try {
+        const response = await fetch(url, options);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        if (data.errors) {
+          throw new Error(data.errors.map(error => error.message).join(', '));
+        }
+        return data;
+      } catch (error) {
+        EventBus.emit('show-error', error.message);
       }
-      const data = await response.json();
-      console.log(data)
-      if (data.errors) {
-        throw new Error(data.errors.map(error => error.message).join(', '));
-      }
-      return data;
     },
     updateAniList() {
       // Here you can add the logic to update the user's AniList according to the specific conditions set
