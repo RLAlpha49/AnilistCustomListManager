@@ -3,6 +3,7 @@ import CustomListManager from './components/custom-lists/ListManagerHome.vue'
 import AniListLogin from './components/anilist/AniListLogin.vue'
 import AniListRedirect from './components/anilist/AniListRedirect.vue'
 import ListManagerList from './components/custom-lists/ListManagerList.vue'
+import ListManagerUpdate from './components/custom-lists/ListManagerUpdate.vue'
 import WorkInProgress from './components/base/WorkInProgress.vue'
 
 const router = createRouter({
@@ -27,6 +28,11 @@ const router = createRouter({
       path: '/custom-list-manager/list-manager',
       name: 'ListManager',
       component: ListManagerList
+    },
+    {
+      path: '/custom-list-manager/update',
+      name: 'ListManagerUpdate',
+      component: ListManagerUpdate
     },
     {
       path: '/custom-list-manager/work-in-progress',

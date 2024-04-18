@@ -113,7 +113,10 @@ export default {
     },
     proceedToNextStep() {
       this.showPopup = false;
-      this.$router.push("/custom-list-manager/work-in-progress");
+      this.$store.commit('setLists', this.filteredLists);
+      this.$store.commit('setType', this.listType);
+      this.$store.commit('setUserId', this.userId);
+      this.$router.push("/custom-list-manager/update");
     },
     sortLists() {
       const categoriesAnime = ["watching", "completed", "paused", "planning", "dropped", "rewatched", "10", "9", "8", "7", "6", "5", "<5", "4", "3", "2", "1"];

@@ -5,5 +5,6 @@ import PrimeVue from 'primevue/config'
 import 'primevue/resources/themes/saga-blue/theme.css'
 import 'primevue/resources/primevue.min.css'
 import 'primeicons/primeicons.css'
+import store from './store'
 
-createApp(App).use(router).use(PrimeVue).mount('#app')
+createApp(App).use(router).use(PrimeVue).use(store).mount('#app')
