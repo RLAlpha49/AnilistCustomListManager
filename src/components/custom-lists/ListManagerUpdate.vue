@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- Use the lists array here -->
   </div>
 </template>
 
@@ -91,11 +90,13 @@ export default {
 
           // Check the score lists
           if (list.selectedOption.includes('Score set to')) {
-            const scoreCondition = list.selectedOption.split(' ').slice(-1)[0];
-            if (scoreCondition === 'below 5' && entry.score < 5) {
+            if (list.selectedOption.includes('below 5') && entry.score < 5) {
               entry.lists.push(list.name);
-            } else if (entry.score === parseInt(scoreCondition)) {
-              entry.lists.push(list.name);
+            } else {
+              const scoreCondition = parseInt(list.selectedOption.split(' ').slice(-1)[0]);
+              if (entry.score == scoreCondition) {
+                entry.lists.push(list.name);
+              }
             }
           }
 
