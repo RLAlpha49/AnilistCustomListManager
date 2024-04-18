@@ -7,13 +7,13 @@ export default createStore({
     lists: []
   },
   mutations: {
-    setLists(state, lists) {
+    setLists (state, lists) {
       state.lists = lists
     },
-    setType(state, type) {
+    setType (state, type) {
       state.type = type
     },
-    setUserId(state, userId) {
+    setUserId (state, userId) {
       state.userId = userId
     }
   },
