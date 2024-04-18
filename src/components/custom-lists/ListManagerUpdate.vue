@@ -94,7 +94,7 @@ export default {
               entry.lists.push(list.name);
             } else {
               const scoreCondition = parseInt(list.selectedOption.split(' ').slice(-1)[0]);
-              if (entry.score == scoreCondition) {
+              if (entry.score === scoreCondition) {
                 entry.lists.push(list.name);
               }
             }
