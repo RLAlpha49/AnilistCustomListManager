@@ -1,11 +1,29 @@
 <template>
-  <div>
+  <div class="media-list">
+    <div class="media-card" v-for="entry in mediaList" :key="entry.media.id">
+      <img :src="entry.media.coverImage.large" alt="Cover Image">
+      <div class="media-titles">
+        <h2 class="romaji-title">{{ entry.media.title.romaji }}</h2>
+        <h3 class="english-title">{{ entry.media.title.english }}</h3>
+      </div>
+      <div class="media-info">
+        <p>Status: {{ entry.status }}</p>
+        <p>Score: {{ entry.score }}</p>
+        <p>Repeat: {{ entry.repeat }}</p>
+      </div>
+      <div class="custom-lists">
+        <h3>Lists:</h3>
+        <ul>
+          <li v-for="(list, index) in entry.lists" :key="index">{{ list }}</li>
+        </ul>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import {EventBus} from "@/event-bus";
-import { mapGetters } from 'vuex'
+import {mapGetters} from 'vuex'
 
 export default {
   name: 'ListManagerUpdate',
@@ -40,6 +58,10 @@ export default {
                 status
                 media {
                   id
+                  title {
+                    romaji
+                    english
+                  }
                   coverImage {
                     large
                   }
@@ -82,7 +104,10 @@ export default {
         // Check the status lists
         this.lists.forEach(list => {
           if (list.selectedOption.includes('Status set to')) {
-            const status = list.selectedOption.split(' ').slice(-1)[0].toUpperCase();
+            let status = list.selectedOption.split(' ').slice(-1)[0].toUpperCase();
+            if (status === 'WATCHING' || status === 'READING') {
+              status = 'CURRENT';
+            }
             if (entry.status === status) {
               entry.lists.push(list.name);
             }
@@ -90,7 +115,7 @@ export default {
 
           // Check the score lists
           if (list.selectedOption.includes('Score set to')) {
-            if (list.selectedOption.includes('below 5') && entry.score < 5) {
+            if (list.selectedOption.includes('below 5') && entry.score > 0 && entry.score < 5) {
               entry.lists.push(list.name);
             } else {
               const scoreCondition = parseInt(list.selectedOption.split(' ').slice(-1)[0]);
@@ -108,6 +133,9 @@ export default {
 
         return entry;
       });
+
+      // Sort the entries by the romaji title
+      entries.sort((a, b) => a.media.title.romaji.localeCompare(b.media.title.romaji));
 
       this.mediaList = entries;
 
@@ -149,3 +177,51 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.media-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.media-card {
+  display: flex;
+  align-items: center;
+  width: 90%;
+  border: 1px solid #ccc;
+  margin: 10px;
+  padding: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.media-card img {
+  width: 10%;
+  height: auto;
+  margin-right: 20px;
+  object-fit: cover;
+}
+
+.media-card div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.media-card h2, .media-card h3 {
+  margin: 0;
+  font-size: 16px;
+  text-align: center;
+}
+
+.media-card p {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+.media-card ul {
+  padding: 0;
+  list-style-type: none;
+}
+</style>
