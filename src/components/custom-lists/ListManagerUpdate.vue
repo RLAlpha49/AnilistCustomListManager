@@ -1,23 +1,28 @@
 <template>
   <div class="media-list">
-    <div class="media-card" v-for="entry in mediaList" :key="entry.media.id">
-      <img :src="entry.media.coverImage.large" alt="Cover Image">
-      <div class="media-titles">
-        <h2 class="romaji-title">{{ entry.media.title.romaji }}</h2>
-        <h3 class="english-title">{{ entry.media.title.english }}</h3>
+    <a :href="getMediaUrl(entry)" target="_blank" v-for="entry in mediaList" :key="entry.media.id" class="media-link">
+      <div class="media-card">
+        <img :src="entry.media.coverImage.large" alt="Cover Image">
+        <div class="media-titles">
+          <h3>Romaji Title:</h3>
+          <h2 class="romaji-title">{{ entry.media.title.romaji }}</h2>
+          <h3>English Title:</h3>
+          <h3 class="english-title">{{ entry.media.title.english }}</h3>
+        </div>
+        <div class="media-info">
+          <h3>Media Info:</h3>
+          <p>Status: {{ entry.status }}</p>
+          <p>Score: {{ entry.score }}</p>
+          <p>Repeat: {{ entry.repeat }}</p>
+        </div>
+        <div class="custom-lists">
+          <h3>Lists:</h3>
+          <ul>
+            <li v-for="(list, index) in entry.lists" :key="index">{{ list }}</li>
+          </ul>
+        </div>
       </div>
-      <div class="media-info">
-        <p>Status: {{ entry.status }}</p>
-        <p>Score: {{ entry.score }}</p>
-        <p>Repeat: {{ entry.repeat }}</p>
-      </div>
-      <div class="custom-lists">
-        <h3>Lists:</h3>
-        <ul>
-          <li v-for="(list, index) in entry.lists" :key="index">{{ list }}</li>
-        </ul>
-      </div>
-    </div>
+    </a>
   </div>
 </template>
 
@@ -46,6 +51,11 @@ export default {
     this.fetchMediaList();
   },
   methods: {
+    getMediaUrl(entry) {
+      const base = 'https://anilist.co/';
+      const type = this.type === 'ANIME' ? 'anime' : 'manga';
+      return `${base}${type}/${entry.media.id}`;
+    },
     async fetchMediaList() {
       const mediaListQuery = `
         query ($userId: Int, $type: MediaType) {
@@ -184,20 +194,46 @@ export default {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-around;
+  padding: 20px;
+  margin: 20px;
+  background-color: #1b1d25;
+  color: #c5c6c7;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.media-link {
+  all: unset;
+  text-decoration: none;
+  width: 90%;
+}
+
+.media-link:hover {
+  cursor: pointer;
 }
 
 .media-card {
   display: flex;
+  flex-direction: row;
   align-items: center;
-  width: 90%;
-  border: 1px solid #ccc;
+  width: 100%;
+  border: 1px solid #66fcf1;
+  background-color: #0b0c10;
   margin: 10px;
   padding: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 10px;
+  transform: translateX(-10px);
+}
+
+.media-card:hover {
+  transform: scale(1.05) translateX(-10px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
 .media-card img {
-  width: 10%;
+  width: 15%;
   height: auto;
   margin-right: 20px;
   object-fit: cover;
@@ -206,22 +242,78 @@ export default {
 .media-card div {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  align-items: center;
+}
+
+.media-titles {
+  width: 50%;
+  align-self: flex-start;
+}
+
+.media-titles h3, .media-titles h2 {
+  margin-top: 0px;
+  margin-bottom: 10px;
+}
+
+.romaji-title {
+  color: #66fcf1;
+  font-weight: bold;
+  word-wrap: break-word;
+  word-break: break-word;
+  margin-bottom: 10px;
+}
+
+.english-title {
+  color: #c5c6c7;
+  font-style: italic;
+  word-wrap: break-word;
+  word-break: break-word;
 }
 
 .media-card h2, .media-card h3 {
-  margin: 0;
+  margin-top: 0px;
   font-size: 16px;
   text-align: center;
 }
 
+.media-info {
+  margin-left: 10px;
+  align-self: flex-start;
+}
+
 .media-card p {
+  text-align: center;
   margin: 5px 0;
   font-size: 14px;
+  color: #c5c6c7;
+}
+
+.custom-lists {
+  margin-left: 10px;
+  align-self: flex-start;
 }
 
 .media-card ul {
   padding: 0;
   list-style-type: none;
+  color: #c5c6c7;
+}
+
+@media (max-width: 800px) {
+  .media-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .media-card img {
+    width: 25%;
+    margin: auto;
+    margin-bottom: 10px;
+  }
+
+  .media-titles, .media-info, .custom-lists {
+    width: 100%;
+    margin-left: 0;
+  }
 }
 </style>

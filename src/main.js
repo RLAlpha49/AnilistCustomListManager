@@ -7,4 +7,10 @@ import 'primevue/resources/primevue.min.css'
 import 'primeicons/primeicons.css'
 import store from './store'
 
-createApp(App).use(router).use(PrimeVue).use(store).mount('#app')
+const app = createApp(App)
+
+app.use(router)
+app.use(PrimeVue)
+app.use(store)
+
+app.mount('#app')
