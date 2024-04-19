@@ -89,33 +89,28 @@ export default {
 
 /* Show scrollbar for IE, Edge and Firefox */
 html {
-  scrollbar-width: auto; /* For Firefox */
-  -ms-overflow-style: auto; /* For Internet Explorer and Edge */
+  scrollbar-width: auto;
+  -ms-overflow-style: auto;
 }
 
 body, html {
   height: 100%;
   padding: 0;
-  overflow-x: hidden; /* Hide horizontal scrollbar */
-  overflow-y: auto; /* Show vertical scrollbar when needed */
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
-/* Style the scrollbar */
 ::-webkit-scrollbar {
-  width: 10px; /* Width of the scrollbar */
+  width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #1b1d25; /* Color of the track */
+  background: #1b1d25;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #66fcf1; /* Color of the scroll thumb */
-  border-radius: 5px; /* Radius of the scroll thumb */
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #1b1d25; /* Color of the scroll thumb when hovered */
+  background: #66fcf1;
+  border-radius: 5px;
 }
 
 body {

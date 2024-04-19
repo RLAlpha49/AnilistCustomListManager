@@ -16,9 +16,11 @@
           <p>Repeat: {{ entry.repeat }}</p>
         </div>
         <div class="custom-lists">
-          <h3>Lists:</h3>
+          <h3>Lists (To Update):</h3>
           <ul>
-            <li v-for="(list, index) in entry.lists" :key="index">{{ list }}</li>
+            <li v-for="(value, list) in entry.lists" :key="list">
+              {{ list }}: {{ value ? 'True' : 'False' }}
+            </li>
           </ul>
         </div>
       </div>
@@ -110,7 +112,11 @@ export default {
 
       entries = entries.map(entry => {
         // Create a new property 'lists' for each entry
-        entry.lists = [];
+        entry.lists = {};
+
+        // Track the current status and score lists
+        let currentStatusList = '';
+        let currentScoreList = '';
 
         // Check the status lists
         this.lists.forEach(list => {
@@ -119,34 +125,49 @@ export default {
             if (status === 'WATCHING' || status === 'READING') {
               status = 'CURRENT';
             }
-            if (entry.status === status && !entry.customLists[list.name]) {
-              entry.lists.push(list.name);
+            if (entry.status === status && entry.customLists[list.name] !== true) {
+              currentStatusList = list.name;
+              entry.lists[list.name] = true;
+            } else if (entry.status !== status && entry.customLists[list.name] !== false) {
+              entry.lists[list.name] = false;
             }
           }
 
           // Check the score lists
           if (list.selectedOption.includes('Score set to')) {
             if (list.selectedOption.includes('below 5') && entry.score > 0 && entry.score < 5 && !entry.customLists[list.name]) {
-              entry.lists.push(list.name);
-            } else {
+              entry.lists[list.name] = true;
+            } else if (!list.selectedOption.includes('below 5')) {
               const scoreCondition = parseInt(list.selectedOption.split(' ').slice(-1)[0]);
-              if (!list.selectedOption.includes('below 5') && entry.score === scoreCondition && !entry.customLists[list.name]) {
-                entry.lists.push(list.name);
+              if (entry.score === scoreCondition && entry.customLists[list.name] !== true) {
+                entry.lists[list.name] = true;
+              } else if (entry.score !== scoreCondition && entry.customLists[list.name] !== false) {
+                entry.lists[list.name] = false;
               }
             }
           }
 
-          // Check the reread list
-          if (list.selectedOption === 'Reread' && entry.repeat > 0 && !entry.customLists[list.name]) {
-            entry.lists.push(list.name);
+          // Check the reread/rewatched list
+          if ((list.selectedOption === 'Reread' || list.selectedOption === 'Rewatched') && entry.repeat > 0 && !entry.customLists[list.name]) {
+            entry.lists[list.name] = true;
+          } else if ((list.selectedOption === 'Reread' || list.selectedOption === 'Rewatched') && entry.repeat <= 0 && entry.customLists[list.name]) {
+            entry.lists[list.name] = false;
           }
         });
+
+        // If the current status or score list is not in the custom lists, set it to true
+        if (currentStatusList && !entry.customLists[currentStatusList]) {
+          entry.lists[currentStatusList] = true;
+        }
+        if (currentScoreList && !entry.customLists[currentScoreList]) {
+          entry.lists[currentScoreList] = true;
+        }
 
         return entry;
       });
 
       // Filter out entries with empty lists
-      entries = entries.filter(entry => entry.lists.length > 0);
+      entries = entries.filter(entry => Object.values(entry.lists).some(value => value));
 
       // Sort the entries by the romaji title
       entries.sort((a, b) => a.media.title.romaji.localeCompare(b.media.title.romaji));
@@ -185,8 +206,7 @@ export default {
       }
     },
     updateAniList() {
-      // Here you can add the logic to update the user's AniList according to the specific conditions set
-      // You'll probably need to iterate over the lists array and make API calls to update the AniList
+      // TODO
     }
   }
 }
@@ -250,7 +270,7 @@ export default {
 }
 
 .media-titles {
-  width: 50%;
+  width: 45%;
   align-self: flex-start;
 }
 
@@ -293,6 +313,7 @@ export default {
 }
 
 .custom-lists {
+  width: 20%;
   margin-left: 10px;
   align-self: flex-start;
 }
