@@ -66,6 +66,7 @@ export default {
                 score(format: POINT_10)
                 repeat
                 status
+                customLists
                 media {
                   id
                   title {
@@ -118,31 +119,34 @@ export default {
             if (status === 'WATCHING' || status === 'READING') {
               status = 'CURRENT';
             }
-            if (entry.status === status) {
+            if (entry.status === status && !entry.customLists[list.name]) {
               entry.lists.push(list.name);
             }
           }
 
           // Check the score lists
           if (list.selectedOption.includes('Score set to')) {
-            if (list.selectedOption.includes('below 5') && entry.score > 0 && entry.score < 5) {
+            if (list.selectedOption.includes('below 5') && entry.score > 0 && entry.score < 5 && !entry.customLists[list.name]) {
               entry.lists.push(list.name);
             } else {
               const scoreCondition = parseInt(list.selectedOption.split(' ').slice(-1)[0]);
-              if (entry.score === scoreCondition) {
+              if (!list.selectedOption.includes('below 5') && entry.score === scoreCondition && !entry.customLists[list.name]) {
                 entry.lists.push(list.name);
               }
             }
           }
 
           // Check the reread list
-          if (list.selectedOption === 'Reread' && entry.repeat > 0) {
+          if (list.selectedOption === 'Reread' && entry.repeat > 0 && !entry.customLists[list.name]) {
             entry.lists.push(list.name);
           }
         });
 
         return entry;
       });
+
+      // Filter out entries with empty lists
+      entries = entries.filter(entry => entry.lists.length > 0);
 
       // Sort the entries by the romaji title
       entries.sort((a, b) => a.media.title.romaji.localeCompare(b.media.title.romaji));
