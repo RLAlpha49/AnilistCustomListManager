@@ -202,7 +202,11 @@ export default {
         }
         return data;
       } catch (error) {
-        EventBus.emit('show-error', error.message);
+        if (error.name === 'TypeError') {
+          EventBus.emit('show-error', 'Network error. Please check your internet connection or try again later.');
+        } else {
+          EventBus.emit('show-error', error.message);
+        }
       }
     },
     updateAniList() {
