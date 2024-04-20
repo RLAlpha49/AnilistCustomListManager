@@ -133,7 +133,7 @@ export default {
     },
     sortLists() {
       console.log(this.lists)
-      const categoriesAnime = ["watching", "completed", "paused", "planning", "dropped", "rewatched", "10", "9", "8", "7", "6", "5", "<5", "4", "3", "2", "1", "tv", "tv_short", "movie", "special", "ova", "ona", "music"];
+      const categoriesAnime = ["watching", "completed", "paused", "planning", "dropped", "rewatched", "10", "9", "8", "7", "6", "5", "<5", "4", "3", "2", "1", "tv", "tv short", "movie", "special", "ova", "ona", "music"];
       const categoriesManga = ["reading", "completed", "paused", "planning", "dropped", "reread", "10", "9", "8", "7", "6", "5", "<5", "4", "3", "2", "1", "manga (japan)", "manga (south korean)", "manga (chinese)", "manga", "manwha", "manhua", "one shot", "light novel", "web novel"];
       const categories = this.listType === 'ANIME' ? categoriesAnime : categoriesManga;
       this.lists.sort((a, b) => {
