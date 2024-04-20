@@ -145,66 +145,73 @@ export default {
       let statusItems = ['Watching', 'Completed', 'Paused', 'Planning', 'Dropped'];
       const scoreItems = ['10', '9', '8', '7', '6', '5', '4', '3', '2', '1', 'below 5'];
       let miscItems = [];
+      let formatItems = [];
 
       const createOptionObjects = items => items.map(item => ({label: item, value: item}));
 
       if (type === 'ANIME') {
         miscItems = ['Rewatched'];
-        return [
-          {
-            label: 'Status',
-            items: createOptionObjects(statusItems.map(status => `Status set to ${status}`))
-          },
-          {
-            label: 'Score',
-            items: createOptionObjects(scoreItems.map(score => `Score set to ${score}`))
-          },
-          {
-            label: 'Misc',
-            items: createOptionObjects(miscItems)
-          }
-        ];
+        formatItems = ['TV', 'TV_Short', 'Movie', 'Special', 'OVA', 'ONA', 'Music'];
       } else if (type === 'MANGA') {
         statusItems = ['Reading', 'Completed', 'Paused', 'Planning', 'Dropped'];
         miscItems = ['Reread'];
-        return [
-          {
-            label: 'Status',
-            items: createOptionObjects(statusItems.map(status => `Status set to ${status}`))
-          },
-          {
-            label: 'Score',
-            items: createOptionObjects(scoreItems.map(score => `Score set to ${score}`))
-          },
-          {
-            label: 'Misc',
-            items: createOptionObjects(miscItems)
-          }
-        ];
+        formatItems = ['Manga (Japan)', 'Manga (South Korean)', 'Manga (Chinese)', 'One shot', 'Light Novel'];
       }
+
+      return [
+        {
+          label: 'Status',
+          items: createOptionObjects(statusItems.map(status => `Status set to ${status}`))
+        },
+        {
+          label: 'Score',
+          items: createOptionObjects(scoreItems.map(score => `Score set to ${score}`))
+        },
+        {
+          label: 'Format',
+          items: createOptionObjects(formatItems.map(format => `Format set to ${format}`))
+        },
+        {
+          label: 'Misc',
+          items: createOptionObjects(miscItems)
+        }
+      ];
     },
     getDefaultOption(listName) {
       const statusItems = ['watching', 'reading', 'completed', 'paused', 'planning', 'dropped'];
       const scoreItems = ['10', '9', '8', '7', '6', '5', '4', '3', '2', '1'];
       const miscItems = ['rewatched', 'reread'];
-      const allItems = [...statusItems, ...scoreItems, ...miscItems];
+      const formatItemsAnime = ['TV', 'TV_Short', 'Movie', 'Special', 'OVA', 'ONA', 'Music'];
+      const formatItemsManga = ['Manga (Japan)', 'Manga (South Korean)', 'Manga (Chinese)', 'manga', 'manwha', 'manhua', 'One shot', 'Light Novel'];
+      const allItems = [...statusItems, ...scoreItems, ...miscItems, ...formatItemsAnime, ...formatItemsManga];
 
       if (listName.includes('<5')) {
         return `Score set to below 5`;
       }
 
       for (const item of allItems) {
-        if (listName.toLowerCase().includes(item)) {
+        console.log(`Checking if "${listName.toLowerCase()}" includes "${item.toLowerCase()}"`);
+        if (listName.toLowerCase().includes(item.toLowerCase())) {
           if (statusItems.includes(item)) {
             return `Status set to ${item.charAt(0).toUpperCase() + item.slice(1)}`;
           } else if (scoreItems.includes(item)) {
             return `Score set to ${item}`;
           } else if (miscItems.includes(item)) {
             return item.charAt(0).toUpperCase() + item.slice(1);
+          } else if (formatItemsAnime.includes(item) || formatItemsManga.includes(item)) {
+            if (['manga', 'manwha', 'manhua'].includes(item.toLowerCase())) {
+              const countryMap = {
+                'manga': 'Manga (Japan)',
+                'manwha': 'Manga (South Korean)',
+                'manhua': 'Manga (Chinese)'
+              };
+              return `Format set to ${countryMap[item.toLowerCase()]}`;
+            } else {
+              return `Format set to ${item}`;
+            }
           }
         }
       }
-
       return null;
     },
     async fetchViewerId() {

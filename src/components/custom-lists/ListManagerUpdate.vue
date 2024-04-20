@@ -58,6 +58,21 @@ export default {
       const type = this.type === 'ANIME' ? 'anime' : 'manga';
       return `${base}${type}/${entry.media.id}`;
     },
+    capitalizeWords(str) {
+      let words = str.split(/[\s()]+/);
+      words = words.map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase());
+
+      // Find the index of the word 'Manga'
+      const index = words.findIndex(word => word === 'Manga');
+
+      // If found, join the 'Manga' and all following words with parentheses
+      if (index >= 0 && index < words.length - 1) {
+        words[index] = `${words[index]} (${words.slice(index + 1).join(' ').trim()})`;
+        words = words.slice(0, index + 1);
+      }
+
+      return words.join(' ');
+    },
     async fetchMediaList() {
       const mediaListQuery = `
         query ($userId: Int, $type: MediaType) {
@@ -71,6 +86,8 @@ export default {
                 customLists
                 media {
                   id
+                  format
+                  countryOfOrigin
                   title {
                     romaji
                     english
@@ -114,9 +131,10 @@ export default {
         // Create a new property 'lists' for each entry
         entry.lists = {};
 
-        // Track the current status and score lists
+        // Track the current status, score, and format lists
         let currentStatusList = '';
         let currentScoreList = '';
+        let currentFormatList = '';
 
         // Check the status lists
         this.lists.forEach(list => {
@@ -147,6 +165,39 @@ export default {
             }
           }
 
+          // Check the format lists
+          if (list.selectedOption.includes('Format set to')) {
+            let format = list.selectedOption.replace('Format set to ', '').toUpperCase();
+            if (this.type === 'MANGA' && ['MANGA', 'MANWHA', 'MANHUA', 'MANGA (JAPAN)', 'MANGA (SOUTH KOREAN)', 'MANGA (CHINESE)'].includes(format)) {
+              const countryMap = {
+                'MANGA': 'Manga (Japan)',
+                'MANWHA': 'Manga (South Korean)',
+                'MANHUA': 'Manga (Chinese)'
+              };
+              const country = entry.media.countryOfOrigin;
+              if (['MANGA', 'MANWHA', 'MANHUA'].includes(format)) {
+                format = countryMap[format];
+              } else {
+                format = this.capitalizeWords(format);
+              }
+              if ((country === 'JP' && format === 'Manga (Japan)') ||
+                  (country === 'KR' && format === 'Manga (South Korean)') ||
+                  (country === 'CN' && format === 'Manga (Chinese)')) {
+                if (entry.customLists[list.name] === false) {
+                  currentFormatList = list.name;
+                  entry.lists[list.name] = true;
+                }
+              } else if (entry.customLists[list.name] !== false) {
+                entry.lists[list.name] = false;
+              }
+            } else if (entry.media.format === format && entry.customLists[list.name] === false) {
+              currentFormatList = list.name;
+              entry.lists[list.name] = true;
+            } else if (entry.media.format !== format && entry.customLists[list.name] !== false) {
+              entry.lists[list.name] = false;
+            }
+          }
+
           // Check the reread/rewatched list
           if ((list.selectedOption === 'Reread' || list.selectedOption === 'Rewatched') && entry.repeat > 0 && !entry.customLists[list.name]) {
             entry.lists[list.name] = true;
@@ -155,12 +206,15 @@ export default {
           }
         });
 
-        // If the current status or score list is not in the custom lists, set it to true
+        // If the current status, score, or format list is not in the custom lists, set it to true
         if (currentStatusList && !entry.customLists[currentStatusList]) {
           entry.lists[currentStatusList] = true;
         }
         if (currentScoreList && !entry.customLists[currentScoreList]) {
           entry.lists[currentScoreList] = true;
+        }
+        if (currentFormatList && !entry.customLists[currentFormatList]) {
+          entry.lists[currentFormatList] = true;
         }
 
         return entry;
