@@ -132,8 +132,9 @@ export default {
       this.$router.push("/custom-list-manager/update");
     },
     sortLists() {
-      const categoriesAnime = ["watching", "completed", "paused", "planning", "dropped", "rewatched", "10", "9", "8", "7", "6", "5", "<5", "4", "3", "2", "1"];
-      const categoriesManga = ["reading", "completed", "paused", "planning", "dropped", "reread", "10", "9", "8", "7", "6", "5", "<5", "4", "3", "2", "1"];
+      console.log(this.lists)
+      const categoriesAnime = ["watching", "completed", "paused", "planning", "dropped", "rewatched", "10", "9", "8", "7", "6", "5", "<5", "4", "3", "2", "1", "tv", "tv_short", "movie", "special", "ova", "ona", "music"];
+      const categoriesManga = ["reading", "completed", "paused", "planning", "dropped", "reread", "10", "9", "8", "7", "6", "5", "<5", "4", "3", "2", "1", "manga (japan)", "manga (south korean)", "manga (chinese)", "manga", "manwha", "manhua", "one shot", "light novel", "web novel"];
       const categories = this.listType === 'ANIME' ? categoriesAnime : categoriesManga;
       this.lists.sort((a, b) => {
         const aCategoryIndex = categories.findIndex(category => a.name.toLowerCase().includes(category));
@@ -190,7 +191,6 @@ export default {
       }
 
       for (const item of allItems) {
-        console.log(`Checking if "${listName.toLowerCase()}" includes "${item.toLowerCase()}"`);
         if (listName.toLowerCase().includes(item.toLowerCase())) {
           if (statusItems.includes(item)) {
             return `Status set to ${item.charAt(0).toUpperCase() + item.slice(1)}`;
