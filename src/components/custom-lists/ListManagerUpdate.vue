@@ -213,6 +213,12 @@ export default {
 </script>
 
 <style scoped>
+@media (min-width: 1200px) {
+  .media-list {
+    width: 1050px;
+  }
+}
+
 .media-list {
   display: flex;
   flex-direction: row;
@@ -229,7 +235,7 @@ export default {
 .media-link {
   all: unset;
   text-decoration: none;
-  width: 90%;
+  width: 100%;
 }
 
 .media-link:hover {
@@ -324,7 +330,7 @@ export default {
   color: #c5c6c7;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 750px) {
   .media-card {
     flex-direction: column;
     align-items: flex-start;
