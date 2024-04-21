@@ -91,7 +91,7 @@ export default {
       loading: false,
       showPopup: false,
       errorMessage: null,
-      hideDefaultStatusLists: true,
+      hideDefaultStatusLists: this.$store.getters.hideDefaultStatusLists !== null ? this.$store.getters.hideDefaultStatusLists : true
     }
   },
   watch: {
@@ -109,6 +109,12 @@ export default {
         }
       },
       deep: true
+    },
+    hideDefaultStatusLists: {
+      handler(newValue) {
+        this.$store.commit('setHideDefaultStatusLists', newValue);
+      },
+      immediate: true
     }
   },
   computed: {
