@@ -94,6 +94,18 @@ export default {
       hideDefaultStatusLists: true,
     }
   },
+  watch: {
+    lists: {
+      handler(newLists) {
+        const newConditions = newLists.map(list => ({
+          name: list.name,
+          selectedOption: list.selectedOption
+        }));
+        this.$store.commit('setConditions', newConditions);
+      },
+      deep: true
+    }
+  },
   computed: {
     title() {
       return `Your ${this.listType} Custom Lists`;
@@ -247,11 +259,17 @@ export default {
 
       try {
         const response = await this.fetchAniList(query);
-        this.lists = response.data.MediaListCollection.lists.filter(list => list.isCustomList).map(list => ({
-          ...list,
-          selectedOption: this.getDefaultOption(list.name)
-        }));
-        // console.log(this.lists)
+        const savedConditions = this.$store.getters.conditions;
+        this.lists = response.data.MediaListCollection.lists.filter(list => list.isCustomList).map((list) => {
+          let savedCondition = null;
+          if (savedConditions) {
+            savedCondition = savedConditions.find(condition => condition.name === list.name);
+          }
+          return {
+            ...list,
+            selectedOption: savedCondition ? savedCondition.selectedOption : this.getDefaultOption(list.name)
+          };
+        });
         this.sortLists();
         this.loading = false;
       } catch (error) {
