@@ -298,7 +298,7 @@ export default {
 .media-link {
   all: unset;
   text-decoration: none;
-  width: 100%;
+  width: 95%;
 }
 
 .media-link:hover {
@@ -306,6 +306,7 @@ export default {
 }
 
 .media-card {
+  position: relative;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -318,6 +319,36 @@ export default {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   border-radius: 10px;
   transform: translateX(-10px);
+  overflow: hidden;
+}
+
+.media-card:hover::before {
+  position: absolute;
+  content: '';
+  width: 150%;
+  height: 35%;
+  background: #fff;
+  left: -25%;
+  top: 32.5%;
+  transform: rotate(45deg);
+  animation: rotateBorder 5s linear infinite;
+}
+
+@keyframes rotateBorder {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.media-card::after {
+  position: absolute;
+  content: '';
+  inset: 5px;
+  border-radius: 10px;
+  background: #0b0c10;
 }
 
 .media-card:hover {
@@ -330,12 +361,14 @@ export default {
   height: auto;
   margin-right: 20px;
   object-fit: cover;
+  z-index: 1;
 }
 
 .media-card div {
   display: flex;
   flex-direction: column;
   align-items: center;
+  z-index: 1;
 }
 
 .media-titles {
