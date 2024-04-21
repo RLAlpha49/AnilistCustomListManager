@@ -12,19 +12,21 @@
           <h3>English Title:</h3>
           <h3 class="english-title">{{ entry.media.title.english }}</h3>
         </div>
-        <div class="media-info">
-          <h3>Media Info:</h3>
-          <p>Status: {{ entry.status }}</p>
-          <p>Score: {{ entry.score }}</p>
-          <p>Repeat: {{ entry.repeat }}</p>
-        </div>
-        <div class="custom-lists">
-          <h3>To Update:</h3>
-          <ul>
-            <li v-for="(value, list) in entry.lists" :key="list">
-              {{ list }}: {{ value ? 'True' : 'False' }}
-            </li>
-          </ul>
+        <div class="media-container">
+          <div class="media-info">
+            <h3>Media Info:</h3>
+            <p>Status: {{ entry.status }}</p>
+            <p>Score: {{ entry.score }}</p>
+            <p>Repeat: {{ entry.repeat }}</p>
+          </div>
+          <div class="custom-lists">
+            <h3>To Update:</h3>
+            <ul>
+              <li v-for="(value, list) in entry.lists" :key="list">
+                {{ list }}: {{ value ? 'True' : 'False' }}
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </a>
@@ -319,6 +321,52 @@ export default {
   }
 }
 
+@media (max-width: 1100px) {
+  .media-card h2, .media-card h3 {
+    font-size: calc(16px * 0.9) !important;
+  }
+
+  .media-card p, .media-card li{
+    font-size: calc(14px * 0.9) !important;
+  }
+}
+
+@media (max-width: 900px) {
+  .media-card h2, .media-card h3 {
+    font-size: calc(16px * 0.8) !important;
+  }
+
+  .media-card p, .media-card li{
+    font-size: calc(14px * 0.8) !important;
+  }
+}
+
+@media (max-width: 900px) {
+  .media-card {
+    align-items: center !important;
+  }
+
+  .media-card img {
+    width: 25% !important;
+  }
+
+  .media-titles {
+    align-self: center !important;
+  }
+
+  .media-container {
+    flex-direction: column !important;
+    align-items: center !important;
+    width: auto !important;
+    padding-left: 10px !important;
+    gap: 10px !important;
+  }
+
+  .media-info, .custom-lists {
+    width: 100% !important;
+  }
+}
+
 .media-list {
   display: flex;
   flex-direction: row;
@@ -346,7 +394,6 @@ export default {
   position: relative;
   display: flex;
   flex-direction: row;
-  align-items: center;
   width: 100%;
   border: 1px solid #66fcf1;
   background-color: #0b0c10;
@@ -411,10 +458,19 @@ export default {
   z-index: 1;
 }
 
-.media-card div {
+.media-card img, .media-titles {
   display: flex;
   flex-direction: column;
   align-items: center;
+  z-index: 1;
+}
+
+.media-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 40%;
   z-index: 1;
 }
 
@@ -426,6 +482,10 @@ export default {
 .media-titles h3, .media-titles h2 {
   margin-top: 0px;
   margin-bottom: 10px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .romaji-title {
@@ -464,7 +524,7 @@ export default {
 }
 
 .custom-lists {
-  width: 20%;
+  width: 60%;
   margin-left: 10px;
   align-self: flex-start;
 }
@@ -480,7 +540,7 @@ export default {
   margin-bottom: 5px;
 }
 
-@media (max-width: 750px) {
+@media (max-width: 700px) {
   .media-card {
     flex-direction: column;
     align-items: flex-start;
