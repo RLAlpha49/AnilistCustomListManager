@@ -97,11 +97,16 @@ export default {
   watch: {
     lists: {
       handler(newLists) {
-        const newConditions = newLists.map(list => ({
+        const newListLocations = newLists.map((list, index) => ({
           name: list.name,
-          selectedOption: list.selectedOption
+          selectedOption: list.selectedOption,
+          location: index
         }));
-        this.$store.commit('setConditions', newConditions);
+        if (this.listType === 'ANIME') {
+          this.$store.commit('setListLocationsAnime', newListLocations);
+        } else if (this.listType === 'MANGA') {
+          this.$store.commit('setListLocationsManga', newListLocations);
+        }
       },
       deep: true
     }
@@ -259,20 +264,62 @@ export default {
 
       try {
         const response = await this.fetchAniList(query);
-        const savedConditions = this.$store.getters.conditions;
-        this.lists = response.data.MediaListCollection.lists.filter(list => list.isCustomList).map((list) => {
-          let savedCondition = null;
-          if (savedConditions) {
-            savedCondition = savedConditions.find(condition => condition.name === list.name);
+
+        const savedConditions = this.listType === 'ANIME' ? this.$store.getters.conditionsAnime : this.$store.getters.conditionsManga;
+        const savedListLocations = this.listType === 'ANIME' ? this.$store.getters.listLocationsAnime : this.$store.getters.listLocationsManga;
+
+        const listsFromQuery = response.data.MediaListCollection.lists.filter(list => list.isCustomList);
+
+        const savedListNames = savedListLocations.map(list => list.name);
+        const savedConditionNames = savedConditions.map(condition => condition.name);
+        const queryListNames = listsFromQuery.map(list => list.name);
+
+        const allListNamesExist = queryListNames.every(name => savedListNames.includes(name));
+        const allConditionNamesExist = queryListNames.every(name => savedConditionNames.includes(name));
+
+        if (savedListLocations && savedListLocations.length >= listsFromQuery.length && savedConditions && savedConditions.length >= listsFromQuery.length && allListNamesExist && allConditionNamesExist && this.listType === type) {
+          this.lists = savedListLocations.map(savedList => {
+            const list = listsFromQuery.find(list => list.name === savedList.name);
+            if (list) {
+              let savedCondition = savedConditions.find(condition => condition.name === list.name);
+              return {
+                ...list,
+                selectedOption: savedCondition ? savedCondition.selectedOption : this.getDefaultOption(list.name)
+              };
+            }
+          }).filter(list => list);
+          console.log('Final lists:', this.lists);
+        } else {
+          this.lists = listsFromQuery.map((list) => {
+            return {
+              ...list,
+              selectedOption: this.getDefaultOption(list.name)
+            };
+          });
+          this.sortLists();
+          console.log('Final lists:', this.lists);
+
+          const newListLocations = this.lists.map((list, index) => ({
+            name: list.name,
+            selectedOption: list.selectedOption,
+            location: index
+          }));
+          const newConditions = this.lists.map(list => ({
+            name: list.name,
+            selectedOption: list.selectedOption
+          }));
+          if (this.listType === 'ANIME') {
+            this.$store.commit('setListLocationsAnime', newListLocations);
+            this.$store.commit('setConditionsAnime', newConditions);
+          } else if (this.listType === 'MANGA') {
+            this.$store.commit('setListLocationsManga', newListLocations);
+            this.$store.commit('setConditionsManga', newConditions);
           }
-          return {
-            ...list,
-            selectedOption: savedCondition ? savedCondition.selectedOption : this.getDefaultOption(list.name)
-          };
-        });
-        this.sortLists();
+        }
+
         this.loading = false;
       } catch (error) {
+        console.error('Error in fetchLists:', error.message);
         EventBus.emit('show-error', error.message);
       }
     },

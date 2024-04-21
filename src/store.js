@@ -8,7 +8,10 @@ export default createStore({
     userId: null,
     userSettings: {
       listPlacements: [],
-      conditions: []
+      conditionsAnime: [],
+      conditionsManga: [],
+      listLocationsAnime: [],
+      listLocationsManga: []
     }
   },
   mutations: {
@@ -21,19 +24,27 @@ export default createStore({
     setUserId (state, userId) {
       state.userId = userId
     },
-    setListPlacements (state, placements) {
-      state.userSettings.listPlacements = placements
+    setListLocationsAnime (state, listLocations) {
+      state.userSettings.listLocationsAnime = listLocations
     },
-    setConditions (state, conditions) {
-      state.userSettings.conditions = conditions
+    setListLocationsManga (state, listLocations) {
+      state.userSettings.listLocationsManga = listLocations
+    },
+    setConditionsAnime (state, conditions) {
+      state.userSettings.conditionsAnime = conditions
+    },
+    setConditionsManga (state, conditions) {
+      state.userSettings.conditionsManga = conditions
     }
   },
   getters: {
     lists: state => state.lists,
     userId: state => state.userId,
     type: state => state.type,
-    listPlacements: state => state.userSettings.listPlacements,
-    conditions: state => state.userSettings.conditions
+    listLocationsAnime: state => state.userSettings.listLocationsAnime,
+    listLocationsManga: state => state.userSettings.listLocationsManga,
+    conditionsAnime: state => state.userSettings.conditionsAnime,
+    conditionsManga: state => state.userSettings.conditionsManga
   },
   plugins: [createPersistedState()]
 })
