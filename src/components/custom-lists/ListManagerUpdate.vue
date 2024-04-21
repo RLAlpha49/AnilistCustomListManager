@@ -364,11 +364,21 @@ export default {
   content: '';
   width: 150%;
   height: 35%;
-  background: #fff;
+  background: linear-gradient(45deg, #fff, #66fcf1);
+  background-size: 200% 200%;
   left: -25%;
   top: 32.5%;
   transform: rotate(45deg);
-  animation: rotateBorder 5s linear infinite;
+  animation: gradient 5s ease infinite, rotateBorder 5s linear infinite;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: 0 100%;
+  }
 }
 
 @keyframes rotateBorder {
