@@ -1,5 +1,25 @@
 <template>
-  <div class="media-list">
+  <div v-if="isLoading" class="loading">
+    <span style="--i:1"></span>
+    <span style="--i:2"></span>
+    <span style="--i:3"></span>
+    <span style="--i:4"></span>
+    <span style="--i:5"></span>
+    <span style="--i:6"></span>
+    <span style="--i:7"></span>
+    <span style="--i:8"></span>
+    <span style="--i:9"></span>
+    <span style="--i:10"></span>
+    <span style="--i:11"></span>
+    <span style="--i:12"></span>
+    <span style="--i:13"></span>
+    <span style="--i:14"></span>
+    <span style="--i:15"></span>
+    <span style="--i:16"></span>
+    <span style="--i:17"></span>
+    <span style="--i:18"></span>
+  </div>
+  <div v-else class="media-list">
     <a :href="getMediaUrl(entry)" target="_blank" v-for="entry in mediaList" :key="entry.media.id" class="media-link">
       <div class="media-card">
         <img :src="entry.media.coverImage.extraLarge" alt="Cover Image">
@@ -38,7 +58,8 @@ export default {
     return {
       mediaList: [],
       defaultLists: [],
-      customLists: []
+      customLists: [],
+      isLoading: false
     }
   },
   computed: {
@@ -53,6 +74,9 @@ export default {
     this.fetchMediaList();
   },
   methods: {
+    delay(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    },
     getMediaUrl(entry) {
       const base = 'https://anilist.co/';
       const type = this.type === 'ANIME' ? 'anime' : 'manga';
@@ -74,6 +98,8 @@ export default {
       return words.join(' ');
     },
     async fetchMediaList() {
+      await this.delay(500);
+      this.isLoading = true;
       const mediaListQuery = `
         query ($userId: Int, $type: MediaType) {
           MediaListCollection(userId: $userId, type: $type) {
@@ -233,6 +259,8 @@ export default {
 
       this.mediaList = entries;
 
+      this.isLoading = false;
+
       console.log('Media List:', this.mediaList);
     },
     async fetchAniList(query, variables = {}) {
@@ -276,6 +304,32 @@ export default {
 </script>
 
 <style scoped>
+.loading {
+  position: relative;
+  height: 300px;
+  width: 300px;
+  transform: translateX(50%);
+}
+
+.loading span {
+  position: absolute;
+  height: 150px;
+  width: 5px;
+  background: linear-gradient(#35defc 50%, transparent 50%);
+  top: calc(50% - 150px);
+  transform-origin: bottom center;
+  transform: rotate(calc(var(--i) * 20deg));
+  border-radius: 50px;
+  animation: loading 2s calc(var(--i) * 0.1s) infinite;
+}
+
+@keyframes loading {
+  from {
+    opacity: 0;
+  }
+}
+
+
 @media (min-width: 1200px) {
   .media-list {
     width: 1050px;
