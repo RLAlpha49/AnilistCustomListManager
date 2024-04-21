@@ -460,15 +460,39 @@ input[type="checkbox"]:checked:after {
   }
 }
 
+@keyframes hueRotate {
+  0% {
+    filter: hue-rotate(0deg);
+  }
+  100% {
+    filter: hue-rotate(360deg);
+  }
+}
+
 .list-item {
+  position: relative;
   display: flex;
   align-items: center;
   padding: 10px;
   margin-bottom: 10px;
-  border: 1px solid #66fcf1;
   background-color: #0b0c10;
   cursor: move;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.list-item::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border: 1px solid #66fcf1;
+}
+
+.list-item:hover::before {
+  animation: hueRotate 5s linear infinite;
+  border-width: 3px;
 }
 
 .list-item:hover {
