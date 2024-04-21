@@ -146,6 +146,7 @@ export default {
       this.$store.commit('setLists', this.filteredLists);
       this.$store.commit('setType', this.listType);
       this.$store.commit('setUserId', this.userId);
+      this.$store.commit('setHideDefaultStatusLists', this.hideDefaultStatusLists);
       this.$router.push("/custom-list-manager/update");
     },
     sortLists() {

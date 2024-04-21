@@ -16,7 +16,7 @@
           <p>Repeat: {{ entry.repeat }}</p>
         </div>
         <div class="custom-lists">
-          <h3>Lists (To Update):</h3>
+          <h3>To Update:</h3>
           <ul>
             <li v-for="(value, list) in entry.lists" :key="list">
               {{ list }}: {{ value ? 'True' : 'False' }}
@@ -217,6 +217,11 @@ export default {
           entry.lists[currentFormatList] = true;
         }
 
+        // Check if the hiddenFromStatusLists value is different from the hideDefaultStatusLists value
+        if (entry.hiddenFromStatusLists !== this.hideDefaultStatusLists) {
+          entry.lists['hiddenFromStatusLists'] = this.hideDefaultStatusLists;
+        }
+
         return entry;
       });
 
@@ -371,6 +376,8 @@ export default {
 
 .media-card p {
   text-align: center;
+  padding-top: 0;
+  padding-bottom: 0;
   margin: 5px 0;
   font-size: 14px;
   color: #c5c6c7;
@@ -384,8 +391,13 @@ export default {
 
 .media-card ul {
   padding: 0;
+  margin-top: 0;
   list-style-type: none;
   color: #c5c6c7;
+}
+
+.media-card li {
+  margin-bottom: 5px;
 }
 
 @media (max-width: 750px) {

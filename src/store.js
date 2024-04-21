@@ -6,6 +6,7 @@ export default createStore({
     lists: [],
     type: '',
     userId: null,
+    hideDefaultStatusLists: true,
     userSettings: {
       listPlacements: [],
       conditionsAnime: [],
@@ -24,6 +25,9 @@ export default createStore({
     setUserId (state, userId) {
       state.userId = userId
     },
+    setHideDefaultStatusLists (state, hideDefaultStatusLists) {
+      state.hideDefaultStatusLists = hideDefaultStatusLists
+    },
     setListLocationsAnime (state, listLocations) {
       state.userSettings.listLocationsAnime = listLocations
     },
@@ -41,6 +45,7 @@ export default createStore({
     lists: state => state.lists,
     userId: state => state.userId,
     type: state => state.type,
+    hideDefaultStatusLists: state => state.hideDefaultStatusLists,
     listLocationsAnime: state => state.userSettings.listLocationsAnime,
     listLocationsManga: state => state.userSettings.listLocationsManga,
     conditionsAnime: state => state.userSettings.conditionsAnime,
