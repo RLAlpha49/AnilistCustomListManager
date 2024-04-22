@@ -1,5 +1,10 @@
 <template>
   <div class="controls">
+    <h1 style="text-align: center">Update Custom Lists</h1>
+    <p style="text-align: center">This step allows you to start updating your Anilist. You can pause the update process at any time.</p>
+    <div class="button-controls">
+      <button @click="toggleUpdate">{{ isUpdating ? 'Pause' : 'Start' }}</button>
+    </div>
     <div class="navigation-buttons">
       <router-link to="/custom-list-manager/list-manager">
         <button>Back</button>
@@ -54,7 +59,8 @@ export default {
       mediaList: [],
       defaultLists: [],
       customLists: [],
-      isLoading: false
+      isLoading: false,
+      isUpdating: false
     }
   },
   computed: {
@@ -291,9 +297,22 @@ export default {
         }
       }
     },
-    updateAniList() {
-      // TODO
-    }
+    toggleUpdate() {
+      this.isUpdating = !this.isUpdating;
+
+      if (this.isUpdating) {
+        this.startUpdate();
+      } else {
+        this.pauseUpdate();
+      }
+    },
+    startUpdate() {
+      // Logic to start updating the Anilist
+    },
+
+    pauseUpdate() {
+      // Logic to pause updating the Anilist
+    },
   }
 }
 </script>
@@ -378,16 +397,46 @@ export default {
 }
 
 .controls, .media-list {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-around;
   padding: 20px;
   margin: 20px;
   background-color: #1b1d25;
   color: #c5c6c7;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.button-controls {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+button {
+  background-color: #66fcf1;
+  color: #1b1d25;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition-duration: 0.4s;
+}
+
+button:hover {
+  background-color: #1b1d25;
+  color: #66fcf1;
+  outline: 2px solid #66fcf1;
+}
+
+.media-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
 }
 
 .media-link {

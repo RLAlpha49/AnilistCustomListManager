@@ -372,11 +372,6 @@ export default {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
-.error-message {
-  color: red;
-  font-weight: bold;
-}
-
 .footer-div {
   margin-top: 20px !important;
 }
