@@ -1,28 +1,49 @@
-// eslint-disable-next-line no-redeclare
-/* global IntersectionObserver */
+/* global IntersectionObserver, MutationObserver */
+
+let isRunning = false
+let checkImagesInterval = null
+
 window.onload = function () {
-  const checkImagesInterval = setInterval(function () {
-    const lazyImages = [].slice.call(document.querySelectorAll('img.lazy'))
+  if (isRunning) return
+  isRunning = true
+  const targetNode = document.querySelector('.center-container')
 
-    if (lazyImages.length > 0) {
-      clearInterval(checkImagesInterval)
+  const config = { childList: true }
 
-      if ('IntersectionObserver' in window) {
-        const lazyImageObserver = new IntersectionObserver(function (entries) {
-          entries.forEach(function (entry) {
-            if (entry.isIntersecting) {
-              const lazyImage = entry.target
-              lazyImage.src = lazyImage.dataset.src
-              lazyImage.classList.remove('lazy')
-              lazyImageObserver.unobserve(lazyImage)
+  const callback = function (mutationsList, observer) {
+    for (const mutation of mutationsList) {
+      if (mutation.type === 'childList') {
+        clearInterval(checkImagesInterval)
+        checkImagesInterval = setInterval(function () {
+          const lazyImages = [].slice.call(document.querySelectorAll('img.lazy'))
+
+          if (lazyImages.length > 0) {
+            clearInterval(checkImagesInterval)
+
+            if ('IntersectionObserver' in window) {
+              const lazyImageObserver = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                  if (entry.isIntersecting) {
+                    const lazyImage = entry.target
+                    lazyImage.src = lazyImage.dataset.src
+                    lazyImage.classList.remove('lazy')
+                    lazyImageObserver.unobserve(lazyImage)
+                  }
+                })
+              })
+
+              lazyImages.forEach(function (lazyImage) {
+                lazyImageObserver.observe(lazyImage)
+              })
             }
-          })
-        })
-
-        lazyImages.forEach(function (lazyImage) {
-          lazyImageObserver.observe(lazyImage)
-        })
+          }
+        }, 250)
+        isRunning = false
       }
     }
-  }, 250)
+  }
+
+  const observer = new MutationObserver(callback)
+
+  observer.observe(targetNode, config)
 }

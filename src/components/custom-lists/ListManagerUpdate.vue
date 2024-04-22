@@ -1,4 +1,14 @@
 <template>
+  <div class="controls">
+    <div class="navigation-buttons">
+      <router-link to="/custom-list-manager/list-manager">
+        <button>Back</button>
+      </router-link>
+      <router-link to="/custom-list-manager/work-in-progress">
+        <button>Finish</button>
+      </router-link>
+    </div>
+  </div>
   <div v-if="isLoading" class="loading">
     <span v-for="i in 18" :key="i" :style="{ '--i': i }"></span>
   </div>
@@ -367,7 +377,7 @@ export default {
   }
 }
 
-.media-list {
+.controls, .media-list {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
