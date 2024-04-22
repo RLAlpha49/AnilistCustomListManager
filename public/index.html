@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="description" content="Anilist List Manager is a web application for managing your Anilist lists automatically.">
     <link rel="icon" href="<%= BASE_URL %>images/favicon.webp">
     <title>Anilist List Manager</title>
   </head>
@@ -13,6 +14,34 @@
     </noscript>
     <div id="app"></div>
   </body>
+  <script>
+      window.onload = function() {
+          let checkImagesInterval = setInterval(function() {
+              const lazyImages = [].slice.call(document.querySelectorAll("img.lazy"));
+
+              if (lazyImages.length > 0) {
+                  clearInterval(checkImagesInterval);
+
+                  if ("IntersectionObserver" in window) {
+                      let lazyImageObserver = new IntersectionObserver(function(entries) {
+                          entries.forEach(function(entry) {
+                              if (entry.isIntersecting) {
+                                  let lazyImage = entry.target;
+                                  lazyImage.src = lazyImage.dataset.src;
+                                  lazyImage.classList.remove("lazy");
+                                  lazyImageObserver.unobserve(lazyImage);
+                              }
+                          });
+                      });
+
+                      lazyImages.forEach(function(lazyImage) {
+                          lazyImageObserver.observe(lazyImage);
+                      });
+                  }
+              }
+          }, 250);
+      };
+  </script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-6L7RKZ1C2L"></script>
   <script>
       window.dataLayer = window.dataLayer || [];

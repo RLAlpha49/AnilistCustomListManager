@@ -62,16 +62,7 @@ export default {
       this.direction = toIndex > fromIndex ? 'forward' : 'backward';
     }
   },
-  mounted() {
-    this.lazyLoadImages();
-  },
   methods: {
-    lazyLoadImages() {
-      const images = document.querySelectorAll('img')
-      images.forEach((img) => {
-        img.setAttribute('loading', 'lazy')
-      })
-    },
     clearError() {
       this.errorMessage = '';
       this.showError = false;

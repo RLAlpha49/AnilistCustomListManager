@@ -5,7 +5,7 @@
   <div v-else class="media-list">
     <a :href="getMediaUrl(entry)" target="_blank" v-for="entry in mediaList" :key="entry.media.id" class="media-link">
       <div class="media-card">
-        <img :src="entry.media.coverImage.extraLarge" alt="Cover Image">
+        <img class="lazy" :data-src="entry.media.coverImage.extraLarge" alt="Cover Image">
         <div class="media-titles">
           <h3>Romaji Title:</h3>
           <h2 class="romaji-title">{{ entry.media.title.romaji }}</h2>
