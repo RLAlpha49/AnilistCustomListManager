@@ -14,40 +14,7 @@
     </noscript>
     <div id="app"></div>
   </body>
-  <script>
-      window.onload = function() {
-          let checkImagesInterval = setInterval(function() {
-              const lazyImages = [].slice.call(document.querySelectorAll("img.lazy"));
-
-              if (lazyImages.length > 0) {
-                  clearInterval(checkImagesInterval);
-
-                  if ("IntersectionObserver" in window) {
-                      let lazyImageObserver = new IntersectionObserver(function(entries) {
-                          entries.forEach(function(entry) {
-                              if (entry.isIntersecting) {
-                                  let lazyImage = entry.target;
-                                  lazyImage.src = lazyImage.dataset.src;
-                                  lazyImage.classList.remove("lazy");
-                                  lazyImageObserver.unobserve(lazyImage);
-                              }
-                          });
-                      });
-
-                      lazyImages.forEach(function(lazyImage) {
-                          lazyImageObserver.observe(lazyImage);
-                      });
-                  }
-              }
-          }, 250);
-      };
-  </script>
+  <script src="../lazyLoadImages.js"></script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-6L7RKZ1C2L"></script>
-  <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-6L7RKZ1C2L');
-  </script>
+  <script src="../googleAnalytics.js"></script>
 </html>
