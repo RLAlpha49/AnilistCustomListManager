@@ -1,3 +1,4 @@
+/* eslint-disable no-redeclare */
 /* global IntersectionObserver, MutationObserver */
 
 let isRunning = false
@@ -10,7 +11,7 @@ window.onload = function () {
 
   const config = { childList: true }
 
-  const callback = function (mutationsList, observer) {
+  const callback = function (mutationsList) {
     for (const mutation of mutationsList) {
       if (mutation.type === 'childList') {
         clearInterval(checkImagesInterval)
