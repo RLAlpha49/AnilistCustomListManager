@@ -1,5 +1,6 @@
 <template>
   <div id="list-manager-list">
+    <ErrorDropdown v-if="retryCountdown >= 0" :countdown="retryCountdown"/>
     <div class="manager">
       <h1 style="text-align: center">{{ title }}</h1>
       <p style="text-align: center">The order of the list does not affect the functionality.<br> Select the option in
@@ -75,11 +76,14 @@ import draggable from 'vuedraggable';
 import Dropdown from 'primevue/dropdown';
 import {EventBus} from "@/event-bus.js";
 
+import ErrorDropdown from "@/components/base/ErrorDropdown";
+
 export default {
   name: 'ListManagerList',
   components: {
     draggable,
-    Dropdown
+    Dropdown,
+    ErrorDropdown
   },
   data() {
     return {
@@ -91,6 +95,7 @@ export default {
       loading: false,
       showPopup: false,
       errorMessage: null,
+      retryCountdown: -1,
       hideDefaultStatusLists: this.$store.getters.hideDefaultStatusLists !== null ? this.$store.getters.hideDefaultStatusLists : true
     }
   },
@@ -355,7 +360,7 @@ export default {
         EventBus.emit('show-error', error.message);
       }
     },
-    async fetchAniList(query) {
+    async fetchAniList(query, variables = {}, retryCount = 0) {
       const url = 'https://graphql.anilist.co';
       const options = {
         method: 'POST',
@@ -365,7 +370,8 @@ export default {
           'Accept': 'application/json',
         },
         body: JSON.stringify({
-          query: query
+          query: query,
+          variables: variables
         })
       };
 
@@ -380,7 +386,22 @@ export default {
         }
         return data;
       } catch (error) {
-        EventBus.emit('show-error', error.message);
+        console.log('Error:', error.code, error.message, error.stack)
+        if (error.message === 'Failed to fetch' && retryCount < 5) {
+          this.retryCountdown = 15;
+          return new Promise((resolve) => {
+            const countdownInterval = setInterval(async () => {
+              this.retryCountdown--;
+              if (this.retryCountdown < 0) {
+                clearInterval(countdownInterval);
+                // Retry the request instead of returning
+                resolve(await this.fetchAniList(query, variables, retryCount + 1));
+              }
+            }, 1000);
+          });
+        } else {
+          EventBus.emit('show-error', 'Network error. Please check your internet connection or try again later.');
+        }
       }
     }
   }

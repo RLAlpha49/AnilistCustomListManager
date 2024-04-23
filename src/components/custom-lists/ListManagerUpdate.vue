@@ -1,5 +1,6 @@
 <template>
   <div class="update">
+    <ErrorDropdown v-if="retryCountdown >= 0" :countdown="retryCountdown"/>
     <div class="controls">
       <h1 style="text-align: center">Update Custom Lists</h1>
       <p style="text-align: center">This step allows you to start updating your Anilist. You can pause the update
@@ -71,10 +72,13 @@ import {EventBus} from "@/event-bus";
 import ProgressBar from 'primevue/progressbar';
 import {mapGetters} from 'vuex'
 
+import ErrorDropdown from "@/components/base/ErrorDropdown";
+
 export default {
   name: 'ListManagerUpdate',
   components: {
-    ProgressBar
+    ProgressBar,
+    ErrorDropdown
   },
   data() {
     return {
@@ -87,7 +91,8 @@ export default {
       currentEntry: null,
       totalEntries: 0,
       updateProcess: null,
-      done: false
+      done: false,
+      retryCountdown: -1
     }
   },
   computed: {
@@ -391,7 +396,7 @@ export default {
         return;
       }
     },
-    async fetchAniList(query, variables = {}) {
+    async fetchAniList(query, variables = {}, retryCount = 0) {
       const url = 'https://graphql.anilist.co';
       const options = {
         method: 'POST',
@@ -417,10 +422,21 @@ export default {
         }
         return data;
       } catch (error) {
-        if (error.name === 'TypeError') {
-          EventBus.emit('show-error', 'Network error. Please check your internet connection or try again later.');
+        console.log('Error:', error.code, error.message, error.stack)
+        if (error.message === 'Failed to fetch' && retryCount < 5) {
+          this.retryCountdown = 15;
+          return new Promise((resolve) => {
+            const countdownInterval = setInterval(async () => {
+              this.retryCountdown--;
+              if (this.retryCountdown < 0) {
+                clearInterval(countdownInterval);
+                // Retry the request instead of returning
+                resolve(await this.fetchAniList(query, variables, retryCount + 1));
+              }
+            }, 1000);
+          });
         } else {
-          EventBus.emit('show-error', error.message);
+          EventBus.emit('show-error', 'Network error. Please check your internet connection or try again later.');
         }
       }
     },
