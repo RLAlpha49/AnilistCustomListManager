@@ -19,7 +19,8 @@
     <span v-for="i in 18" :key="i" :style="{ '--i': i }"></span>
   </div>
   <div v-else class="media-list">
-    <a :href="getMediaUrl(entry)" target="_blank" v-for="entry in mediaList" :key="entry.media.id" class="media-link">
+    <a :href="getMediaUrl(entry)" :id="entry.media.id" target="_blank" v-for="entry in mediaList" :key="entry.media.id"
+       class="media-link">
       <div class="media-card">
         <img class="lazy" :data-src="entry.media.coverImage.extraLarge" alt="Cover Image">
         <div class="media-titles">
