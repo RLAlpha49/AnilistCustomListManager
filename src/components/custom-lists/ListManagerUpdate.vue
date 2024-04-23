@@ -1,60 +1,68 @@
 <template>
-  <div class="controls">
-    <h1 style="text-align: center">Update Custom Lists</h1>
-    <p style="text-align: center">This step allows you to start updating your Anilist. You can pause the update process
-      at any time.</p>
-    <div class="button-controls">
-      <button @click="toggleUpdate">{{ isUpdating ? 'Pause' : 'Start' }}</button>
-    </div>
-    <p>{{
-        totalEntries > 0 && mediaList && mediaList.length > 0 ? totalEntries - mediaList.length : 0
-      }}/{{ totalEntries > 0 ? totalEntries : 0 }}</p>
-    <ProgressBar
-        :value="totalEntries > 0 && mediaList && mediaList.length > 0 ? ((totalEntries - mediaList.length) / totalEntries) * 100 : 0"></ProgressBar>
-    <p v-if="currentEntry">Updating entry with ID: {{ currentEntry.media.id }}</p>
-    <div class="navigation-buttons">
-      <router-link to="/custom-list-manager/list-manager">
-        <button>Back</button>
-      </router-link>
-      <router-link to="/custom-list-manager/work-in-progress">
-        <button>Finish</button>
-      </router-link>
-    </div>
-  </div>
-  <div v-if="isLoading" class="loading">
-    <span v-for="i in 18" :key="i" :style="{ '--i': i }"></span>
-  </div>
-  <div v-else class="media-list">
-    <a v-for="entry in mediaList" :id="entry.media.id" :key="entry.media.id" :href="getMediaUrl(entry)"
-       class="media-link"
-       :class="{ removing: entry.removing }"
-       target="_blank">
-      <div class="media-card">
-        <img :data-src="entry.media.coverImage.extraLarge" alt="Cover Image" class="lazy">
-        <div class="media-titles">
-          <h3>Romaji Title:</h3>
-          <h2 class="romaji-title">{{ entry.media.title.romaji }}</h2>
-          <h3>English Title:</h3>
-          <h3 class="english-title">{{ entry.media.title.english }}</h3>
-        </div>
-        <div class="media-container">
-          <div class="media-info">
-            <h3>Media Info:</h3>
-            <p>Status: {{ entry.status }}</p>
-            <p>Score: {{ entry.score }}</p>
-            <p>Repeat: {{ entry.repeat }}</p>
-          </div>
-          <div class="custom-lists">
-            <h3>To Update:</h3>
-            <ul>
-              <li v-for="(value, list) in entry.lists" :key="list">
-                {{ list }}: {{ value ? 'True' : 'False' }}
-              </li>
-            </ul>
-          </div>
-        </div>
+  <div class="update">
+    <div class="controls">
+      <h1 style="text-align: center">Update Custom Lists</h1>
+      <p style="text-align: center">This step allows you to start updating your Anilist. You can pause the update
+        process
+        at any time.</p>
+      <div class="button-controls">
+        <button @click="toggleUpdate" :disabled="done">
+          <span v-if="done">Start</span>
+          <span v-else>{{ isUpdating ? 'Pause' : 'Start' }}</span>
+        </button>
       </div>
-    </a>
+      <p v-if="!done">{{
+          totalEntries > 0 && mediaList && mediaList.length > 0 ? totalEntries - mediaList.length : 0
+        }}/{{ totalEntries > 0 ? totalEntries : 0 }}</p>
+      <p v-else>{{ totalEntries }}/{{ totalEntries }}</p>
+      <ProgressBar
+          :value="done ? 100 : parseFloat((totalEntries > 0 && mediaList && mediaList.length > 0 ? ((totalEntries - mediaList.length) / totalEntries) * 100 : 0).toFixed(2))"></ProgressBar>
+      <p v-if="currentEntry && !done">Updating entry with ID: {{ currentEntry.media.id }}</p>
+      <p v-else-if="done">Finished updating</p>
+      <div class="navigation-buttons">
+        <router-link to="/custom-list-manager/list-manager">
+          <button>Back</button>
+        </router-link>
+        <router-link to="/custom-list-manager/work-in-progress">
+          <button>Finish</button>
+        </router-link>
+      </div>
+    </div>
+    <div v-if="isLoading" class="loading">
+      <span v-for="i in 18" :key="i" :style="{ '--i': i }"></span>
+    </div>
+    <div v-if="!done && !isLoading" class="media-list">
+      <a v-for="entry in mediaList" :id="entry.media.id" :key="entry.media.id" :href="getMediaUrl(entry)"
+         class="media-link"
+         :class="{ removing: entry.removing }"
+         target="_blank">
+        <div class="media-card">
+          <img :data-src="entry.media.coverImage.extraLarge" alt="Cover Image" class="lazy">
+          <div class="media-titles">
+            <h3>Romaji Title:</h3>
+            <h2 class="romaji-title">{{ entry.media.title.romaji }}</h2>
+            <h3>English Title:</h3>
+            <h3 class="english-title">{{ entry.media.title.english }}</h3>
+          </div>
+          <div class="media-container">
+            <div class="media-info">
+              <h3>Media Info:</h3>
+              <p>Status: {{ entry.status }}</p>
+              <p>Score: {{ entry.score }}</p>
+              <p>Repeat: {{ entry.repeat }}</p>
+            </div>
+            <div class="custom-lists">
+              <h3>To Update:</h3>
+              <ul>
+                <li v-for="(value, list) in entry.lists" :key="list">
+                  {{ list }}: {{ value ? 'True' : 'False' }}
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
   </div>
 </template>
 
@@ -78,7 +86,8 @@ export default {
       shouldPause: false,
       currentEntry: null,
       totalEntries: 0,
-      updateProcess: null
+      updateProcess: null,
+      done: false
     }
   },
   computed: {
@@ -376,6 +385,11 @@ export default {
       this.isLoading = false;
 
       console.log('Media List:', this.mediaList);
+
+      if (this.mediaList.length === 0) {
+        this.done = true;
+        return;
+      }
     },
     async fetchAniList(query, variables = {}) {
       const url = 'https://graphql.anilist.co';
@@ -449,6 +463,7 @@ export default {
               pauseLoop();
             });
           } else {
+            this.done = true;
             resolve();
           }
         };
@@ -504,11 +519,18 @@ export default {
 </script>
 
 <style scoped>
+.update {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .loading {
-  position: relative;
-  height: 300px;
-  width: 300px;
-  transform: translateX(50%);
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  transform: translateY(18vh);
 }
 
 .loading span {
@@ -636,6 +658,12 @@ button:hover {
   background-color: #1b1d25;
   color: #66fcf1;
   outline: 2px solid #66fcf1;
+}
+
+button:disabled {
+  background-color: #888;
+  color: #ccc;
+  cursor: not-allowed;
 }
 
 .media-list {
