@@ -121,10 +121,8 @@ export default {
                     english
                   }
                   tags {
-                    id
                     name
                     category
-                    rank
                   }
                   coverImage {
                     extraLarge
@@ -166,7 +164,6 @@ export default {
         entry.lists = {};
         entry.tagCategories = entry.media.tags.map(tag => tag.category);
         entry.tags = entry.media.tags.map(tag => tag.name);
-        // console.log(entry.tagCategories)
 
         // Track the current status, score, and format lists
         let currentStatusList = '';
@@ -244,26 +241,20 @@ export default {
 
           if (list.selectedOption.includes('Tag Categories contain')) {
             let tagCategory = list.selectedOption.replace('Tag Categories contain ', '');
-            console.log(tagCategory)
             // Check the tags
             if (entry.tagCategories.includes(tagCategory) && entry.customLists[list.name] !== true) {
-              console.log(tagCategory)
               entry.lists[list.name] = true;
             } else if (!entry.tagCategories.includes(tagCategory) && entry.customLists[list.name] !== false) {
-              console.log(tagCategory)
               entry.lists[list.name] = false;
             }
           }
 
           if (list.selectedOption.includes('Tags contain')) {
             let tag = list.selectedOption.replace('Tags contain ', '');
-            console.log(tag)
             // Check the tags
             if (entry.tags.includes(tag) && entry.customLists[list.name] !== true) {
-              console.log(tag)
               entry.lists[list.name] = true;
             } else if (!entry.tags.includes(tag) && entry.customLists[list.name] !== false) {
-              console.log(tag)
               entry.lists[list.name] = false;
             }
           }
