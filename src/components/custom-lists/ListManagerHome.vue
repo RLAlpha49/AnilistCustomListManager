@@ -13,7 +13,7 @@
       </div>
       <div class="feature-card">
         <h2>Sort entries</h2>
-        <p>Sort entries based on status, score, rereads, and type (Manga, Manwha, Manhua)</p>
+        <p>Sort entries based on status, score, rereads, tags, and type (Manga, Manwha, Manhua)</p>
       </div>
     </div>
     <div class="navigation-buttons">

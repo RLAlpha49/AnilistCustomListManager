@@ -8,7 +8,7 @@ based on status, score, rereads, and type (Manga, Manwha, Manhua).
 
 - Fetch the list of the authenticated AniList user
 - Move your entries to specific custom lists
-- Sort entries based on status, score, rereads, and type (Manga, Manwha, Manhua)
+- Sort entries based on status, score, rereads, tags, and type (Manga, Manwha, Manhua)
 
 ## Installation
 

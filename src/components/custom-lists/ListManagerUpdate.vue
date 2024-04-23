@@ -1,7 +1,8 @@
 <template>
   <div class="controls">
     <h1 style="text-align: center">Update Custom Lists</h1>
-    <p style="text-align: center">This step allows you to start updating your Anilist. You can pause the update process at any time.</p>
+    <p style="text-align: center">This step allows you to start updating your Anilist. You can pause the update process
+      at any time.</p>
     <div class="button-controls">
       <button @click="toggleUpdate">{{ isUpdating ? 'Pause' : 'Start' }}</button>
     </div>
@@ -119,6 +120,12 @@ export default {
                     romaji
                     english
                   }
+                  tags {
+                    id
+                    name
+                    category
+                    rank
+                  }
                   coverImage {
                     extraLarge
                   }
@@ -155,8 +162,11 @@ export default {
       });
 
       entries = entries.map(entry => {
-        // Create a new property 'lists' for each entry
+        // Create new properties 'lists', 'tagCategories' and 'tags' for each entry
         entry.lists = {};
+        entry.tagCategories = entry.media.tags.map(tag => tag.category);
+        entry.tags = entry.media.tags.map(tag => tag.name);
+        // console.log(entry.tagCategories)
 
         // Track the current status, score, and format lists
         let currentStatusList = '';
@@ -230,6 +240,32 @@ export default {
             entry.lists[list.name] = true;
           } else if ((list.selectedOption === 'Reread' || list.selectedOption === 'Rewatched') && entry.repeat <= 0 && entry.customLists[list.name]) {
             entry.lists[list.name] = false;
+          }
+
+          if (list.selectedOption.includes('Tag Categories contain')) {
+            let tagCategory = list.selectedOption.replace('Tag Categories contain ', '');
+            console.log(tagCategory)
+            // Check the tags
+            if (entry.tagCategories.includes(tagCategory) && entry.customLists[list.name] !== true) {
+              console.log(tagCategory)
+              entry.lists[list.name] = true;
+            } else if (!entry.tagCategories.includes(tagCategory) && entry.customLists[list.name] !== false) {
+              console.log(tagCategory)
+              entry.lists[list.name] = false;
+            }
+          }
+
+          if (list.selectedOption.includes('Tags contain')) {
+            let tag = list.selectedOption.replace('Tags contain ', '');
+            console.log(tag)
+            // Check the tags
+            if (entry.tags.includes(tag) && entry.customLists[list.name] !== true) {
+              console.log(tag)
+              entry.lists[list.name] = true;
+            } else if (!entry.tags.includes(tag) && entry.customLists[list.name] !== false) {
+              console.log(tag)
+              entry.lists[list.name] = false;
+            }
           }
         });
 
@@ -355,7 +391,7 @@ export default {
     font-size: calc(16px * 0.9) !important;
   }
 
-  .media-card p, .media-card li{
+  .media-card p, .media-card li {
     font-size: calc(14px * 0.9) !important;
   }
 }
@@ -365,7 +401,7 @@ export default {
     font-size: calc(16px * 0.8) !important;
   }
 
-  .media-card p, .media-card li{
+  .media-card p, .media-card li {
     font-size: calc(14px * 0.8) !important;
   }
 }

@@ -10,7 +10,7 @@
         <button @click="fetchLists('MANGA')">Manga Lists</button>
       </div>
       <div style="text-align: center;">
-        <input type="checkbox" id="hideDefaultStatusLists" v-model="hideDefaultStatusLists">
+        <input id="hideDefaultStatusLists" v-model="hideDefaultStatusLists" type="checkbox">
         <label for="hideDefaultStatusLists">Hide Default Status Lists</label>
         <p style="color: #c5c6c7; font-size: 0.8em;">
           This option is for hiding AniList's default status lists (Watching, Completed, Planning, etc).
@@ -22,18 +22,18 @@
         <draggable
             v-model="lists"
             group="customLists"
-            @start="drag=true"
+            item-key="name"
             @end="drag=false"
-            item-key="name">
+            @start="drag=true">
           <template #item="{element}">
             <div class="list-item">
               <div class="drag-handle">&#x2630;</div>
               <div class="list-content">{{ element.name }}</div>
-              <Dropdown v-model="element.selectedOption" :options="getOptions(listType)" filter showClear
-                        optionLabel="label"
+              <Dropdown v-model="element.selectedOption" :options="getOptions(listType)" class="custom-dropdown" filter
                         option-value="value"
-                        optionGroupLabel="label" optionGroupChildren="items" placeholder="Select a Condition"
-                        class="custom-dropdown">
+                        optionGroupChildren="items"
+                        optionGroupLabel="label" optionLabel="label" placeholder="Select a Condition"
+                        showClear>
                 <template #optiongroup="slotProps">
                   <div class="flex align-items-center">
                     <div>{{ slotProps.option.label }}</div>
@@ -53,7 +53,7 @@
       <div v-if="showPopup" class="popup">
         <h2>Conditions:</h2>
         <div>
-          <input type="checkbox" id="hideDefaultStatusLists" v-model="hideDefaultStatusLists">
+          <input id="hideDefaultStatusLists" v-model="hideDefaultStatusLists" type="checkbox">
           <label for="hideDefaultStatusLists">Hide Default Status Lists</label>
         </div>
         <ul>
@@ -171,6 +171,11 @@ export default {
       const scoreItems = ['10', '9', '8', '7', '6', '5', '4', '3', '2', '1', 'below 5'];
       let miscItems = [];
       let formatItems = [];
+      let tagCategories = ['Cast', 'Cast / Main Cast', 'Cast / Traits', 'Demographic', 'Setting', 'Setting / Scene', 'Setting / Time', 'Setting / Universe', 'Technical', 'Theme / Action', 'Theme / Arts', 'Theme / Arts-Music', 'Theme / Comedy', 'Theme / Drama', 'Theme / Fantasy', 'Theme / Game', 'Theme / Game-Card & Board Game', 'Theme / Game-Sport', 'Theme / Other', 'Theme / Other-Organisations', 'Theme / Other-Vehicle', 'Theme / Romance', 'Theme / Sci Fi', 'Theme / Sci Fi-Mecha', 'Theme / Slice Of Life'];
+      let tags = "Polyamorous\nAnti-Hero\nEnsembleCast\nEstrangedFamily\nFemaleProtagonist\nMaleProtagonist\nPrimarilyAdultCast\nPrimarilyAnimalCast\nPrimarilyChildCast\nPrimarilyFemaleCast\nPrimarilyMaleCast\nPrimarilyTeenCast\nAgeRegression\nAgender\nAliens\nAmnesia\nAngels\nAnthropomorphism\nArrangedMarriage\nArtificialIntelligence\nAsexual\nButler\nCentaur\nChimera\nChuunibyou\nClone\nCosplay\nCrossdressing\nCyborg\nDelinquents\nDemons\nDetective\nDinosaurs\nDisability\nDissociativeIdentities\nDragons\nDullahan\nElf\nFairy\nFemboy\nGhost\nGoblin\nGods\nGyaru\nHikikomori\nHomeless\nIdol\nKemonomimi\nKuudere\nMaids\nMermaid\nMonsterBoy\nMonsterGirl\nNekomimi\nNinja\nNudity\nNun\nOfficeLady\nOiran\nOjou-Sama\nOrphan\nPirates\nRobots\nSamurai\nShrineMaiden\nSkeleton\nSuccubus\nTannedSkin\nTeacher\nTomboy\nTransgender\nTsundere\nTwins\nVampire\nVeterinarian\nVikings\nVillainess\nVTuber\nWerewolf\nWitch\nYandere\nZombie\nJosei\nKids\nSeinen\nShoujo\nShounen\nMatriarchy\nBar\nBoardingSchool\nCircus\nCoastal\nCollege\nDesert\nDungeon\nForeign\nInn\nKonbini\nNaturalDisaster\nOffice\nOutdoor\nPrison\nRural\nSchool\nSchoolClub\nSnowscape\nUrban\nWork\nAchronologicalOrder\nAnachronism\nAncientChina\nDystopian\nHistorical\nTimeSkip\nAfterlife\nAlternateUniverse\nAugmentedReality\nOmegaverse\nPost-Apocalyptic\nSpace\nUrbanFantasy\nVirtualWorld\n4-Koma\nAchromatic\nAdvertisement\nAnthology\nCGI\nEpisodic\nFlash\nFullCGI\nFullColor\nNoDialogue\nNon-Fiction\nPOV\nPuppetry\nRotoscoping\nStopMotion\nArchery\nBattleRoyale\nEspionage\nFugitive\nGuns\nMartialArts\nSpearplay\nSwordplay\nActing\nCalligraphy\nClassicLiterature\nDrawing\nFashion\nFood\nMakeup\nPhotography\nRakugo\nWriting\nBand\nDancing\nMusical\nParody\nSatire\nSlapstick\nSurrealComedy\nBullying\nClassStruggle\nComingOfAge\nConspiracy\nKingdomManagement\nRehabilitation\nRevenge\nSuicide\nTragedy\nAlchemy\nBodySwapping\nCultivation\nFairyTale\nHenshin\nIsekai\nKaiju\nMagic\nMythology\nNecromancy\nShapeshifting\nSteampunk\nSuperPower\nSuperhero\nWuxia\nYoukai\nBoardGame\nE-Sports\nVideoGames\nCardBattle\nGo\nKaruta\nMahjong\nPoker\nShogi\nAcrobatics\nAirsoft\nAmericanFootball\nAthletics\nBadminton\nBaseball\nBasketball\nBoxing\nCheerleading\nCycling\nFencing\nFishing\nFitness\nFootball\nGolf\nHandball\nIceSkating\nJudo\nLacrosse\nParkour\nRugby\nScubaDiving\nSkateboarding\nSumo\nSurfing\nSwimming\nTableTennis\nTennis\nVolleyball\nWrestling\nAdoption\nAnimals\nAstronomy\nAutobiographical\nBiographical\nBodyHorror\nCannibalism\nChibi\nCosmicHorror\nCrime\nCrossover\nDeathGame\nDenpa\nDrugs\nEconomics\nEducational\nEnvironmental\nEroGuro\nFilmmaking\nFoundFamily\nGambling\nGenderBending\nGore\nLanguageBarrier\nLGBTQ+Themes\nLostCivilization\nMarriage\nMedicine\nMemoryManipulation\nMeta\nMountaineering\nNoir\nOtakuCulture\nPandemic\nPhilosophy\nPolitics\nProxyBattle\nReincarnation\nReligion\nRoyalAffairs\nSlavery\nSoftwareDevelopment\nSurvival\nTerrorism\nTorture\nTravel\nWar\nAssassins\nCriminalOrganization\nCult\nFirefighters\nGangs\nMafia\nMilitary\nPolice\nTriads\nYakuza\nAviation\nCars\nMopeds\nMotorcycles\nShips\nTanks\nTrains\nAgeGap\nBisexual\nBoys'Love\nFemaleHarem\nHeterosexual\nLoveTriangle\nMaleHarem\nMixedGenderHarem\nTeens'Love\n+UnrequitedLove\nYuri\nCyberpunk\nSpaceOpera\nTimeLoop\nTimeManipulation\nTokusatsu\nRealRobot\nSuperRobot\nAgriculture\nCuteBoysDoingCuteThings\nCuteGirlsDoingCuteThings\nFamilyLife\nHorticulture\nIyashikei\n";
+
+      tags = tags.split('\n').map(tag => tag.replace(/(?<!-)([A-Z])/g, ' $1').trim());
+      console.log(tags)
 
       const createOptionObjects = items => items.map(item => ({label: item, value: item}));
 
@@ -197,6 +202,14 @@ export default {
           items: createOptionObjects(formatItems.map(format => `Format set to ${format}`))
         },
         {
+          label: 'Tags Categories',
+          items: createOptionObjects(tagCategories.map(tagCategory => `Tag Categories contain ${tagCategory}`))
+        },
+        {
+          label: 'Tags',
+          items: createOptionObjects(tags.map(tag => `Tags contain ${tag}`))
+        },
+        {
           label: 'Misc',
           items: createOptionObjects(miscItems)
         }
@@ -208,7 +221,11 @@ export default {
       const miscItems = ['rewatched', 'reread'];
       const formatItemsAnime = ['TV', 'TV_Short', 'Movie', 'Special', 'OVA', 'ONA', 'Music'];
       const formatItemsManga = ['Manga (Japan)', 'Manga (South Korean)', 'Manga (Chinese)', 'manga', 'manwha', 'manhua', 'One shot', 'Light Novel'];
-      const allItems = [...statusItems, ...scoreItems, ...miscItems, ...formatItemsAnime, ...formatItemsManga];
+      let tagCategories = ['Cast', 'Cast / Main Cast', 'Cast / Traits', 'Demographic', 'Setting', 'Setting / Scene', 'Setting / Time', 'Setting / Universe', 'Technical', 'Theme / Action', 'Theme / Arts', 'Theme / Arts-Music', 'Theme / Comedy', 'Theme / Drama', 'Theme / Fantasy', 'Theme / Game', 'Theme / Game-Card & Board Game', 'Theme / Game-Sport', 'Theme / Other', 'Theme / Other-Organisations', 'Theme / Other-Vehicle', 'Theme / Romance', 'Theme / Sci Fi', 'Theme / Sci Fi-Mecha', 'Theme / Slice Of Life'];
+      let tagsList = "Polyamorous\nAnti-Hero\nEnsembleCast\nEstrangedFamily\nFemaleProtagonist\nMaleProtagonist\nPrimarilyAdultCast\nPrimarilyAnimalCast\nPrimarilyChildCast\nPrimarilyFemaleCast\nPrimarilyMaleCast\nPrimarilyTeenCast\nAgeRegression\nAgender\nAliens\nAmnesia\nAngels\nAnthropomorphism\nArrangedMarriage\nArtificialIntelligence\nAsexual\nButler\nCentaur\nChimera\nChuunibyou\nClone\nCosplay\nCrossdressing\nCyborg\nDelinquents\nDemons\nDetective\nDinosaurs\nDisability\nDissociativeIdentities\nDragons\nDullahan\nElf\nFairy\nFemboy\nGhost\nGoblin\nGods\nGyaru\nHikikomori\nHomeless\nIdol\nKemonomimi\nKuudere\nMaids\nMermaid\nMonsterBoy\nMonsterGirl\nNekomimi\nNinja\nNudity\nNun\nOfficeLady\nOiran\nOjou-Sama\nOrphan\nPirates\nRobots\nSamurai\nShrineMaiden\nSkeleton\nSuccubus\nTannedSkin\nTeacher\nTomboy\nTransgender\nTsundere\nTwins\nVampire\nVeterinarian\nVikings\nVillainess\nVTuber\nWerewolf\nWitch\nYandere\nZombie\nJosei\nKids\nSeinen\nShoujo\nShounen\nMatriarchy\nBar\nBoardingSchool\nCircus\nCoastal\nCollege\nDesert\nDungeon\nForeign\nInn\nKonbini\nNaturalDisaster\nOffice\nOutdoor\nPrison\nRural\nSchool\nSchoolClub\nSnowscape\nUrban\nWork\nAchronologicalOrder\nAnachronism\nAncientChina\nDystopian\nHistorical\nTimeSkip\nAfterlife\nAlternateUniverse\nAugmentedReality\nOmegaverse\nPost-Apocalyptic\nSpace\nUrbanFantasy\nVirtualWorld\n4-Koma\nAchromatic\nAdvertisement\nAnthology\nCGI\nEpisodic\nFlash\nFullCGI\nFullColor\nNoDialogue\nNon-Fiction\nPOV\nPuppetry\nRotoscoping\nStopMotion\nArchery\nBattleRoyale\nEspionage\nFugitive\nGuns\nMartialArts\nSpearplay\nSwordplay\nActing\nCalligraphy\nClassicLiterature\nDrawing\nFashion\nFood\nMakeup\nPhotography\nRakugo\nWriting\nBand\nDancing\nMusical\nParody\nSatire\nSlapstick\nSurrealComedy\nBullying\nClassStruggle\nComingOfAge\nConspiracy\nKingdomManagement\nRehabilitation\nRevenge\nSuicide\nTragedy\nAlchemy\nBodySwapping\nCultivation\nFairyTale\nHenshin\nIsekai\nKaiju\nMagic\nMythology\nNecromancy\nShapeshifting\nSteampunk\nSuperPower\nSuperhero\nWuxia\nYoukai\nBoardGame\nE-Sports\nVideoGames\nCardBattle\nGo\nKaruta\nMahjong\nPoker\nShogi\nAcrobatics\nAirsoft\nAmericanFootball\nAthletics\nBadminton\nBaseball\nBasketball\nBoxing\nCheerleading\nCycling\nFencing\nFishing\nFitness\nFootball\nGolf\nHandball\nIceSkating\nJudo\nLacrosse\nParkour\nRugby\nScubaDiving\nSkateboarding\nSumo\nSurfing\nSwimming\nTableTennis\nTennis\nVolleyball\nWrestling\nAdoption\nAnimals\nAstronomy\nAutobiographical\nBiographical\nBodyHorror\nCannibalism\nChibi\nCosmicHorror\nCrime\nCrossover\nDeathGame\nDenpa\nDrugs\nEconomics\nEducational\nEnvironmental\nEroGuro\nFilmmaking\nFoundFamily\nGambling\nGenderBending\nGore\nLanguageBarrier\nLGBTQ+Themes\nLostCivilization\nMarriage\nMedicine\nMemoryManipulation\nMeta\nMountaineering\nNoir\nOtakuCulture\nPandemic\nPhilosophy\nPolitics\nProxyBattle\nReincarnation\nReligion\nRoyalAffairs\nSlavery\nSoftwareDevelopment\nSurvival\nTerrorism\nTorture\nTravel\nWar\nAssassins\nCriminalOrganization\nCult\nFirefighters\nGangs\nMafia\nMilitary\nPolice\nTriads\nYakuza\nAviation\nCars\nMopeds\nMotorcycles\nShips\nTanks\nTrains\nAgeGap\nBisexual\nBoys'Love\nFemaleHarem\nHeterosexual\nLoveTriangle\nMaleHarem\nMixedGenderHarem\nTeens'Love\n+UnrequitedLove\nYuri\nCyberpunk\nSpaceOpera\nTimeLoop\nTimeManipulation\nTokusatsu\nRealRobot\nSuperRobot\nAgriculture\nCuteBoysDoingCuteThings\nCuteGirlsDoingCuteThings\nFamilyLife\nHorticulture\nIyashikei\n";
+
+      const tags = tagsList.split('\n').map(tag => tag.replace(/(?<!-)([A-Z])/g, ' $1').trim());
+      const allItems = [...statusItems, ...scoreItems, ...miscItems, ...formatItemsAnime, ...formatItemsManga, ...tagCategories, ...tags];
 
       if (listName.includes('<5')) {
         return `Score set to below 5`;
@@ -233,6 +250,10 @@ export default {
             } else {
               return `Format set to ${item}`;
             }
+          } else if (tagCategories.includes(item)) {
+            return `Tag Categories contain ${item}`;
+          } else if (tags.includes(item)) {
+            return `Tags contain ${item}`;
           }
         }
       }
@@ -526,6 +547,7 @@ input[type="checkbox"]:checked:after {
 .p-dropdown-panel {
   background-color: #1b1d25;
   color: #c5c6c7;
+  max-width: 80%;
 }
 
 .p-dropdown-item {
