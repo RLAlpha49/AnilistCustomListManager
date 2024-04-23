@@ -27,6 +27,7 @@
   <div v-else class="media-list">
     <a v-for="entry in mediaList" :id="entry.media.id" :key="entry.media.id" :href="getMediaUrl(entry)"
        class="media-link"
+       :class="{ removing: entry.removing }"
        target="_blank">
       <div class="media-card">
         <img :data-src="entry.media.coverImage.extraLarge" alt="Cover Image" class="lazy">
@@ -431,7 +432,7 @@ export default {
             this.currentEntry = this.mediaList[index];
 
             this.updateEntry(this.currentEntry).then(() => {
-              this.mediaList = this.mediaList.filter(e => e.media.id !== this.currentEntry.media.id);
+              this.removeEntry(this.currentEntry);
 
               const pauseLoop = () => {
                 if (this.shouldPause || cancellablePromise.cancelled) {
@@ -486,6 +487,14 @@ export default {
       } else {
         console.log(`Failed to update entry with id ${entry.media.id}`);
       }
+    },
+    removeEntry(entry) {
+      entry.removing = true;
+
+      // Wait for the animation to complete before actually removing the entry
+      setTimeout(() => {
+        this.mediaList = this.mediaList.filter(e => e.media.id !== entry.media.id);
+      }, 500);
     },
     pauseUpdate() {
       this.shouldPause = true;
@@ -636,19 +645,16 @@ button:hover {
   justify-content: space-around;
 }
 
-.list-leave-active {
-  transition: all 0.5s ease;
-}
-
-.list-leave-to {
-  opacity: 0;
-  transform: translateY(-30px);
-}
-
 .media-link {
   all: unset;
   text-decoration: none;
   width: 95%;
+  transition: all 0.5s ease;
+}
+
+.media-link.removing {
+  opacity: 0;
+  transform: translateY(-30px);
 }
 
 .media-link:hover {
