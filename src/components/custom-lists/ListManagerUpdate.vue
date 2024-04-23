@@ -125,6 +125,7 @@ export default {
                     name
                     category
                   }
+                  genres
                   coverImage {
                     extraLarge
                   }
@@ -165,6 +166,7 @@ export default {
         entry.lists = {};
         entry.tagCategories = entry.media.tags.map(tag => tag.category);
         entry.tags = entry.media.tags.map(tag => tag.name);
+        entry.genres = entry.media.genres.map(genres => genres);
 
         // Track the current status, score, and format lists
         let currentStatusList = '';
@@ -238,6 +240,16 @@ export default {
             entry.lists[list.name] = true;
           } else if ((list.selectedOption === 'Reread' || list.selectedOption === 'Rewatched') && entry.repeat <= 0 && entry.customLists[list.name]) {
             entry.lists[list.name] = false;
+          }
+
+          if (list.selectedOption.includes('Genres contain')) {
+            let genre = list.selectedOption.replace('Genres contain ', '');
+            // Check the genre
+            if (entry.genres.includes(genre) && entry.customLists[list.name] !== true) {
+              entry.lists[list.name] = true;
+            } else if (!entry.genres.includes(genre) && entry.customLists[list.name] !== false) {
+              entry.lists[list.name] = false;
+            }
           }
 
           if (list.selectedOption.includes('Tag Categories contain')) {
