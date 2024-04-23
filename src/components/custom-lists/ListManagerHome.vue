@@ -4,16 +4,16 @@
     <p>This application allows you to manage your Anilist in a more personalized way.</p>
     <div class="features">
       <div class="feature-card">
-        <h2>Grab the list</h2>
-        <p>Grab the list of the authenticated Anilist user</p>
-      </div>
-      <div class="feature-card">
         <h2>Move your entries</h2>
         <p>Move your entries to specific custom lists</p>
       </div>
       <div class="feature-card">
         <h2>Sort entries</h2>
         <p>Sort entries based on status, score, rereads, genres, tags, and type (Manga, Manwha, Manhua)</p>
+      </div>
+      <div class="feature-card">
+        <h2>Update entries</h2>
+        <p>Update entries automatically based on the conditions you set</p>
       </div>
     </div>
     <div class="navigation-buttons">

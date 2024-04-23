@@ -6,6 +6,12 @@
     <div class="button-controls">
       <button @click="toggleUpdate">{{ isUpdating ? 'Pause' : 'Start' }}</button>
     </div>
+    <p>{{
+        totalEntries > 0 && mediaList && mediaList.length > 0 ? totalEntries - mediaList.length : 0
+      }}/{{ totalEntries > 0 ? totalEntries : 0 }}</p>
+    <ProgressBar
+        :value="totalEntries > 0 && mediaList && mediaList.length > 0 ? ((totalEntries - mediaList.length) / totalEntries) * 100 : 0"></ProgressBar>
+    <p v-if="currentEntry">Updating entry with ID: {{ currentEntry.media.id }}</p>
     <div class="navigation-buttons">
       <router-link to="/custom-list-manager/list-manager">
         <button>Back</button>
@@ -53,17 +59,25 @@
 
 <script>
 import {EventBus} from "@/event-bus";
+import ProgressBar from 'primevue/progressbar';
 import {mapGetters} from 'vuex'
 
 export default {
   name: 'ListManagerUpdate',
+  components: {
+    ProgressBar
+  },
   data() {
     return {
       mediaList: [],
       defaultLists: [],
       customLists: [],
       isLoading: false,
-      isUpdating: false
+      isUpdating: false,
+      shouldPause: false,
+      currentEntry: null,
+      totalEntries: 0,
+      updateProcess: null
     }
   },
   computed: {
@@ -164,7 +178,7 @@ export default {
       });
 
       entries = entries.map(entry => {
-        // Create new properties 'lists', 'tagCategories', 'tags' and 'isAdult' for each entry
+        // Create new properties 'lists', 'tagCategories', 'tags', 'genres', and 'isAdult' for each entry
         entry.lists = {};
         entry.tagCategories = entry.media.tags.map(tag => tag.category);
         entry.tags = entry.media.tags.map(tag => tag.name);
@@ -175,6 +189,7 @@ export default {
         let currentStatusList = '';
         let currentScoreList = '';
         let currentFormatList = '';
+        let toUpdate = false;
 
         // Check the status lists
         this.lists.forEach(list => {
@@ -186,8 +201,13 @@ export default {
             if (entry.status === status && entry.customLists[list.name] !== true) {
               currentStatusList = list.name;
               entry.lists[list.name] = true;
+              toUpdate = true;
             } else if (entry.status !== status && entry.customLists[list.name] !== false) {
               entry.lists[list.name] = false;
+              toUpdate = true;
+            } else if (entry.status === status) {
+              currentStatusList = list.name;
+              entry.lists[list.name] = true;
             }
           }
 
@@ -199,8 +219,12 @@ export default {
               const scoreCondition = parseInt(list.selectedOption.split(' ').slice(-1)[0]);
               if (entry.score === scoreCondition && entry.customLists[list.name] !== true) {
                 entry.lists[list.name] = true;
+                toUpdate = true;
               } else if (entry.score !== scoreCondition && entry.customLists[list.name] !== false) {
                 entry.lists[list.name] = false;
+                toUpdate = true;
+              } else if (entry.score === scoreCondition) {
+                entry.lists[list.name] = true;
               }
             }
           }
@@ -226,15 +250,24 @@ export default {
                 if (entry.customLists[list.name] === false) {
                   currentFormatList = list.name;
                   entry.lists[list.name] = true;
+                  toUpdate = true;
+                } else if (entry.customLists[list.name] !== false) {
+                  entry.lists[list.name] = true;
                 }
               } else if (entry.customLists[list.name] !== false) {
                 entry.lists[list.name] = false;
+                toUpdate = true;
               }
             } else if (entry.media.format === format && entry.customLists[list.name] === false) {
               currentFormatList = list.name;
               entry.lists[list.name] = true;
+              toUpdate = true;
             } else if (entry.media.format !== format && entry.customLists[list.name] !== false) {
               entry.lists[list.name] = false;
+              toUpdate = true;
+            } else if (entry.media.format === format) {
+              currentFormatList = list.name;
+              entry.lists[list.name] = true;
             }
           }
 
@@ -243,8 +276,12 @@ export default {
             // Check the genre
             if (entry.genres.includes(genre) && entry.customLists[list.name] !== true) {
               entry.lists[list.name] = true;
+              toUpdate = true;
             } else if (!entry.genres.includes(genre) && entry.customLists[list.name] !== false) {
               entry.lists[list.name] = false;
+              toUpdate = true;
+            } else if (entry.genres.includes(genre)) {
+              entry.lists[list.name] = true;
             }
           }
 
@@ -253,8 +290,12 @@ export default {
             // Check the tags
             if (entry.tagCategories.includes(tagCategory) && entry.customLists[list.name] !== true) {
               entry.lists[list.name] = true;
+              toUpdate = true;
             } else if (!entry.tagCategories.includes(tagCategory) && entry.customLists[list.name] !== false) {
               entry.lists[list.name] = false;
+              toUpdate = true;
+            } else if (entry.tagCategories.includes(tagCategory)) {
+              entry.lists[list.name] = true;
             }
           }
 
@@ -263,35 +304,54 @@ export default {
             // Check the tags
             if (entry.tags.includes(tag) && entry.customLists[list.name] !== true) {
               entry.lists[list.name] = true;
+              toUpdate = true;
             } else if (!entry.tags.includes(tag) && entry.customLists[list.name] !== false) {
               entry.lists[list.name] = false;
+              toUpdate = true;
+            } else if (entry.tags.includes(tag)) {
+              entry.lists[list.name] = true;
             }
           }
 
           // Check the reread/rewatched list
           if ((list.selectedOption === 'Reread' || list.selectedOption === 'Rewatched') && entry.repeat > 0 && !entry.customLists[list.name]) {
             entry.lists[list.name] = true;
+            toUpdate = true;
           } else if ((list.selectedOption === 'Reread' || list.selectedOption === 'Rewatched') && entry.repeat <= 0 && entry.customLists[list.name]) {
             entry.lists[list.name] = false;
+            toUpdate = true;
+          } else if ((list.selectedOption === 'Reread' || list.selectedOption === 'Rewatched') && entry.repeat > 0) {
+            entry.lists[list.name] = true;
           }
 
           // Check the adult list
           if (list.selectedOption === 'Adult (18+)' && entry.isAdult === true && entry.customLists[list.name] !== true) {
             entry.lists[list.name] = true;
+            toUpdate = true;
           } else if (list.selectedOption === 'Adult (18+)' && entry.isAdult === false && entry.customLists[list.name] !== false) {
             entry.lists[list.name] = false;
+            toUpdate = true;
+          } else if (list.selectedOption === 'Adult (18+)' && entry.isAdult === true) {
+            entry.lists[list.name] = true;
           }
         });
 
         // If the current status, score, or format list is not in the custom lists, set it to true
         if (currentStatusList && !entry.customLists[currentStatusList]) {
           entry.lists[currentStatusList] = true;
+          toUpdate = true;
         }
         if (currentScoreList && !entry.customLists[currentScoreList]) {
           entry.lists[currentScoreList] = true;
+          toUpdate = true;
         }
         if (currentFormatList && !entry.customLists[currentFormatList]) {
           entry.lists[currentFormatList] = true;
+          toUpdate = true;
+        }
+
+        if (!toUpdate) {
+          entry.lists = {};
         }
 
         // Check if the hiddenFromStatusLists value is different from the hideDefaultStatusLists value
@@ -309,6 +369,8 @@ export default {
       entries.sort((a, b) => a.media.title.romaji.localeCompare(b.media.title.romaji));
 
       this.mediaList = entries;
+
+      this.totalEntries = this.mediaList.length;
 
       this.isLoading = false;
 
@@ -351,17 +413,82 @@ export default {
       this.isUpdating = !this.isUpdating;
 
       if (this.isUpdating) {
-        this.startUpdate();
+        this.shouldPause = false;
+        this.updateProcess = this.startUpdate();
       } else {
+        if (this.updateProcess) {
+          this.updateProcess.cancel();
+        }
         this.pauseUpdate();
       }
     },
     startUpdate() {
-      // Logic to start updating the Anilist
-    },
+      let index = 0;
 
+      const cancellablePromise = new Promise((resolve) => {
+        const updateLoop = () => {
+          if (index < this.mediaList.length) {
+            this.currentEntry = this.mediaList[index];
+
+            this.updateEntry(this.currentEntry).then(() => {
+              this.mediaList = this.mediaList.filter(e => e.media.id !== this.currentEntry.media.id);
+
+              const pauseLoop = () => {
+                if (this.shouldPause || cancellablePromise.cancelled) {
+                  if (cancellablePromise.cancelled) {
+                    return resolve('Update process cancelled');
+                  }
+                  setTimeout(pauseLoop, 1000);
+                } else {
+                  setTimeout(() => {
+                    updateLoop();
+                  }, 1000);
+                }
+              };
+              pauseLoop();
+            });
+          } else {
+            resolve();
+          }
+        };
+        updateLoop();
+      });
+
+      cancellablePromise.cancelled = false;
+
+      cancellablePromise.cancel = function () {
+        this.cancelled = true;
+      };
+
+      return cancellablePromise;
+    },
+    async updateEntry(entry) {
+      const updateMediaListEntryMutation = `
+        mutation ($mediaId: Int, $hiddenFromStatusLists: Boolean, $customLists: [String]) {
+          SaveMediaListEntry (mediaId: $mediaId, hiddenFromStatusLists: $hiddenFromStatusLists, customLists: $customLists) {
+            id
+            hiddenFromStatusLists
+            customLists
+          }
+        }
+      `;
+
+      const variables = {
+        mediaId: entry.media.id,
+        hiddenFromStatusLists: entry.lists.hiddenFromStatusLists,
+        customLists: Object.keys(entry.lists).filter(list => entry.lists[list])
+      };
+
+      const response = await this.fetchAniList(updateMediaListEntryMutation, variables);
+
+      if (response.data.SaveMediaListEntry) {
+        console.log(`Successfully updated entry with id ${entry.media.id}`);
+      } else {
+        console.log(`Failed to update entry with id ${entry.media.id}`);
+      }
+    },
     pauseUpdate() {
-      // Logic to pause updating the Anilist
+      this.shouldPause = true;
     },
   }
 }
@@ -455,6 +582,26 @@ export default {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
+.controls p {
+  font-size: 16px;
+  color: #c5c6c7;
+  line-height: 1.5;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.p-progressbar {
+  background-color: #3f3f46;
+  border-radius: 5px;
+  height: 20px;
+  margin: 20px 0;
+}
+
+.p-progressbar-value {
+  background-color: #66fcf1;
+  border-radius: 5px;
+}
+
 .button-controls {
   display: flex;
   justify-content: center;
@@ -487,6 +634,15 @@ button:hover {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-around;
+}
+
+.list-leave-active {
+  transition: all 0.5s ease;
+}
+
+.list-leave-to {
+  opacity: 0;
+  transform: translateY(-30px);
 }
 
 .media-link {
