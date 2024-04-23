@@ -180,11 +180,11 @@ export default {
       const createOptionObjects = items => items.map(item => ({label: item, value: item}));
 
       if (type === 'ANIME') {
-        miscItems = ['Rewatched'];
+        miscItems = ['Rewatched', 'Adult (18+)'];
         formatItems = ['TV', 'TV_Short', 'Movie', 'Special', 'OVA', 'ONA', 'Music'];
       } else if (type === 'MANGA') {
         statusItems = ['Reading', 'Completed', 'Paused', 'Planning', 'Dropped'];
-        miscItems = ['Reread'];
+        miscItems = ['Reread', 'Adult (18+)'];
         formatItems = ['Manga (Japan)', 'Manga (South Korean)', 'Manga (Chinese)', 'One shot', 'Light Novel'];
       }
 

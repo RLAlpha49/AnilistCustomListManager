@@ -19,10 +19,11 @@
     <span v-for="i in 18" :key="i" :style="{ '--i': i }"></span>
   </div>
   <div v-else class="media-list">
-    <a :href="getMediaUrl(entry)" :id="entry.media.id" target="_blank" v-for="entry in mediaList" :key="entry.media.id"
-       class="media-link">
+    <a v-for="entry in mediaList" :id="entry.media.id" :key="entry.media.id" :href="getMediaUrl(entry)"
+       class="media-link"
+       target="_blank">
       <div class="media-card">
-        <img class="lazy" :data-src="entry.media.coverImage.extraLarge" alt="Cover Image">
+        <img :data-src="entry.media.coverImage.extraLarge" alt="Cover Image" class="lazy">
         <div class="media-titles">
           <h3>Romaji Title:</h3>
           <h2 class="romaji-title">{{ entry.media.title.romaji }}</h2>
@@ -121,11 +122,12 @@ export default {
                     romaji
                     english
                   }
+                  genres
                   tags {
                     name
                     category
                   }
-                  genres
+                  isAdult
                   coverImage {
                     extraLarge
                   }
@@ -162,11 +164,12 @@ export default {
       });
 
       entries = entries.map(entry => {
-        // Create new properties 'lists', 'tagCategories' and 'tags' for each entry
+        // Create new properties 'lists', 'tagCategories', 'tags' and 'isAdult' for each entry
         entry.lists = {};
         entry.tagCategories = entry.media.tags.map(tag => tag.category);
         entry.tags = entry.media.tags.map(tag => tag.name);
         entry.genres = entry.media.genres.map(genres => genres);
+        entry.isAdult = entry.media.isAdult;
 
         // Track the current status, score, and format lists
         let currentStatusList = '';
@@ -235,13 +238,6 @@ export default {
             }
           }
 
-          // Check the reread/rewatched list
-          if ((list.selectedOption === 'Reread' || list.selectedOption === 'Rewatched') && entry.repeat > 0 && !entry.customLists[list.name]) {
-            entry.lists[list.name] = true;
-          } else if ((list.selectedOption === 'Reread' || list.selectedOption === 'Rewatched') && entry.repeat <= 0 && entry.customLists[list.name]) {
-            entry.lists[list.name] = false;
-          }
-
           if (list.selectedOption.includes('Genres contain')) {
             let genre = list.selectedOption.replace('Genres contain ', '');
             // Check the genre
@@ -270,6 +266,20 @@ export default {
             } else if (!entry.tags.includes(tag) && entry.customLists[list.name] !== false) {
               entry.lists[list.name] = false;
             }
+          }
+
+          // Check the reread/rewatched list
+          if ((list.selectedOption === 'Reread' || list.selectedOption === 'Rewatched') && entry.repeat > 0 && !entry.customLists[list.name]) {
+            entry.lists[list.name] = true;
+          } else if ((list.selectedOption === 'Reread' || list.selectedOption === 'Rewatched') && entry.repeat <= 0 && entry.customLists[list.name]) {
+            entry.lists[list.name] = false;
+          }
+
+          // Check the adult list
+          if (list.selectedOption === 'Adult (18+)' && entry.isAdult === true && entry.customLists[list.name] !== true) {
+            entry.lists[list.name] = true;
+          } else if (list.selectedOption === 'Adult (18+)' && entry.isAdult === false && entry.customLists[list.name] !== false) {
+            entry.lists[list.name] = false;
           }
         });
 
