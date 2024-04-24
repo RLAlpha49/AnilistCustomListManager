@@ -68,6 +68,7 @@ header {
 header p {
   color: #c5c6c7;
   margin-left: auto;
+  margin-bottom: 16px;
   font-size: 1em;
 }
 
@@ -113,6 +114,7 @@ header p {
 
   header p {
     font-size: calc(1em * 0.8);
+    margin-bottom: calc(16px * 0.8);
   }
 }
 
@@ -129,6 +131,7 @@ header p {
 
   header p {
     font-size: calc(1em * 0.7);
+    margin-bottom: calc(16px * 0.7);
   }
 }
 
@@ -145,6 +148,7 @@ header p {
 
   header p {
     font-size: calc(1em * 0.6);
+    margin-bottom: calc(16px * 0.6);
   }
 }
 
@@ -161,6 +165,7 @@ header p {
 
   header p {
     font-size: calc(1em * 0.5);
+    margin-bottom: calc(16px * 0.5);
   }
 }
 </style>
