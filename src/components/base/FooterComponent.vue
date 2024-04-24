@@ -1,17 +1,23 @@
 <template>
+  <!-- The footer component of the application -->
   <footer class="footer-div">
+    <!-- Copyright notice -->
     <p>© 2024 Alpha49</p>
+    <!-- List of links -->
     <ul>
+      <!-- Link to the website -->
       <li><a href="https://alpha49.com" target="_blank">Website</a></li>
-      <li>
-        <a href="https://github.com/RLAlpha49" target="_blank">Github</a>
-      </li>
+      <!-- Link to the Github page -->
+      <li><a href="https://github.com/RLAlpha49" target="_blank">Github</a></li>
+      <!-- Link to send an email -->
       <li><a href="mailto:contact@alpha49.com">Contact</a></li>
     </ul>
+    <!-- Disclaimer about AniList API -->
     <p>
       This application uses the AniList API. This project is not
       affiliated with AniList in any way.
     </p>
+    <!-- License information -->
     <p>
       This project is licensed under the
       <a href="https://www.gnu.org/licenses/gpl-3.0.en.html"
@@ -23,11 +29,13 @@
 
 <script>
 export default {
+  // The name of the component
   name: 'FooterComponent',
 }
 </script>
 
 <style scoped>
+/* General styles for the footer */
 .footer-div {
   width: auto;
   bottom: 0;
@@ -41,6 +49,7 @@ export default {
   transition: width 0.5s;
 }
 
+/* General styles for the text and links in the footer */
 .footer-div p,
 .footer-div a {
   color: #c5c6c7;
@@ -48,10 +57,12 @@ export default {
   padding: 0;
 }
 
+/* General styles for the links when hovered */
 .footer-div a:hover {
   color: #66fcf1;
 }
 
+/* General styles for the list of links */
 .footer-div ul {
   list-style-type: none;
   padding: 0;
@@ -60,6 +71,7 @@ export default {
   gap: 10px;
 }
 
+/* Adjust styles for screens 700px wide or less */
 @media (width <= 700px) {
   .footer-div {
     margin-top: calc(40px * 0.9);
@@ -67,6 +79,7 @@ export default {
   }
 }
 
+/* Adjust styles for screens 550px wide or less */
 @media (width <= 550px) {
   .footer-div {
     margin-top: calc(40px * 0.8);
@@ -74,6 +87,7 @@ export default {
   }
 }
 
+/* Adjust styles for screens 500px wide or less */
 @media (width <= 500px) {
   .footer-div {
     margin-top: calc(40px * 0.7);
@@ -81,6 +95,7 @@ export default {
   }
 }
 
+/* Adjust styles for screens 450px wide or less */
 @media (width <= 450px) {
   .footer-div {
     margin-top: calc(40px * 0.6);
@@ -88,6 +103,7 @@ export default {
   }
 }
 
+/* Adjust styles for screens 400px wide or less */
 @media (width <= 400px) {
   .footer-div {
     margin-top: calc(40px * 0.5);

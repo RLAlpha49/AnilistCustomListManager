@@ -1,15 +1,25 @@
 <template>
   <div id="list-manager-list">
+    <!-- Error dropdown component, shown when retry countdown is active -->
     <ErrorDropdown v-if="retryCountdown >= 0" :countdown="retryCountdown"/>
+    <!-- Container for the list manager content -->
     <div class="manager">
+      <!-- Title of the list manager -->
       <h1 style="text-align: center">{{ title }}</h1>
-      <p style="text-align: center">The order of the list does not affect the functionality.<br> Select the option in
-        the dropdowns to be assocaited with the custom list.<br> For example if you want all anime/manga with the
-        completed status to be set a certain custom list.</p>
+      <!-- Description of the list manager functionality -->
+      <p style="text-align: center">
+        The order of the list does not affect the functionality.<br>
+        Select the option in the dropdowns to be associated with the custom list.<br>
+        For example if you want all anime/manga with the completed status to be set a certain custom list.
+      </p>
+      <!-- Container for the list type buttons -->
       <div class="button-container">
+        <!-- Button to fetch anime lists -->
         <button @click="fetchLists('ANIME')">Anime Lists</button>
+        <!-- Button to fetch manga lists -->
         <button @click="fetchLists('MANGA')">Manga Lists</button>
       </div>
+      <!-- Checkbox to hide default status lists -->
       <div style="text-align: center;">
         <input id="hideDefaultStatusLists" v-model="hideDefaultStatusLists" type="checkbox">
         <label for="hideDefaultStatusLists">Hide Default Status Lists</label>
@@ -18,25 +28,34 @@
           It does not affect the custom lists.
         </p>
       </div>
+      <!-- Container for the draggable list items -->
       <div class="draggable-container">
+        <!-- Spinner shown when loading -->
         <div v-if="loading" class="spinner"></div>
+        <!-- Draggable component for the custom lists -->
         <draggable
             v-model="lists"
             group="customLists"
             item-key="name"
             @end="drag=false"
             @start="drag=true">
+          <!-- Template for each draggable list item -->
           <template #item="{element}">
             <div class="list-item">
+              <!-- Drag handle for the list item -->
               <div class="drag-handle">&#x2630;</div>
+              <!-- Name of the list -->
               <div class="list-content">{{ element.name }}</div>
+              <!-- Dropdown to select the condition for the list -->
               <Dropdown v-model="element.selectedOption" :options="getOptions(listType)" class="custom-dropdown" filter
                         option-value="value"
                         optionGroupChildren="items"
                         optionGroupLabel="label" optionLabel="label" placeholder="Select a Condition"
                         showClear>
+                <!-- Template for each option group in the dropdown -->
                 <template #optiongroup="slotProps">
                   <div class="flex align-items-center">
+                    <!-- Label of the option group -->
                     <div>{{ slotProps.option.label }}</div>
                   </div>
                 </template>
@@ -45,25 +64,36 @@
           </template>
         </draggable>
       </div>
+      <!-- Navigation buttons -->
       <div class="navigation-buttons">
+        <!-- Button to go back to the Anilist login page -->
         <router-link to="/custom-list-manager/anilist-login">
           <button>Back</button>
         </router-link>
+        <!-- Button to go to the next step -->
         <button @click="confirmAndNavigate">Next</button>
       </div>
+      <!-- Popup shown when confirming the conditions -->
       <div v-if="showPopup" class="popup">
+        <!-- Title of the popup -->
         <h2>Conditions:</h2>
+        <!-- Checkbox to hide default status lists -->
         <div>
           <input id="hideDefaultStatusLists" v-model="hideDefaultStatusLists" type="checkbox">
           <label for="hideDefaultStatusLists">Hide Default Status Lists</label>
         </div>
+        <!-- List of the conditions for each custom list -->
         <ul>
           <li v-for="list in filteredLists" :key="list.name">
+            <!-- Name and selected option of the list -->
             {{ list.name }}: {{ list.selectedOption }}
           </li>
         </ul>
+        <!-- Navigation buttons -->
         <div class="navigation-buttons">
+          <!-- Button to cancel the confirmation -->
           <button @click="showPopup = false">Cancel</button>
+          <!-- Button to confirm the conditions and go to the next step -->
           <button @click="proceedToNextStep">Confirm</button>
         </div>
       </div>
@@ -81,27 +111,29 @@ import ErrorDropdown from "@/components/base/ErrorDropdown";
 export default {
   name: 'ListManagerList',
   components: {
-    draggable,
-    Dropdown,
-    ErrorDropdown
+    draggable, // Enables drag and drop functionality
+    Dropdown, // Dropdown component from PrimeVue
+    ErrorDropdown // Custom error dropdown component
   },
   data() {
     return {
-      drag: false,
-      lists: [],
-      token: null,
-      userId: null,
-      listType: 'ANIME',
-      loading: false,
-      showPopup: false,
-      errorMessage: null,
-      retryCountdown: -1,
-      hideDefaultStatusLists: this.$store.getters.hideDefaultStatusLists !== null ? this.$store.getters.hideDefaultStatusLists : true
+      drag: false, // State for drag and drop
+      lists: [], // List of custom lists
+      token: null, // Anilist token
+      userId: null, // User ID
+      listType: 'ANIME', // Default list type
+      loading: false, // Loading state
+      showPopup: false, // State for showing popup
+      errorMessage: null, // Error message
+      retryCountdown: -1, // Countdown for retrying failed requests
+      hideDefaultStatusLists: this.$store.getters.hideDefaultStatusLists !== null ? this.$store.getters.hideDefaultStatusLists : true // State for hiding default status lists
     }
   },
   watch: {
+    // Watcher for lists
     lists: {
       handler(newLists) {
+        // When lists change, update the list locations and conditions in the store
         const newListLocations = newLists.map((list, index) => ({
           name: list.name,
           selectedOption: list.selectedOption,
@@ -121,24 +153,29 @@ export default {
           this.$store.commit('setConditionsManga', newConditions);
         }
       },
-      deep: true
+      deep: true // Deep watch to observe nested data
     },
+    // Watcher for hideDefaultStatusLists
     hideDefaultStatusLists: {
       handler(newValue) {
+        // When hideDefaultStatusLists changes, update it in the store
         this.$store.commit('setHideDefaultStatusLists', newValue);
       },
-      immediate: true
+      immediate: true // Apply the handler immediately upon registration
     }
   },
   computed: {
+    // Computed property for title
     title() {
       return `Your ${this.listType} Custom Lists`;
     },
+    // Computed property for filtered lists
     filteredLists() {
       return this.lists.filter(list => list.selectedOption);
     }
   },
   mounted() {
+    // When the component is mounted, fetch the Anilist token and viewer ID
     this.token = localStorage.getItem('anilistToken');
     if (!this.token) {
       EventBus.emit('show-error', 'Anilist token not found in local storage');
@@ -147,9 +184,11 @@ export default {
     this.fetchViewerId();
   },
   methods: {
+    // Method to show error
     showError(message) {
       EventBus.emit('show-error', message);
     },
+    // Method to confirm and navigate
     confirmAndNavigate() {
       if (typeof this.showConditions !== 'function') {
         EventBus.emit('show-error', 'showConditions is not a function');
@@ -157,9 +196,11 @@ export default {
       }
       this.showConditions();
     },
+    // Method to show conditions
     showConditions() {
       this.showPopup = true;
     },
+    // Method to proceed to next step
     proceedToNextStep() {
       this.showPopup = false;
       this.$store.commit('setLists', this.filteredLists);
@@ -168,11 +209,13 @@ export default {
       this.$store.commit('setHideDefaultStatusLists', this.hideDefaultStatusLists);
       this.$router.push("/custom-list-manager/update");
     },
+    // Method to sort lists
     sortLists() {
-      console.log(this.lists)
+      // Define categories for anime and manga
       const categoriesAnime = ["watching", "completed", "paused", "planning", "dropped", "rewatched", "10", "9", "8", "7", "6", "5", "<5", "4", "3", "2", "1", "tv", "tv short", "movie", "special", "ova", "ona", "music"];
       const categoriesManga = ["reading", "completed", "paused", "planning", "dropped", "reread", "10", "9", "8", "7", "6", "5", "<5", "4", "3", "2", "1", "manga (japan)", "manga (south korean)", "manga (chinese)", "manga", "manwha", "manhua", "one shot", "light novel", "web novel"];
       const categories = this.listType === 'ANIME' ? categoriesAnime : categoriesManga;
+      // Sort the lists based on the categories
       this.lists.sort((a, b) => {
         const aCategoryIndex = categories.findIndex(category => a.name.toLowerCase().includes(category));
         const bCategoryIndex = categories.findIndex(category => b.name.toLowerCase().includes(category));
@@ -276,7 +319,9 @@ export default {
       }
       return null;
     },
+    // Fetch the viewer's ID from Anilist
     async fetchViewerId() {
+      // GraphQL query to get the viewer's ID
       const query = `
         query {
           Viewer {
@@ -286,16 +331,25 @@ export default {
       `;
 
       try {
+        // Fetch the data from Anilist
         const response = await this.fetchAniList(query);
+        // Set the user ID to the viewer's ID
         this.userId = response.data.Viewer.id;
+        // Fetch the lists for the current list type
         await this.fetchLists(this.listType);
       } catch (error) {
+        // Emit an error event if something goes wrong
         EventBus.emit('show-error', error.message);
       }
     },
+
+    // Fetch the lists from Anilist
     async fetchLists(type) {
+      // Set the loading state to true
       this.loading = true;
+      // Set the list type
       this.listType = type;
+      // GraphQL query to get the lists
       const query = `
         query {
           MediaListCollection(userId: ${this.userId}, type: ${type}) {
@@ -308,20 +362,26 @@ export default {
       `;
 
       try {
+        // Fetch the data from Anilist
         const response = await this.fetchAniList(query);
 
+        // Get the saved conditions and list locations from the store
         const savedConditions = this.listType === 'ANIME' ? this.$store.getters.conditionsAnime : this.$store.getters.conditionsManga;
         const savedListLocations = this.listType === 'ANIME' ? this.$store.getters.listLocationsAnime : this.$store.getters.listLocationsManga;
 
+        // Filter the lists to only include custom lists
         const listsFromQuery = response.data.MediaListCollection.lists.filter(list => list.isCustomList);
 
+        // Get the names of the saved lists and conditions
         const savedListNames = savedListLocations.map(list => list.name);
         const savedConditionNames = savedConditions.map(condition => condition.name);
         const queryListNames = listsFromQuery.map(list => list.name);
 
+        // Check if all list names exist in the saved lists and conditions
         const allListNamesExist = queryListNames.every(name => savedListNames.includes(name));
         const allConditionNamesExist = queryListNames.every(name => savedConditionNames.includes(name));
 
+        // If all list names exist and the list type hasn't changed, use the saved lists and conditions
         if (savedListLocations && savedListLocations.length >= listsFromQuery.length && savedConditions && savedConditions.length >= listsFromQuery.length && allListNamesExist && allConditionNamesExist && this.listType === type) {
           this.lists = savedListLocations.map(savedList => {
             const list = listsFromQuery.find(list => list.name === savedList.name);
@@ -335,6 +395,7 @@ export default {
           }).filter(list => list);
           console.log('Final lists:', this.lists);
         } else {
+          // If not all list names exist or the list type has changed, fetch the lists from Anilist
           this.lists = listsFromQuery.map((list) => {
             return {
               ...list,
@@ -344,6 +405,7 @@ export default {
           this.sortLists();
           console.log('Final lists:', this.lists);
 
+          // Save the new list locations and conditions in the store
           const newListLocations = this.lists.map((list, index) => ({
             name: list.name,
             selectedOption: list.selectedOption,
@@ -362,14 +424,20 @@ export default {
           }
         }
 
+        // Set the loading state to false
         this.loading = false;
       } catch (error) {
+        // Log the error and emit an error event if something goes wrong
         console.error('Error in fetchLists:', error.message);
         EventBus.emit('show-error', error.message);
       }
     },
+
+    // Fetch data from Anilist
     async fetchAniList(query, variables = {}, retryCount = 0) {
+      // The URL for the Anilist API
       const url = 'https://graphql.anilist.co';
+      // The options for the fetch request
       const options = {
         method: 'POST',
         headers: {
@@ -384,6 +452,7 @@ export default {
       };
 
       try {
+        // Fetch the data from Anilist
         const response = await fetch(url, options);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -395,6 +464,7 @@ export default {
         return data;
       } catch (error) {
         console.log('Error:', error.code, error.message, error.stack)
+        // If the fetch fails and the retry count is less than 5, retry the request
         if (error.message === 'Failed to fetch' && retryCount < 5) {
           this.retryCountdown = 15;
           return new Promise((resolve) => {
@@ -408,6 +478,7 @@ export default {
             }, 1000);
           });
         } else {
+          // Emit an error event if the fetch fails and the retry count is 5 or more
           EventBus.emit('show-error', 'Network error. Please check your internet connection or try again later.');
         }
       }
@@ -417,6 +488,7 @@ export default {
 </script>
 
 <style>
+/* Styling for the main container of the list manager */
 .manager {
   padding: 20px;
   margin: 20px;
@@ -426,16 +498,19 @@ export default {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
+/* Styling for the footer div */
 .footer-div {
   margin-top: 20px !important;
 }
 
+/* Styling for the container that holds the buttons */
 .button-container {
   display: flex;
   justify-content: center;
   margin-bottom: 20px;
 }
 
+/* Styling for the buttons */
 button {
   background-color: #66fcf1;
   color: #1b1d25;
@@ -451,12 +526,14 @@ button {
   transition-duration: 0.4s;
 }
 
+/* Styling for the buttons when hovered over */
 button:hover {
   background-color: #1b1d25;
   color: #66fcf1;
   outline: 2px solid #66fcf1;
 }
 
+/* Styling for the checkboxes */
 input[type="checkbox"] {
   appearance: none;
   background-color: #1b1d25;
@@ -471,10 +548,12 @@ input[type="checkbox"] {
   cursor: pointer;
 }
 
+/* Styling for the checkboxes when checked */
 input[type="checkbox"]:checked {
   background-color: #66fcf1;
 }
 
+/* Styling for the checkboxes when checked (after effect) */
 input[type="checkbox"]:checked:after {
   content: '\2713';
   position: absolute;
@@ -484,10 +563,12 @@ input[type="checkbox"]:checked:after {
   color: #1b1d25;
 }
 
+/* Styling for the container that holds the draggable items */
 .draggable-container {
   padding: 20px;
 }
 
+/* Styling for the spinner */
 .spinner {
   display: flex;
   justify-content: center;
@@ -500,6 +581,7 @@ input[type="checkbox"]:checked:after {
   margin: auto;
 }
 
+/* Animation for the spinner */
 @keyframes spin {
   0% {
     transform: rotate(0deg);
@@ -509,6 +591,7 @@ input[type="checkbox"]:checked:after {
   }
 }
 
+/* Animation for hue rotation */
 @keyframes hueRotate {
   0% {
     filter: hue-rotate(0deg);
@@ -518,6 +601,7 @@ input[type="checkbox"]:checked:after {
   }
 }
 
+/* Styling for the list items */
 .list-item {
   position: relative;
   display: flex;
@@ -529,6 +613,7 @@ input[type="checkbox"]:checked:after {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+/* Styling for the list items (before effect) */
 .list-item::before {
   content: "";
   position: absolute;
@@ -539,16 +624,19 @@ input[type="checkbox"]:checked:after {
   border: 1px solid #66fcf1;
 }
 
+/* Styling for the list items when hovered over */
 .list-item:hover::before {
   animation: hueRotate 5s linear infinite;
   border-width: 3px;
 }
 
+/* Styling for the list items when hovered over */
 .list-item:hover {
   transform: scale(1.05);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
+/* Styling for the custom dropdown */
 .custom-dropdown {
   margin-left: auto;
   background-color: #1b1d25;
@@ -557,59 +645,70 @@ input[type="checkbox"]:checked:after {
   transition-duration: 0.4s;
 }
 
+/* Styling for the dropdown header */
 .p-dropdown-header {
   background-color: #242631;
 }
 
+/* Styling for the dropdown filter */
 .p-dropdown-filter {
   background-color: #1b1d25;
   color: #c5c6c7;
 }
 
+/* Styling for the dropdown item group */
 .p-dropdown-item-group {
   background-color: #242631;
   color: #c5c6c7;
 }
 
+/* Styling for the dropdown label */
 .custom-dropdown .p-dropdown-label {
   color: #ffffff;
   white-space: normal;
   word-wrap: break-word;
 }
 
+/* Styling for the dropdown panel */
 .p-dropdown-panel {
   background-color: #1b1d25;
   color: #c5c6c7;
   max-width: 80%;
 }
 
+/* Styling for the dropdown item */
 .p-dropdown-item {
   color: #c5c6c7;
   white-space: normal;
   word-wrap: break-word;
 }
 
+/* Styling for the dropdown item when focused */
 .p-dropdown-item.p-focus {
   background-color: #66fcf1;
   color: #1b1d25;
 }
 
+/* Styling for the dropdown item when highlighted */
 .p-dropdown-item.p-highlight {
   background-color: #66fcf1;
   color: #1b1d25;
 }
 
+/* Styling for the drag handle */
 .drag-handle {
   margin-right: 10px;
   color: #66fcf1;
 }
 
+/* Styling for the navigation buttons */
 .navigation-buttons {
   display: flex;
   justify-content: space-between;
   width: 100%;
 }
 
+/* Styling for the popup */
 .popup {
   position: fixed;
   top: 50%;
@@ -625,11 +724,13 @@ input[type="checkbox"]:checked:after {
   overflow-y: auto;
 }
 
+/* Styling for the popup list */
 .popup ul {
   list-style-type: none;
   padding: 0;
 }
 
+/* Styling for the popup list items */
 .popup li {
   padding: 10px;
   margin-bottom: 10px;
@@ -640,11 +741,13 @@ input[type="checkbox"]:checked:after {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+/* Styling for the popup list items when hovered over */
 .popup li:hover {
   transform: scale(1.05);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
+/* Styling for the popup buttons */
 .popup button {
   background-color: #66fcf1;
   color: #1b1d25;
@@ -660,6 +763,7 @@ input[type="checkbox"]:checked:after {
   transition-duration: 0.4s;
 }
 
+/* Styling for the popup buttons when hovered over */
 .popup button:hover {
   background-color: #1b1d25;
   color: #66fcf1;
