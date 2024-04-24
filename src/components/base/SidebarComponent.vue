@@ -7,7 +7,7 @@
       <ul>
         <!-- Site icon link -->
         <li class="site-icon-li">
-          <a href="https://anicards.alpha49.com" target="_blank">
+          <a href="/">
             <div class="link-content">
               <!-- Site icon image -->
               <img
@@ -22,7 +22,7 @@
         </li>
         <!-- Home link -->
         <li>
-          <a href="https://anicards.alpha49.com" target="_blank">
+          <a href="/">
             <div class="link-content">
               <!-- Home icon image -->
               <img
@@ -47,6 +47,25 @@
               <span class="link-text">Custom Lists</span>
             </div>
           </router-link>
+        </li>
+        <!-- Stat Cards link -->
+        <li>
+          <a href="https://anicards.alpha49.com" target="_blank">
+            <div class="link-content">
+              <!-- Stat Cards icon image -->
+              <img
+                  src="/images/stat-cards.webp"
+                  alt="Stat Cards Sidebar Icon"
+              />
+              <!-- Container for link text and smaller text -->
+              <div class="text-container">
+                <!-- Stat Cards link text -->
+                <span class="link-text">Stat Cards</span>
+                <!-- Smaller text -->
+                <span class="small-text">(Different Site)</span>
+              </div>
+            </div>
+          </a>
         </li>
         <!-- FAQ link -->
         <li>
@@ -282,8 +301,28 @@ export default {
   color: white;
 }
 
+/* Styles for text container */
+.text-container {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Styles for smaller text */
+.small-text {
+  transform: scaleX(0);
+  transform-origin: left;
+  opacity: 0;
+  transition: transform 0.7s, opacity 0.7s;
+  white-space: nowrap;
+  text-decoration: none;
+  filter: brightness(0.6);
+  color: white;
+  font-size: 0.8em;
+  display: block;
+}
+
 /* Styles for link text when sidebar is expanded */
-.sidebar.expanded .link-text {
+.sidebar.expanded .link-text, .sidebar.expanded .small-text{
   padding-left: 10px;
   transform: scaleX(1);
   opacity: 1;
@@ -368,6 +407,11 @@ export default {
     padding-left: calc(10px * 0.9);
     font-size: calc(1em * 0.95);
   }
+
+  .small-text {
+    padding-left: calc(10px * 0.9);
+    font-size: calc(0.8em * 0.95);
+  }
 }
 
 /* For widths up to 550px */
@@ -394,6 +438,11 @@ export default {
   .link-text {
     padding-left: calc(10px * 0.8);
     font-size: calc(1em * 0.9);
+  }
+
+  .small-text {
+    padding-left: calc(10px * 0.8);
+    font-size: calc(0.8em * 0.9);
   }
 }
 
@@ -422,6 +471,11 @@ export default {
     padding-left: calc(10px * 0.7);
     font-size: calc(1em * 0.85);
   }
+
+  .small-text {
+    padding-left: calc(10px * 0.7);
+    font-size: calc(0.8em * 0.85);
+  }
 }
 
 /* For widths up to 450px */
@@ -431,7 +485,7 @@ export default {
   }
 
   .sidebar.expanded {
-    width: calc(180px * 0.6);
+    width: calc(180px * 0.65);
   }
 
   .sidebar nav ul li a,
@@ -458,7 +512,7 @@ export default {
   }
 
   .sidebar.expanded {
-    width: calc(180px * 0.5);
+    width: calc(180px * 0.6);
   }
 
   .sidebar nav ul li a,
