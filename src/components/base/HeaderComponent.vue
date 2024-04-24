@@ -9,7 +9,7 @@
     <p>
       <a
           class="changelog-link"
-          href="https://docs.alpha49.com/"
+          href="https://docs.alpha49.com/anilist-list-manager"
           target="_blank"
       >Changelog</a
       >
