@@ -129,4 +129,122 @@ export default {
   justify-content: space-between;
   width: 100%;
 }
+
+/* Responsive styles */
+@media (width <= 700px) {
+  .homepage h1 {
+    font-size: calc(2.5em * 0.95);
+    margin-bottom: calc(20px * 0.95);
+  }
+
+  .homepage p {
+    font-size: calc(1.2em * 0.95);
+    margin-bottom: calc(20px * 0.95);
+  }
+
+  .feature-card h2 {
+    font-size: calc(1.5em * 0.95);
+    margin-bottom: calc(10px * 0.95);
+  }
+
+  .homepage button {
+    font-size: calc(1.2em * 0.95);
+  }
+}
+
+@media (width <= 550px) {
+  .homepage h1 {
+    font-size: calc(2.5em * 0.9);
+    margin-bottom: calc(20px * 0.9);
+  }
+
+  .homepage p {
+    font-size: calc(1.2em * 0.9);
+    margin-bottom: calc(20px * 0.9);
+  }
+
+  .feature-card h2 {
+    font-size: calc(1.5em * 0.9);
+    margin-bottom: calc(10px * 0.9);
+  }
+
+  .feature-card p {
+    padding: calc(10px * 0.9) calc(20px * 0.9);
+  }
+}
+
+@media (width <= 500px) {
+  .homepage h1 {
+    font-size: calc(2.5em * 0.85);
+    margin-bottom: calc(20px * 0.85);
+  }
+
+  .homepage p {
+    font-size: calc(1.2em * 0.85);
+    margin-bottom: calc(20px * 0.85);
+  }
+
+  .feature-card h2 {
+    font-size: calc(1.5em * 0.85);
+    margin-bottom: calc(10px * 0.85);
+  }
+
+  .feature-card p {
+    padding: calc(10px * 0.85) calc(20px * 0.85);
+  }
+
+  .homepage button {
+    font-size: calc(1.2em * 0.85);
+  }
+}
+
+@media (width <= 450px) {
+  .homepage h1 {
+    font-size: calc(2.5em * 0.8);
+    margin-bottom: calc(20px * 0.8);
+  }
+
+  .homepage p {
+    font-size: calc(1.2em * 0.8);
+    margin-bottom: calc(20px * 0.8);
+  }
+
+  .feature-card h2 {
+    font-size: calc(1.5em * 0.8);
+    margin-bottom: calc(10px * 0.8);
+  }
+
+  .feature-card p {
+    padding: calc(10px * 0.8) calc(20px * 0.8);
+  }
+
+  .homepage button {
+    font-size: calc(1.2em * 0.8);
+  }
+}
+
+@media (width <= 400px) {
+  .homepage h1 {
+    font-size: calc(2.5em * 0.75);
+    margin-bottom: calc(20px * 0.75);
+  }
+
+  .homepage p {
+    font-size: calc(1.2em * 0.75);
+    margin-bottom: calc(20px * 0.75);
+  }
+
+  .feature-card h2 {
+    font-size: calc(1.5em * 0.75);
+    margin-bottom: calc(10px * 0.75);
+  }
+
+  .feature-card p {
+    padding: calc(10px * 0.75) calc(20px * 0.75);
+  }
+
+  .homepage button {
+    font-size: calc(1.2em * 0.75);
+  }
+}
 </style>

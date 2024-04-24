@@ -136,4 +136,54 @@ export default {
   justify-content: space-between;
   width: 100%;
 }
+
+@media (width <= 700px) {
+  .anilist-login p {
+    font-size: calc(1.2em * 0.95);
+  }
+
+  .anilist-login button {
+    font-size: calc(1.2em * 0.95);
+  }
+}
+
+@media (width <= 550px) {
+  .anilist-login p {
+    font-size: calc(1.2em * 0.9);
+  }
+
+  .anilist-login button {
+    font-size: calc(1.2em * 0.9);
+  }
+}
+
+@media (width <= 500px) {
+  .anilist-login p {
+    font-size: calc(1.2em * 0.85);
+  }
+
+  .anilist-login button {
+    font-size: calc(1.2em * 0.85);
+  }
+}
+
+@media (width <= 450px) {
+  .anilist-login p {
+    font-size: calc(1.2em * 0.8);
+  }
+
+  .anilist-login button {
+    font-size: calc(1.2em * 0.8);
+  }
+}
+
+@media (width <= 400px) {
+  .anilist-login p {
+    font-size: calc(1.2em * 0.75);
+  }
+
+  .anilist-login button {
+    font-size: calc(1.2em * 0.75);
+  }
+}
 </style>

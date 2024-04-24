@@ -88,7 +88,7 @@
       <!-- Link content -->
       <div class="link-content">
         <!-- Discord link -->
-        <a href="https://discord.gg/TaeAPPmAbw" target="_blank">
+        <a href="https://discordid.netlify.app/?id=251479989378220044" target="_blank">
           <!-- Discord icon image -->
           <img
               src="/images/Discord.webp"

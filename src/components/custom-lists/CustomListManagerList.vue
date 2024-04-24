@@ -769,4 +769,208 @@ input[type="checkbox"]:checked:after {
   color: #66fcf1;
   outline: 2px solid #66fcf1;
 }
+
+@media (width <= 700px) {
+  .manager {
+    padding: calc(20px * 0.95);
+    margin: calc(20px * 0.95);
+  }
+
+  h1 {
+    font-size: calc(2.5em * 0.95);
+  }
+
+  p {
+    font-size: calc(1.2em * 0.95);
+  }
+
+  button {
+    font-size: calc(16px * 0.95) !important;
+  }
+
+  .draggable-container {
+    padding: calc(20px * 0.95);
+  }
+
+  .p-dropdwon-panel {
+    max-width: calc(80% * 0.95);
+  }
+
+  .p-inputtext {
+    font-size: calc(1rem * 0.95);
+  }
+
+  .list-content {
+    font-size: calc(1rem * 0.95);
+  }
+
+  .p-dropdown-item-group, .p-dropdown-item-label {
+    font-size: calc(16px * 0.95);
+  }
+
+  .popup h2 {
+    font-size: calc(1.5em * 0.95);
+  }
+
+  .popup label {
+    font-size: calc(1rem * 0.95);
+  }
+
+  .popup li {
+    font-size: calc(1rem * 0.95);
+  }
+}
+
+@media (width <= 500px) {
+  .manager {
+    padding: calc(20px * 0.9);
+    margin: calc(20px * 0.9);
+  }
+
+  h1 {
+    font-size: calc(2.5em * 0.9);
+  }
+
+  p {
+    font-size: calc(1.2em * 0.9);
+  }
+
+  button {
+    font-size: calc(16px * 0.9) !important
+  }
+
+  .draggable-container {
+    padding: calc(20px * 0.9);
+  }
+
+  .p-dropdwon-panel {
+    max-width: calc(80% * 0.9);
+  }
+
+  .p-inputtext {
+    font-size: calc(1rem * 0.9);
+  }
+
+  .list-content {
+    font-size: calc(1rem * 0.9);
+  }
+
+  .p-dropdown-item-group, .p-dropdown-item-label {
+    font-size: calc(16px * 0.9);
+  }
+
+  .popup h2 {
+    font-size: calc(1.5em * 0.9);
+  }
+
+  .popup label {
+    font-size: calc(1rem * 0.9);
+  }
+
+  .popup li {
+    font-size: calc(1rem * 0.9);
+  }
+}
+
+@media (width <= 450px) {
+  .manager {
+    padding: calc(20px * 0.85);
+    margin: calc(20px * 0.85);
+  }
+
+  h1 {
+    font-size: calc(2.5em * 0.85);
+  }
+
+  p {
+    font-size: calc(1.2em * 0.85);
+  }
+
+  button {
+    font-size: calc(16px * 0.85) !important;
+  }
+
+  .draggable-container {
+    padding: calc(20px * 0.85);
+  }
+
+  .p-dropdwon-panel {
+    max-width: calc(80% * 0.85);
+  }
+
+  .p-inputtext {
+    font-size: calc(1rem * 0.85);
+  }
+
+  .list-content {
+    font-size: calc(1rem * 0.85);
+  }
+
+  .p-dropdown-item-group, .p-dropdown-item-label {
+    font-size: calc(16px * 0.85);
+  }
+
+  .popup h2 {
+    font-size: calc(1.5em * 0.85);
+  }
+
+  .popup label {
+    font-size: calc(1rem * 0.85);
+  }
+
+  .popup li {
+    font-size: calc(1rem * 0.85);
+  }
+}
+
+@media (width <= 400px) {
+  .manager {
+    padding: calc(20px * 0.7);
+    margin: calc(20px * 0.7);
+  }
+
+  h1 {
+    font-size: calc(2.5em * 0.7);
+  }
+
+  p {
+    font-size: calc(1.2em * 0.7);
+  }
+
+  button {
+    font-size: calc(16px * 0.7) !important;
+  }
+
+  .draggable-container {
+    padding: calc(20px * 0.7);
+  }
+
+  .p-dropdwon-panel {
+    max-width: calc(80% * 0.7);
+  }
+
+  .p-inputtext {
+    font-size: calc(1rem * 0.7);
+  }
+
+  .list-content {
+    font-size: calc(1rem * 0.7);
+  }
+
+  .p-dropdown-item-group, .p-dropdown-item-label {
+    font-size: calc(16px * 0.7);
+  }
+
+  .popup h2 {
+    font-size: calc(1.5em * 0.7);
+  }
+
+  .popup label {
+    font-size: calc(1rem * 0.7);
+  }
+
+  .popup li {
+    font-size: calc(1rem * 0.7);
+  }
+}
 </style>

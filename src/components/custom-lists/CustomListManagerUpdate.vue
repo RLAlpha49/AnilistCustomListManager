@@ -664,7 +664,7 @@ export default {
 
       // If the mutation was successful, log a success message
       if (response.data.SaveMediaListEntry) {
-        console.log(`Successfully updated entry with id ${entry.media.id}`);
+        // console.log(`Successfully updated entry with id ${entry.media.id}`);
       } else {
         // If the mutation failed, log an error message
         console.log(`Failed to update entry with id ${entry.media.id}`);
