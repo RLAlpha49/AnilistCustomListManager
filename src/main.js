@@ -2,6 +2,7 @@ import { createApp } from 'vue' // Importing createApp function from Vue
 import App from './App.vue' // Importing the root component
 import router from './router' // Importing Vue Router instance
 import PrimeVue from 'primevue/config' // Importing PrimeVue configuration
+import VueLazyload from 'vue-lazyload' // Importing VueLazyload
 import 'primevue/resources/themes/saga-blue/theme.css' // Importing PrimeVue theme CSS
 import 'primevue/resources/primevue.min.css' // Importing PrimeVue CSS
 import 'primeicons/primeicons.css' // Importing PrimeIcons CSS
@@ -11,6 +12,8 @@ const app = createApp(App) // Creating a Vue application instance
 
 // Using Vue Router instance
 app.use(router)
+// Using VueLazyload
+app.use(VueLazyload)
 // Using PrimeVue configuration
 app.use(PrimeVue)
 // Using Vuex store instance

@@ -57,7 +57,7 @@
         <!-- Card for the media entry -->
         <div class="media-card">
           <!-- Cover image of the media entry -->
-          <img :data-src="entry.media.coverImage.extraLarge" alt="Cover Image" class="lazy">
+          <img v-lazy="entry.media.coverImage.extraLarge" alt="Cover Image" class="lazy">
           <!-- Titles of the media entry -->
           <div class="media-titles">
             <!-- Romaji title of the media entry -->
@@ -484,7 +484,6 @@ export default {
 
       if (this.mediaList.length === 0) {
         this.done = true;
-        return;
       }
     },
     // Method to fetch data from Anilist
