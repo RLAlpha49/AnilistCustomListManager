@@ -1,16 +1,20 @@
-import { createApp } from 'vue'
-import App from './App.vue'
-import router from './router'
-import PrimeVue from 'primevue/config'
-import 'primevue/resources/themes/saga-blue/theme.css'
-import 'primevue/resources/primevue.min.css'
-import 'primeicons/primeicons.css'
-import store from './store'
+import { createApp } from 'vue' // Importing createApp function from Vue
+import App from './App.vue' // Importing the root component
+import router from './router' // Importing Vue Router instance
+import PrimeVue from 'primevue/config' // Importing PrimeVue configuration
+import 'primevue/resources/themes/saga-blue/theme.css' // Importing PrimeVue theme CSS
+import 'primevue/resources/primevue.min.css' // Importing PrimeVue CSS
+import 'primeicons/primeicons.css' // Importing PrimeIcons CSS
+import store from './store' // Importing Vuex store instance
 
-const app = createApp(App)
+const app = createApp(App) // Creating a Vue application instance
 
+// Using Vue Router instance
 app.use(router)
+// Using PrimeVue configuration
 app.use(PrimeVue)
+// Using Vuex store instance
 app.use(store)
 
+// Mounting the Vue application to the #app element in the DOM
 app.mount('#app')

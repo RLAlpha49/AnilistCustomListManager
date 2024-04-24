@@ -1,8 +1,11 @@
 <template>
+  <!-- The error modal is only displayed if the 'show' prop is true -->
   <div v-if="show" class="error-modal">
     <div class="modal-content">
+      <!-- Display the error title and message -->
       <h2>Error</h2>
       <p>{{ message }}</p>
+      <!-- Close button emits a 'close' event when clicked -->
       <button @click="$emit('close')">Close</button>
     </div>
   </div>
@@ -12,10 +15,12 @@
 export default {
   name: 'ErrorModal',
   props: {
+    // Define a required prop named 'show' of type Boolean
     show: {
       type: Boolean,
       required: true
     },
+    // Define a required prop named 'message' of type String
     message: {
       type: String,
       required: true
@@ -25,7 +30,9 @@ export default {
 </script>
 
 <style>
+/* Styles for the error modal */
 .error-modal {
+  /* Styles for positioning and appearance of the modal */
   position: fixed;
   z-index: 1000;
   left: 0;
@@ -33,21 +40,25 @@ export default {
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: rgba(27, 29, 37, 0.8); /* Change the background color to match your app's theme */
+  background-color: rgba(27, 29, 37, 0.8);
 }
 
+/* Styles for the modal content */
 .modal-content {
-  background-color: #1b1d25; /* Change the background color to match your app's theme */
-  color: #c5c6c7; /* Change the text color to match your app's theme */
+  /* Styles for the appearance and layout of the modal content */
+  background-color: #1b1d25;
+  color: #c5c6c7;
   margin: 15% auto;
   padding: 20px;
-  border: 1px solid #66fcf1; /* Change the border color to match your app's theme */
+  border: 1px solid #66fcf1;
   width: 80%;
 }
 
+/* Styles for the close button */
 .modal-content button {
-  background-color: #66fcf1; /* Change the button color to match your app's theme */
-  color: #1b1d25; /* Change the button text color to match your app's theme */
+  /* Styles for the appearance and interaction of the close button */
+  background-color: #66fcf1;
+  color: #1b1d25;
   border: none;
   padding: 10px 20px;
   text-align: center;
@@ -60,9 +71,11 @@ export default {
   transition-duration: 0.4s;
 }
 
+/* Styles for the close button when hovered */
 .modal-content button:hover {
-  background-color: #1b1d25; /* Change the button hover color to match your app's theme */
-  color: #66fcf1; /* Change the button text hover color to match your app's theme */
-  outline: 2px solid #66fcf1; /* Change the button hover outline color to match your app's theme */
+  /* Styles for the appearance of the close button when hovered */
+  background-color: #1b1d25;
+  color: #66fcf1;
+  outline: 2px solid #66fcf1;
 }
 </style>

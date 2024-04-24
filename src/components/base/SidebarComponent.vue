@@ -1,73 +1,96 @@
 <template>
+  <!-- The sidebar component of the application -->
   <aside class="sidebar">
+    <!-- Navigation menu -->
     <nav>
+      <!-- List of navigation links -->
       <ul>
+        <!-- Site icon link -->
         <li class="site-icon-li">
           <a href="https://anicards.alpha49.com" target="_blank">
             <div class="link-content">
+              <!-- Site icon image -->
               <img
                   class="site-icon"
                   src="/images/favicon.webp"
                   alt="Site Sidebar Icon"
               />
+              <!-- Site name -->
               <span class="link-text">List Manager</span>
             </div>
           </a>
         </li>
+        <!-- Home link -->
         <li>
           <a href="https://anicards.alpha49.com" target="_blank">
             <div class="link-content">
+              <!-- Home icon image -->
               <img
                   src="/images/home.webp"
                   alt="Home Sidebar Icon"
               />
+              <!-- Home link text -->
               <span class="link-text">Home</span>
             </div>
           </a>
         </li>
+        <!-- Custom Lists link -->
         <li>
           <router-link to="/custom-list-manager/custom-list-home">
             <div class="link-content">
+              <!-- Custom Lists icon image -->
               <img
                   src="/images/custom-list.webp"
                   alt="Stat Cards Sidebar Icon"
               />
+              <!-- Custom Lists link text -->
               <span class="link-text">Custom Lists</span>
             </div>
           </router-link>
         </li>
+        <!-- FAQ link -->
         <li>
           <router-link to="/faq">
             <div class="link-content">
+              <!-- FAQ icon image -->
               <img
                   src="/images/faq.webp"
                   alt="FAQ Sidebar Icon"
               />
+              <!-- FAQ link text -->
               <span class="link-text">FAQ</span>
             </div>
           </router-link>
         </li>
       </ul>
     </nav>
+    <!-- Bottom link section -->
     <div class="bottom-link">
+      <!-- Link content -->
       <div class="link-content">
+        <!-- Discord link -->
         <a href="https://discord.gg/TaeAPPmAbw" target="_blank">
+          <!-- Discord icon image -->
           <img
               src="/images/Discord.webp"
               alt="Discord Sidebar Icon"
           />
         </a>
+        <!-- GitHub link -->
         <a
             href="https://github.com/RLAlpha49/Anilist-Stat-Cards"
             target="_blank"
         >
+          <!-- GitHub icon image -->
           <img
               id="github-icon"
               data-src="/images/GitHub.webp"
               alt="GitHub Sidebar Icon"
           />
         </a>
+        <!-- Ko-Fi link -->
         <a href="https://ko-fi.com/alpha49" target="_blank">
+          <!-- Ko-Fi icon image -->
           <img
               id="kofi-icon"
               data-src="/images/Ko-Fi.webp"
@@ -81,27 +104,37 @@
 
 <script>
 export default {
+  // The name of the component
   name: 'SidebarComponent',
+  // Lifecycle hook that is called after the component is mounted
   mounted() {
+    // Add event listener for sidebar toggle
     this.addSidebarToggleEventListener();
+    // Load images
     this.loadImages();
+    // Add active link class
     this.addActiveLinkClass();
   },
+  // Watch for route changes
   watch: {
     '$route': 'addActiveLinkClass'
   },
+  // Component methods
   methods: {
+    // Load image by id
     loadImage(id) {
       const img = document.getElementById(id)
       if (img && !img.src) {
         img.src = img.dataset.src
       }
     },
+    // Load all images
     loadImages() {
       this.loadImage('github-icon')
       this.loadImage('kofi-icon')
       // Add more calls to loadImage for the other images
     },
+    // Add event listener for sidebar toggle
     addSidebarToggleEventListener() {
       const arrow = document.getElementById('arrow')
       if (arrow) {
@@ -120,6 +153,7 @@ export default {
         console.log('Element with id "arrow" was not found in the DOM.')
       }
     },
+    // Add active link class
     addActiveLinkClass() {
       // Get all the list items in the sidebar navigation
       const listItems = document.querySelectorAll('.sidebar nav ul li')
@@ -147,6 +181,7 @@ export default {
       })
     }
   },
+  // Lifecycle hook that is called after the component is updated
   updated() {
     const sidebar = document.querySelector('.sidebar');
     if (sidebar && sidebar.classList.contains('expanded')) {
@@ -157,6 +192,7 @@ export default {
 </script>
 
 <style scoped>
+/* Styles for the sidebar navigation links */
 .sidebar nav ul li a,
 .sidebar .bottom-link a {
   display: flex;
@@ -169,6 +205,7 @@ export default {
   overflow: hidden;
 }
 
+/* Styles for the sidebar */
 .sidebar {
   width: 64px;
   flex-shrink: 0;
@@ -187,10 +224,12 @@ export default {
   height: 100vh;
 }
 
+/* Styles for expanded sidebar */
 .sidebar.expanded {
   width: 180px;
 }
 
+/* Styles for sidebar navigation list */
 .sidebar nav ul,
 .sidebar .bottom-link {
   list-style-type: none;
@@ -200,32 +239,38 @@ export default {
   flex-direction: column;
 }
 
+/* Styles for sidebar navigation list items */
 .sidebar nav ul li:not(.site-icon-li),
 .sidebar .bottom-link {
   width: 100%;
 }
 
+/* Styles for sidebar navigation links' icons */
 .sidebar nav ul li a img,
 .sidebar .bottom-link a img {
   width: 32px;
   height: 32px;
 }
 
+/* Styles for sidebar navigation links' icons, except for the site icon */
 .sidebar nav ul li a img:not(.site-icon),
 .sidebar .bottom-link a img:not(.site-icon) {
   filter: invert(1) brightness(0.6);
 }
 
+/* Hover effect for sidebar navigation links */
 .sidebar nav ul li a:hover,
 .sidebar .bottom-link a:hover {
   filter: brightness(130%);
 }
 
+/* Styles for link content */
 .link-content {
   display: flex;
   align-items: center;
 }
 
+/* Styles for link text */
 .link-text {
   transform: scaleX(0);
   transform-origin: left;
@@ -237,33 +282,40 @@ export default {
   color: white;
 }
 
+/* Styles for link text when sidebar is expanded */
 .sidebar.expanded .link-text {
   padding-left: 10px;
   transform: scaleX(1);
   opacity: 1;
 }
 
+/* Styles for active sidebar navigation links */
 .sidebar nav ul li.active-link:not(.site-icon-li) a {
   filter: brightness(160%);
 }
 
+/* Styles for active sidebar navigation link text */
 .sidebar nav ul li.active-link:not(.site-icon-li) .link-text {
   filter: none;
   color: #47a59f;
 }
 
+/* Styles for hiding non-first child links in the bottom section */
 .sidebar .bottom-link .link-content a:not(:first-child) {
   display: none;
 }
 
+/* Styles for icons in the bottom section */
 .sidebar .bottom-link .link-content a:not(:first-child) img {
   filter: invert(0) brightness(0.6);
 }
 
+/* Styles for hover effect on active sidebar navigation links */
 .sidebar nav ul li.active-link:not(.site-icon-li) a:hover {
   filter: brightness(120%);
 }
 
+/* Styles for active sidebar navigation links' icons */
 .sidebar nav ul li.active-link .link-content img:not(.site-icon) {
   filter:
       invert(56%)
@@ -274,18 +326,24 @@ export default {
       contrast(85%);
 }
 
+/* Styles for adjusting height of bottom link content */
 .bottom-link .link-content {
   height: 46px;
 }
 
+/* Styles for positioning the bottom link section */
 .sidebar .bottom-link {
   margin-top: auto;
 }
 
+/* Styles for displaying non-first child links in the bottom section when sidebar is expanded */
 .sidebar.expanded .bottom-link .link-content a:not(:first-child) {
   display: block;
 }
 
+/* Media queries for responsive design */
+
+/* For widths up to 700px */
 @media (width <= 700px) {
   .sidebar {
     width: calc(64px * 0.9);
@@ -312,6 +370,7 @@ export default {
   }
 }
 
+/* For widths up to 550px */
 @media (width <= 550px) {
   .sidebar {
     width: calc(64px * 0.8);
@@ -338,6 +397,7 @@ export default {
   }
 }
 
+/* For widths up to 500px */
 @media (width <= 500px) {
   .sidebar {
     width: calc(64px * 0.7);
@@ -364,6 +424,7 @@ export default {
   }
 }
 
+/* For widths up to 450px */
 @media (width <= 450px) {
   .sidebar {
     width: calc(64px * 0.6);
@@ -390,6 +451,7 @@ export default {
   }
 }
 
+/* For widths up to 400px */
 @media (width <= 400px) {
   .sidebar {
     width: calc(64px * 0.5);

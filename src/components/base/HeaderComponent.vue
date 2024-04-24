@@ -1,11 +1,14 @@
 <template>
+  <!-- The header component of the application -->
   <header>
+    <!-- Sidebar expand arrow -->
     <div id="arrow">
       <img
           src="/images/sidebar-arrow.webp"
           alt="Sidebar Expand Arrow"
       />
     </div>
+    <!-- Link to the changelog -->
     <p>
       <a
           class="changelog-link"
@@ -19,34 +22,13 @@
 
 <script>
 export default {
+  // The name of the component
   name: 'HeaderComponent',
 }
 </script>
 
 <style scoped>
-header p {
-  color: #c5c6c7;
-  margin-left: auto;
-  font-size: 1em;
-}
-
-.changelog-link {
-  color: #61aeff;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.changelog-link:hover {
-  color: #4090d9;
-  text-decoration: underline;
-}
-
-#arrow {
-  position: relative;
-  left: 0;
-  cursor: pointer;
-}
-
+/* Styles for the header */
 header {
   grid-column: 1 / -1;
   position: sticky;
@@ -62,6 +44,14 @@ header {
   z-index: 1;
 }
 
+/* Styles for the sidebar expand arrow */
+#arrow {
+  position: relative;
+  left: 0;
+  cursor: pointer;
+}
+
+/* Styles for the sidebar expand arrow image */
 #arrow img {
   width: 32px;
   height: 32px;
@@ -69,10 +59,32 @@ header {
   transition: transform 0.5s ease-in-out;
 }
 
+/* Styles for the sidebar expand arrow image when the sidebar is expanded */
 #arrow.expanded img {
   transform: rotate(180deg);
 }
 
+/* Styles for the paragraph in the header */
+header p {
+  color: #c5c6c7;
+  margin-left: auto;
+  font-size: 1em;
+}
+
+/* Styles for the changelog link */
+.changelog-link {
+  color: #61aeff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* Styles for the changelog link when hovered */
+.changelog-link:hover {
+  color: #4090d9;
+  text-decoration: underline;
+}
+
+/* Responsive styles for screens 700px wide or less */
 @media (width <= 700px) {
   header {
     height: calc(42px * 0.9);
@@ -88,6 +100,7 @@ header {
   }
 }
 
+/* Responsive styles for screens 550px wide or less */
 @media (width <= 550px) {
   header {
     height: calc(42px * 0.8);
@@ -103,6 +116,7 @@ header {
   }
 }
 
+/* Responsive styles for screens 500px wide or less */
 @media (width <= 500px) {
   header {
     height: calc(42px * 0.7);
@@ -118,6 +132,7 @@ header {
   }
 }
 
+/* Responsive styles for screens 450px wide or less */
 @media (width <= 450px) {
   header {
     height: calc(42px * 0.6);
@@ -133,6 +148,7 @@ header {
   }
 }
 
+/* Responsive styles for screens 400px wide or less */
 @media (width <= 400px) {
   header {
     height: calc(42px * 0.5);
