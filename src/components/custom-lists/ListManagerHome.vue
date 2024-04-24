@@ -1,5 +1,4 @@
 <template>
-  <!-- Homepage container -->
   <div class="homepage">
     <!-- Title -->
     <h1>Welcome to Custom List Manager</h1>

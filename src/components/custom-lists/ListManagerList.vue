@@ -1,5 +1,4 @@
 <template>
-  <!-- Main container for the list manager -->
   <div id="list-manager-list">
     <!-- Error dropdown component, shown when retry countdown is active -->
     <ErrorDropdown v-if="retryCountdown >= 0" :countdown="retryCountdown"/>
@@ -42,7 +41,6 @@
             @start="drag=true">
           <!-- Template for each draggable list item -->
           <template #item="{element}">
-            <!-- Container for the list item -->
             <div class="list-item">
               <!-- Drag handle for the list item -->
               <div class="drag-handle">&#x2630;</div>

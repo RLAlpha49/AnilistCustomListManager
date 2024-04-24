@@ -1,5 +1,4 @@
 <template>
-  <!-- Main container for the update process -->
   <div class="update">
     <!-- Error dropdown component, shown when retry countdown is active -->
     <ErrorDropdown v-if="retryCountdown >= 0" :countdown="retryCountdown"/>

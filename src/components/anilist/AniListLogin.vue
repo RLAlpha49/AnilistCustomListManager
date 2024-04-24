@@ -1,5 +1,4 @@
 <template>
-  <!-- Template for the AniListLogin component -->
   <div class="anilist-login">
     <!-- Button to initiate AniList login -->
     <button @click="login">Login with AniList</button>

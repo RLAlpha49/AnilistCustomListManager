@@ -1,5 +1,4 @@
 <template>
-  <!-- Template for the Work in Progress component -->
   <div class="work-in-progress">
     <!-- Heading for the work in progress message -->
     <h1>Work in Progress</h1>
