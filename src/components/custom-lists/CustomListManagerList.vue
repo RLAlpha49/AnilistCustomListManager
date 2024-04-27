@@ -32,8 +32,13 @@
       <div class="draggable-container">
         <!-- Spinner shown when loading -->
         <div v-if="loading" class="spinner"></div>
+        <!-- Message when isListEmpty is true -->
+        <div v-else-if="isListEmpty" class="empty-list-message">
+          No custom lists were found, make sure 1 entry is set to a custom list for it to recognize.
+        </div>
         <!-- Draggable component for the custom lists -->
         <draggable
+            v-else
             v-model="lists"
             group="customLists"
             item-key="name"
@@ -126,7 +131,8 @@ export default {
       showPopup: false, // State for showing popup
       errorMessage: null, // Error message
       retryCountdown: -1, // Countdown for retrying failed requests
-      hideDefaultStatusLists: this.$store.getters.hideDefaultStatusLists !== null ? this.$store.getters.hideDefaultStatusLists : true // State for hiding default status lists
+      hideDefaultStatusLists: this.$store.getters.hideDefaultStatusLists !== null ? this.$store.getters.hideDefaultStatusLists : true, // State for hiding default status lists
+      isListEmpty: false // State for empty list
     }
   },
   watch: {
@@ -394,6 +400,11 @@ export default {
             }
           }).filter(list => list);
           console.log('Final lists:', this.lists);
+          if (this.lists.length === 0) {
+            this.isListEmpty = true;
+          } else {
+            this.isListEmpty = false;
+          }
         } else {
           // If not all list names exist or the list type has changed, fetch the lists from Anilist
           this.lists = listsFromQuery.map((list) => {
@@ -404,6 +415,11 @@ export default {
           });
           this.sortLists();
           console.log('Final lists:', this.lists);
+          if (this.lists.length === 0) {
+            this.isListEmpty = true;
+          } else {
+            this.isListEmpty = false;
+          }
 
           // Save the new list locations and conditions in the store
           const newListLocations = this.lists.map((list, index) => ({
@@ -579,6 +595,13 @@ input[type="checkbox"]:checked:after {
   height: 120px;
   animation: spin 2s linear infinite;
   margin: auto;
+}
+
+/* Styling for the empty list message */
+.empty-list-message {
+  color: red;
+  font-size: 2em;
+  text-align: center;
 }
 
 /* Animation for the spinner */
@@ -792,6 +815,10 @@ input[type="checkbox"]:checked:after {
     padding: calc(20px * 0.95);
   }
 
+  .empty-list-message {
+    font-size: calc(2em * 0.95);
+  }
+
   .p-dropdwon-panel {
     max-width: calc(80% * 0.95);
   }
@@ -841,6 +868,10 @@ input[type="checkbox"]:checked:after {
 
   .draggable-container {
     padding: calc(20px * 0.9);
+  }
+
+  .empty-list-message {
+    font-size: calc(2em * 0.9);
   }
 
   .p-dropdwon-panel {
@@ -894,6 +925,10 @@ input[type="checkbox"]:checked:after {
     padding: calc(20px * 0.85);
   }
 
+  .empty-list-message {
+    font-size: calc(2em * 0.85);
+  }
+
   .p-dropdwon-panel {
     max-width: calc(80% * 0.85);
   }
@@ -943,6 +978,10 @@ input[type="checkbox"]:checked:after {
 
   .draggable-container {
     padding: calc(20px * 0.7);
+  }
+
+  .empty-list-message {
+    font-size: calc(2em * 0.7);
   }
 
   .p-dropdwon-panel {

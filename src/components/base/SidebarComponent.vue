@@ -41,7 +41,7 @@
               <!-- Custom Lists icon image -->
               <img
                   src="/images/custom-list.webp"
-                  alt="Stat Cards Sidebar Icon"
+                  alt="Custom Lists Sidebar Icon"
               />
               <!-- Custom Lists link text -->
               <span class="link-text">Custom Lists</span>
