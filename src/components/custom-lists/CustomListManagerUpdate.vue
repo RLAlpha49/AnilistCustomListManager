@@ -38,7 +38,7 @@
           <button>Back</button>
         </router-link>
         <!-- Button to finish the update process -->
-        <router-link to="/custom-list-manager/work-in-progress">
+        <router-link to="/custom-list-manager/finished">
           <button>Finish</button>
         </router-link>
       </div>

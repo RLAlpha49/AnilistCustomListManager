@@ -5,10 +5,18 @@ import AniListRedirect from './components/anilist/AniListRedirect.vue' // Import
 import ListManagerList from './components/custom-lists/CustomListManagerList.vue' // Importing ListManagerList component
 import ListManagerUpdate from './components/custom-lists/CustomListManagerUpdate.vue' // Importing ListManagerUpdate component
 import WorkInProgress from './components/base/WorkInProgress.vue' // Importing WorkInProgress component
+import HomePage from '@/components/HomePage.vue'
+import CustomListManagerFinished from '@/components/custom-lists/CustomListManagerFinished.vue' // Importing HomePage component
 
 const router = createRouter({
   history: createWebHistory(), // Using web history mode
   routes: [
+    // Default route for Home Page component
+    {
+      path: '/',
+      name: 'HomePage',
+      component: HomePage
+    },
     // Route for CustomListManager component
     {
       path: '/custom-list-manager/custom-list-home',
@@ -38,6 +46,11 @@ const router = createRouter({
       path: '/custom-list-manager/update',
       name: 'ListManagerUpdate',
       component: ListManagerUpdate
+    },
+    {
+      path: '/custom-list-manager/finished',
+      name: 'ListManagerFinished',
+      component: CustomListManagerFinished
     },
     // Route for WorkInProgress component
     {

@@ -77,15 +77,22 @@ export default {
   },
   // Watchers for this component
   watch: {
-    // Watch for changes to the route
-    $route(to, from) {
+  // Watch for changes to the route
+  $route(to, from) {
+    // Set the direction of the route transition based on the current and previous routes
+    if (from.path === '/' && to.path === '/custom-list-manager/custom-list-home') {
+      this.direction = 'forward';
+    } else if (from.path === '/custom-list-manager/custom-list-home' && to.path === '/') {
+      this.direction = 'backward';
+    } else {
       // Compute the indices of the current and previous routes in the route array
-      const toIndex = ['/', '/custom-list-manager/custom-list-manager', '/custom-list-manager/anilist-login', '/custom-list-manager/list-manager', '/custom-list-manager/update', '/custom-list-manager/work-in-progress'].indexOf(to.path);
-      const fromIndex = ['/', '/custom-list-manager/custom-list-manager', '/custom-list-manager/anilist-login', '/custom-list-manager/list-manager', '/custom-list-manager/update', '/custom-list-manager/work-in-progress'].indexOf(from.path);
+      const toIndex = ['/', '/custom-list-manager/custom-list-manager', '/custom-list-manager/anilist-login', '/custom-list-manager/list-manager', '/custom-list-manager/update', '/custom-list-manager/finished', '/custom-list-manager/work-in-progress'].indexOf(to.path);
+      const fromIndex = ['/', '/custom-list-manager/custom-list-manager', '/custom-list-manager/anilist-login', '/custom-list-manager/list-manager', '/custom-list-manager/update', '/custom-list-manager/finished', '/custom-list-manager/work-in-progress'].indexOf(from.path);
       // Set the direction of the route transition based on the comparison of the indices
       this.direction = toIndex > fromIndex ? 'forward' : 'backward';
     }
-  },
+  }
+},
   // Methods for this component
   methods: {
     // Method to clear the error and hide the error modal

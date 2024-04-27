@@ -7,7 +7,7 @@
       <ul>
         <!-- Site icon link -->
         <li class="site-icon-li">
-          <a href="/">
+          <router-link to="/">
             <div class="link-content">
               <!-- Site icon image -->
               <img
@@ -18,11 +18,11 @@
               <!-- Site name -->
               <span class="link-text">List Manager</span>
             </div>
-          </a>
+          </router-link>
         </li>
         <!-- Home link -->
         <li>
-          <a href="/">
+          <router-link to="/">
             <div class="link-content">
               <!-- Home icon image -->
               <img
@@ -32,7 +32,7 @@
               <!-- Home link text -->
               <span class="link-text">Home</span>
             </div>
-          </a>
+          </router-link>
         </li>
         <!-- Custom Lists link -->
         <li>
