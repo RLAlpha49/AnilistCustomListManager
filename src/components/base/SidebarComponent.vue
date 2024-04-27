@@ -67,20 +67,6 @@
             </div>
           </a>
         </li>
-        <!-- FAQ link -->
-        <li>
-          <router-link to="/faq">
-            <div class="link-content">
-              <!-- FAQ icon image -->
-              <img
-                  src="/images/faq.webp"
-                  alt="FAQ Sidebar Icon"
-              />
-              <!-- FAQ link text -->
-              <span class="link-text">FAQ</span>
-            </div>
-          </router-link>
-        </li>
       </ul>
     </nav>
     <!-- Bottom link section -->
