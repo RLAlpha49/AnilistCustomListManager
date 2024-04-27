@@ -227,6 +227,7 @@ export default {
   top: 0;
   bottom: 0;
   height: 100vh;
+  z-index: 10000;
 }
 
 /* Styles for expanded sidebar */
