@@ -102,6 +102,7 @@ import {EventBus} from "@/event-bus";
 import ProgressBar from 'primevue/progressbar';
 import {mapGetters} from 'vuex'
 import ErrorDropdown from "@/components/base/ErrorDropdown";
+import AniLink from "anilink-api-wrapper";
 
 export default {
   // Component name
@@ -126,7 +127,8 @@ export default {
       totalEntries: 0, // Total entries to be updated
       updateProcess: null, // Update process
       done: false, // Done state
-      retryCountdown: -1 // Retry countdown
+      retryCountdown: -1, // Retry countdown
+      aniLink: null // Anilist API Wrapper
     }
   },
 
@@ -146,6 +148,8 @@ export default {
       EventBus.emit('show-error', 'Anilist token not found in local storage');
       return;
     }
+
+    this.aniLink = new AniLink(this.token);
 
     // Fetch the media list
     this.fetchMediaList();
@@ -188,50 +192,16 @@ export default {
       // Set the loading state to true
       this.isLoading = true;
 
-      // Define the GraphQL query to fetch the media list
-      const mediaListQuery = `
-    query ($userId: Int, $type: MediaType) {
-      MediaListCollection(userId: $userId, type: $type) {
-        lists {
-          entries {
-            hiddenFromStatusLists
-            score(format: POINT_10)
-            repeat
-            status
-            customLists
-            media {
-              id
-              format
-              countryOfOrigin
-              title {
-                romaji
-                english
-              }
-              genres
-              tags {
-                name
-                category
-              }
-              isAdult
-              coverImage {
-                extraLarge
-              }
-            }
-          }
-        }
-      }
-    }
-  `;
-
       // Define the variables to be used in the GraphQL query
       const variables = {
         userId: this.userId,
-        type: this.type.toUpperCase()
+        type: this.type.toUpperCase(),
+        format: 'POINT_10'
       };
 
       // Execute the GraphQL query and store the response
-      const response = await this.fetchAniList(mediaListQuery, variables);
-
+      const response = await this.handleRateLimit(() => this.aniLink.anilist.query.mediaListCollection(variables));
+      console.log('Response:', response);
       // Extract the lists from the response data
       const lists = response.data.MediaListCollection.lists;
 
@@ -486,72 +456,39 @@ export default {
         this.done = true;
       }
     },
-    // Method to fetch data from Anilist
-    async fetchAniList(query, variables = {}, retryCount = 0) {
-      // Define the URL for the Anilist API
-      const url = 'https://graphql.anilist.co';
-
-      // Define the options for the fetch request
-      const options = {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${this.token}`,
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        },
-        body: JSON.stringify({
-          query: query,
-          variables: variables
-        })
-      };
-
+    async handleRateLimit(apiCall, retryCount = 0, retryAfter = 60) {
       try {
-        // Make the fetch request
-        const response = await fetch(url, options);
-
-        // If the response is not ok, throw an error
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        // Parse the response data as JSON
-        const data = await response.json();
-
-        // If there are errors in the data, throw an error
-        if (data.errors) {
-          throw new Error(data.errors.map(error => error.message).join(', '));
-        }
-
-        // Return the data
-        return data;
+        const response = await apiCall();
+        this.retryCountdown = -1;
+        return response;
       } catch (error) {
-        // Log the error
-        console.log('Error:', error.code, error.message, error.stack)
-
-        // If the error message is 'Failed to fetch' and the retry count is less than 5
-        if (error.message === 'Failed to fetch' && retryCount < 5) {
-          // Set the retry countdown to 15
+        if ((error.response && error.response.status === 429) || error.message === 'Network Error') {
+          console.log('Rate limit exceeded, waiting for 1 minute before retrying...');
+          this.retryCountdown = retryAfter;
+          const intervalId = setInterval(() => {
+            this.retryCountdown--;
+            if (this.retryCountdown <= 0) {
+              clearInterval(intervalId);
+            }
+          }, 1000);
+          await new Promise(resolve => setTimeout(resolve, retryAfter * 1000));
+          console.log('Retrying...');
+          return this.handleRateLimit(apiCall, retryCount, retryAfter);
+        } else if (error.response && error.response.status === 500 && retryCount < 5) {
+          console.log('Server error, retrying in 15 seconds...');
           this.retryCountdown = 15;
-
-          // Return a new promise
-          return new Promise((resolve) => {
-            // Set an interval to decrement the retry countdown every second
-            const countdownInterval = setInterval(async () => {
-              this.retryCountdown--;
-
-              // If the retry countdown is less than 0
-              if (this.retryCountdown < 0) {
-                // Clear the interval
-                clearInterval(countdownInterval);
-
-                // Retry the request and resolve the promise with the result
-                resolve(await this.fetchAniList(query, variables, retryCount + 1));
-              }
-            }, 1000);
-          });
+          const intervalId = setInterval(() => {
+            this.retryCountdown--;
+            if (this.retryCountdown <= 0) {
+              clearInterval(intervalId);
+            }
+          }, 1000);
+          await new Promise(resolve => setTimeout(resolve, 15 * 1000));
+          console.log('Retrying...');
+          return this.handleRateLimit(apiCall, retryCount + 1, retryAfter);
         } else {
-          // Emit an error event
-          EventBus.emit('show-error', 'Network error. Please check your internet connection or try again later.');
+          console.error('Error in handleRateLimit:', error);
+          return {data: null};
         }
       }
     },
@@ -641,17 +578,6 @@ export default {
     },
     // Method to update a media list entry
     async updateEntry(entry) {
-      // Define the GraphQL mutation to update a media list entry
-      const updateMediaListEntryMutation = `
-        mutation ($mediaId: Int, $hiddenFromStatusLists: Boolean, $customLists: [String]) {
-          SaveMediaListEntry (mediaId: $mediaId, hiddenFromStatusLists: $hiddenFromStatusLists, customLists: $customLists) {
-            id
-            hiddenFromStatusLists
-            customLists
-          }
-        }
-      `;
-
       // Define the variables for the mutation
       const variables = {
         mediaId: entry.media.id,
@@ -660,7 +586,7 @@ export default {
       };
 
       // Execute the mutation and store the response
-      const response = await this.fetchAniList(updateMediaListEntryMutation, variables);
+      const response = await this.handleRateLimit(() => this.aniLink.anilist.mutation.saveMediaListEntry(variables));
 
       // If the mutation was successful, log a success message
       if (response.data.SaveMediaListEntry) {

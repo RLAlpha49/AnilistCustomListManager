@@ -22,7 +22,16 @@ export default createStore({
   mutations: {
     // Mutation to set lists
     setLists (state, lists) {
-      state.lists = lists
+      state.lists = lists.map(list => {
+        return {
+          ...list,
+          entries: list.entries.map(entry => {
+            // eslint-disable-next-line no-unused-vars
+            const { media, ...rest } = entry
+            return rest
+          })
+        }
+      })
     },
     // Mutation to set type
     setType (state, type) {

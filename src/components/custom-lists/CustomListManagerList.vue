@@ -110,6 +110,7 @@
 import draggable from 'vuedraggable';
 import Dropdown from 'primevue/dropdown';
 import {EventBus} from "@/event-bus.js";
+import AniLink from 'anilink-api-wrapper'
 
 import ErrorDropdown from "@/components/base/ErrorDropdown";
 
@@ -132,7 +133,8 @@ export default {
       errorMessage: null, // Error message
       retryCountdown: -1, // Countdown for retrying failed requests
       hideDefaultStatusLists: this.$store.getters.hideDefaultStatusLists !== null ? this.$store.getters.hideDefaultStatusLists : true, // State for hiding default status lists
-      isListEmpty: false // State for empty list
+      isListEmpty: false, // State for empty list
+      aniLink: null // Anilink API wrapper
     }
   },
   watch: {
@@ -187,6 +189,7 @@ export default {
       EventBus.emit('show-error', 'Anilist token not found in local storage');
       return;
     }
+    this.aniLink = new AniLink(this.token);
     this.fetchViewerId();
   },
   methods: {
@@ -327,18 +330,9 @@ export default {
     },
     // Fetch the viewer's ID from Anilist
     async fetchViewerId() {
-      // GraphQL query to get the viewer's ID
-      const query = `
-        query {
-          Viewer {
-            id
-          }
-        }
-      `;
-
       try {
         // Fetch the data from Anilist
-        const response = await this.fetchAniList(query);
+        const response = await this.handleRateLimit(() => this.aniLink.anilist.query.viewer());
         // Set the user ID to the viewer's ID
         this.userId = response.data.Viewer.id;
         // Fetch the lists for the current list type
@@ -355,21 +349,10 @@ export default {
       this.loading = true;
       // Set the list type
       this.listType = type;
-      // GraphQL query to get the lists
-      const query = `
-        query {
-          MediaListCollection(userId: ${this.userId}, type: ${type}) {
-            lists {
-              isCustomList
-              name
-            }
-          }
-        }
-      `;
 
       try {
         // Fetch the data from Anilist
-        const response = await this.fetchAniList(query);
+        const response = await this.handleRateLimit(() => this.aniLink.anilist.query.mediaListCollection({userId: this.userId, type: type}));
 
         // Get the saved conditions and list locations from the store
         const savedConditions = this.listType === 'ANIME' ? this.$store.getters.conditionsAnime : this.$store.getters.conditionsManga;
@@ -496,6 +479,42 @@ export default {
         } else {
           // Emit an error event if the fetch fails and the retry count is 5 or more
           EventBus.emit('show-error', 'Network error. Please check your internet connection or try again later.');
+        }
+      }
+    },
+    async handleRateLimit(apiCall, retryCount = 0, retryAfter = 60) {
+      try {
+        const response = await apiCall();
+        this.retryCountdown = -1;
+        return response;
+      } catch (error) {
+        if ((error.response && error.response.status === 429) || error.message === 'Network Error') {
+          console.log('Rate limit exceeded, waiting for 1 minute before retrying...');
+          this.retryCountdown = retryAfter;
+          const intervalId = setInterval(() => {
+            this.retryCountdown--;
+            if (this.retryCountdown <= 0) {
+              clearInterval(intervalId);
+            }
+          }, 1000);
+          await new Promise(resolve => setTimeout(resolve, retryAfter * 1000));
+          console.log('Retrying...');
+          return this.handleRateLimit(apiCall, retryCount, retryAfter);
+        } else if (error.response && error.response.status === 500 && retryCount < 5) {
+          console.log('Server error, retrying in 15 seconds...');
+          this.retryCountdown = 15;
+          const intervalId = setInterval(() => {
+            this.retryCountdown--;
+            if (this.retryCountdown <= 0) {
+              clearInterval(intervalId);
+            }
+          }, 1000);
+          await new Promise(resolve => setTimeout(resolve, 15 * 1000));
+          console.log('Retrying...');
+          return this.handleRateLimit(apiCall, retryCount + 1, retryAfter);
+        } else {
+          console.error('Error in handleRateLimit:', error);
+          return {data: null};
         }
       }
     }
