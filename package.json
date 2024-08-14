@@ -11,7 +11,7 @@
     "@vercel/analytics": "^1.2.2",
     "@vercel/speed-insights": "^1.0.10",
     "anilink-api-wrapper": "^1.17.4",
-    "axios": "^1.6.8",
+    "axios": "^1.7.4",
     "core-js": "^3.8.3",
     "mitt": "^3.0.1",
     "postcss": "^8.4.38",
