@@ -4,7 +4,6 @@ import router from './router' // Importing Vue Router instance
 import PrimeVue from 'primevue/config' // Importing PrimeVue configuration
 import VueLazyload from 'vue-lazyload' // Importing VueLazyload
 import 'primevue/resources/themes/saga-blue/theme.css' // Importing PrimeVue theme CSS
-import 'primevue/resources/primevue.min.css' // Importing PrimeVue CSS
 import 'primeicons/primeicons.css' // Importing PrimeIcons CSS
 import store from './store' // Importing Vuex store instance
 
