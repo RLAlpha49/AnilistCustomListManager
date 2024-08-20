@@ -17,7 +17,7 @@
     "mitt": "^3.0.1",
     "postcss": "^8.4.41",
     "primeicons": "^7.0.0",
-    "primevue": "^3.53.0",
+    "primevue": "^4.0.4",
     "vue": "^3.4.38",
     "vue-lazyload": "^3.0.0",
     "vue-router": "^4.4.3",
