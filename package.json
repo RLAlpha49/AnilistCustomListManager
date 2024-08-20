@@ -17,7 +17,7 @@
     "postcss": "^8.4.41",
     "primeicons": "^7.0.0",
     "primevue": "^3.51.0",
-    "vue": "^3.2.13",
+    "vue": "^3.4.38",
     "vue-lazyload": "^3.0.0",
     "vue-router": "^4.4.3",
     "vuedraggable": "^4.1.0",
