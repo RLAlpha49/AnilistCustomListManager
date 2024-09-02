@@ -581,9 +581,13 @@ export default {
       // Define the variables for the mutation
       const variables = {
         mediaId: entry.media.id,
-        hiddenFromStatusLists: entry.lists.hiddenFromStatusLists,
         customLists: Object.keys(entry.lists).filter(list => entry.lists[list])
       };
+
+      // Conditionally add hiddenFromStatusLists if it is not undefined
+      if (entry.lists.hiddenFromStatusLists !== undefined) {
+        variables.hiddenFromStatusLists = entry.lists.hiddenFromStatusLists;
+      }
 
       // Execute the mutation and store the response
       const response = await this.handleRateLimit(() => this.aniLink.anilist.mutation.saveMediaListEntry(variables));
