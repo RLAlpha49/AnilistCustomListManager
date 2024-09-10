@@ -11,7 +11,7 @@
     "@primevue/themes": "^4.0.5",
     "@vercel/analytics": "^1.3.1",
     "@vercel/speed-insights": "^1.0.12",
-    "anilink-api-wrapper": "^1.29.1",
+    "anilink-api-wrapper": "^1.29.2",
     "axios": "^1.7.7",
     "core-js": "^3.38.1",
     "mitt": "^3.0.1",
