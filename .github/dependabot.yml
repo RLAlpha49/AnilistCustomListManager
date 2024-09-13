@@ -4,3 +4,8 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+    ignore:
+      - dependency-name: "primevue"
+        versions: ["<3.53.0"]
+      - dependency-name: "eslint"
+        versions: ["<8.57.0"]
