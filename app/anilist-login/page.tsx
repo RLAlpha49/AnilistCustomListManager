@@ -49,9 +49,8 @@ export default function Page() {
 
 	useEffect(() => {
 		const accessToken: string | null = getItemWithExpiry("anilistToken");
-		const expirationTime: string | null = getItemWithExpiry("anilistTokenExpiration");
 
-		if (accessToken && expirationTime && Date.now() <= Number(expirationTime)) {
+		if (accessToken) {
 			setIsProcessing(true);
 			fetchViewerId(accessToken).finally(() => setIsProcessing(false));
 		} else {
