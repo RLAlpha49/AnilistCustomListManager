@@ -10,7 +10,14 @@ interface ModalProps {
 	children: React.ReactNode;
 }
 
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onConfirm, title, confirmButtonText = "Confirm", children }) => {
+const Modal: React.FC<ModalProps> = ({
+	isOpen,
+	onClose,
+	onConfirm,
+	title,
+	confirmButtonText = "Confirm",
+	children,
+}) => {
 	useEffect(() => {
 		const handleEscape = (event: KeyboardEvent) => {
 			if (event.key === "Escape") {
@@ -57,6 +64,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onConfirm, title, confir
 					<button
 						onClick={onClose}
 						className="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded focus:outline-none"
+						aria-label="Cancel"
 					>
 						Cancel
 					</button>
@@ -66,6 +74,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onConfirm, title, confir
 							onClose();
 						}}
 						className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded focus:outline-none"
+						aria-label={confirmButtonText}
 					>
 						{confirmButtonText}
 					</button>

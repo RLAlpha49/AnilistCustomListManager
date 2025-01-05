@@ -118,7 +118,7 @@ export default function Page() {
 					>
 						<CardHeader>
 							<CardTitle className="text-3xl font-bold flex items-center">
-								<FaSignInAlt className="mr-2 text-blue-400" />
+								<FaSignInAlt className="mr-2 text-blue-400" aria-hidden="true" />
 								AniList Login
 							</CardTitle>
 							<CardDescription className="text-gray-300 mt-2">
@@ -138,7 +138,7 @@ export default function Page() {
 										className="bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center w-full py-3 rounded-md shadow-md transition-transform"
 										aria-label="Login with AniList"
 									>
-										<FaSignInAlt className="mr-2" />
+										<FaSignInAlt className="mr-2" aria-hidden="true" />
 										Login with AniList
 									</Button>
 								</motion.div>
@@ -154,7 +154,7 @@ export default function Page() {
 											className="text-black hover:text-white border-gray-600 hover:bg-gray-700 transition-colors flex items-center justify-center w-full py-3 rounded-md shadow-md"
 											aria-label="Clear Cached Token"
 										>
-											<FaTimesCircle className="mr-2" />
+											<FaTimesCircle className="mr-2" aria-hidden="true" />
 											Clear Cached Token
 										</Button>
 									</motion.div>
@@ -173,7 +173,7 @@ export default function Page() {
 											className="text-black hover:text-white border-gray-600 hover:bg-gray-700 transition-colors flex items-center"
 											aria-label="Navigate to Home"
 										>
-											<FaHome className="mr-2" />
+											<FaHome className="mr-2" aria-hidden="true" />
 											Home
 										</Button>
 									</motion.div>
@@ -201,6 +201,7 @@ export default function Page() {
 												xmlns="http://www.w3.org/2000/svg"
 												fill="none"
 												viewBox="0 0 24 24"
+												aria-hidden="true"
 											>
 												<circle
 													className="opacity-25"

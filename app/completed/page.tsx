@@ -77,7 +77,10 @@ export default function CompletedPage({ summary }: CompletedPageProps): JSX.Elem
 							transition={{ duration: 0.5 }}
 							className="flex justify-center"
 						>
-							<FaCheckCircle className="text-green-500 w-16 h-16" />
+							<FaCheckCircle
+								className="text-green-500 w-16 h-16"
+								aria-hidden="true"
+							/>
 						</motion.div>
 						<CardTitle className="mt-4 text-3xl font-bold text-white">
 							Update Completed!
@@ -126,7 +129,7 @@ export default function CompletedPage({ summary }: CompletedPageProps): JSX.Elem
 									className="flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white w-full sm:w-auto"
 									aria-label="Manage Lists Again"
 								>
-									<FaList className="mr-2" />
+									<FaList className="mr-2" aria-hidden="true" />
 									Manage Lists
 								</Button>
 							</motion.div>
@@ -141,7 +144,7 @@ export default function CompletedPage({ summary }: CompletedPageProps): JSX.Elem
 									className="text-black hover:text-white border-gray-600 hover:bg-gray-700 transition-colors flex items-center"
 									aria-label="Go to Home"
 								>
-									<FaHome className="mr-2" />
+									<FaHome className="mr-2" aria-hidden="true" />
 									Home
 								</Button>
 							</motion.div>
@@ -163,9 +166,10 @@ export default function CompletedPage({ summary }: CompletedPageProps): JSX.Elem
 									whileHover={{ scale: 1.05 }}
 									whileTap={{ scale: 0.95 }}
 									className="w-full sm:w-auto mt-2 ml-2"
+									aria-label="View AniCards project on GitHub"
 								>
 									<Button className="flex items-center justify-center bg-purple-600 hover:bg-purple-700 text-white">
-										<FaGithub className="mr-2" />
+										<FaGithub className="mr-2" aria-hidden="true" />
 										AniCards
 									</Button>
 								</motion.a>
@@ -176,9 +180,10 @@ export default function CompletedPage({ summary }: CompletedPageProps): JSX.Elem
 									whileHover={{ scale: 1.05 }}
 									whileTap={{ scale: 0.95 }}
 									className="w-full sm:w-auto"
+									aria-label="View AniSearchModel project on GitHub"
 								>
 									<Button className="flex items-center justify-center bg-green-600 hover:bg-green-700 text-white">
-										<FaGithub className="mr-2" />
+										<FaGithub className="mr-2" aria-hidden="true" />
 										AniSearchModel
 									</Button>
 								</motion.a>
@@ -189,9 +194,10 @@ export default function CompletedPage({ summary }: CompletedPageProps): JSX.Elem
 									whileHover={{ scale: 1.05 }}
 									whileTap={{ scale: 0.95 }}
 									className="w-full sm:w-auto"
+									aria-label="View AniSearch project on GitHub"
 								>
 									<Button className="flex items-center justify-center bg-yellow-600 hover:bg-yellow-700 text-white">
-										<FaGithub className="mr-2" />
+										<FaGithub className="mr-2" aria-hidden="true" />
 										AniSearch
 									</Button>
 								</motion.a>
@@ -202,9 +208,10 @@ export default function CompletedPage({ summary }: CompletedPageProps): JSX.Elem
 									whileHover={{ scale: 1.05 }}
 									whileTap={{ scale: 0.95 }}
 									className="w-full sm:w-auto"
+									aria-label="View SpotifySkipTracker project on GitHub"
 								>
 									<Button className="flex items-center justify-center bg-indigo-600 hover:bg-indigo-700 text-white">
-										<FaGithub className="mr-2" />
+										<FaGithub className="mr-2" aria-hidden="true" />
 										SpotifySkipTracker
 									</Button>
 								</motion.a>
@@ -215,9 +222,10 @@ export default function CompletedPage({ summary }: CompletedPageProps): JSX.Elem
 									whileHover={{ scale: 1.05 }}
 									whileTap={{ scale: 0.95 }}
 									className="w-full sm:w-auto"
+									aria-label="View Anilist-Manga-Updater project on GitHub"
 								>
 									<Button className="flex items-center justify-center bg-red-600 hover:bg-red-700 text-white">
-										<FaGithub className="mr-2" />
+										<FaGithub className="mr-2" aria-hidden="true" />
 										Anilist-Manga-Updater
 									</Button>
 								</motion.a>

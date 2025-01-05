@@ -43,12 +43,14 @@ const CustomToast: React.FC<CustomToastProps> = ({
 	return (
 		<div
 			className={`w-80 p-4 rounded shadow-lg flex justify-between items-start ${variantStyles[variant]} text-white`}
+			role="alert"
+			aria-live="assertive"
 		>
 			<div>
 				<strong className="block text-lg">{title}</strong>
 				<p className="mt-1 text-sm">{description}</p>
 			</div>
-			<button onClick={onClose} className="ml-4 font-bold">
+			<button onClick={onClose} className="ml-4 font-bold" aria-label="Close notification">
 				×
 			</button>
 		</div>

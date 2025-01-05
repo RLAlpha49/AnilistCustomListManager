@@ -661,27 +661,34 @@ export default function Page() {
 							onClick={toggleUpdate}
 							disabled={done}
 							className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full flex items-center space-x-2 shadow-md transition-transform transform hover:scale-105"
+							aria-label={
+								!updating && !isPausedRef.current
+									? "Start updating"
+									: isPausedRef.current
+									? "Resume updating"
+									: "Pause updating"
+							}
 						>
 							{!updating && !isPausedRef.current ? (
 								<>
-									<FaPlay />
+									<FaPlay aria-hidden="true" />
 									<span>Start</span>
 								</>
 							) : !done ? (
 								isPausedRef.current ? (
 									<>
-										<FaPlay />
+										<FaPlay aria-hidden="true" />
 										<span>Resume</span>
 									</>
 								) : (
 									<>
-										<FaPause />
+										<FaPause aria-hidden="true" />
 										<span>Pause</span>
 									</>
 								)
 							) : (
 								<>
-									<FaCheckCircle />
+									<FaCheckCircle aria-hidden="true" />
 									<span>Finished</span>
 								</>
 							)}
@@ -722,7 +729,7 @@ export default function Page() {
 								animate={{ scale: 1, opacity: 1 }}
 								className="flex items-center space-x-2 text-green-400"
 							>
-								<FaCheckCircle size={24} />
+								<FaCheckCircle size={24} aria-hidden="true" />
 								<span className="text-xl">All entries have been updated!</span>
 							</motion.div>
 						)}
@@ -731,6 +738,7 @@ export default function Page() {
 								variant="outline"
 								asChild
 								className="text-black hover:text-white border-gray-600 hover:bg-gray-700 transition-colors flex items-center space-x-2 px-4 py-2 rounded-md shadow-sm"
+								aria-label="Back to Custom List Manager"
 							>
 								<Link href="/custom-list-manager">
 									<span>Back</span>
@@ -739,6 +747,7 @@ export default function Page() {
 							<Button
 								onClick={handleFinish}
 								className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md shadow-sm flex items-center space-x-2"
+								aria-label="Finish updating"
 							>
 								<span>Finish</span>
 							</Button>
@@ -750,13 +759,6 @@ export default function Page() {
 							<span>
 								⚠️ Rate limit exceeded. Retrying in {retryCountdown - 1} seconds...
 							</span>
-							<Button
-								variant="ghost"
-								onClick={() => setRetryCountdown(-1)}
-								className="text-yellow-100 hover:text-black"
-							>
-								&times;
-							</Button>
 						</div>
 					)}
 					{showNotice && (
@@ -769,6 +771,7 @@ export default function Page() {
 							<button
 								onClick={() => setShowNotice(false)}
 								className="text-yellow-800 hover:text-yellow-600 text-xl font-bold"
+								aria-label="Dismiss notice"
 							>
 								&times;
 							</button>

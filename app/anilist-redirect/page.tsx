@@ -38,7 +38,11 @@ export default function Page() {
 
 	return (
 		<Layout>
-			<Card className="w-full max-w-md mx-auto bg-gray-800 text-gray-100">
+			<Card
+				className="w-full max-w-md mx-auto bg-gray-800 text-gray-100"
+				role="alert"
+				aria-live="polite"
+			>
 				<CardContent className="p-6">
 					<p className="text-center text-lg">Processing login...</p>
 				</CardContent>

@@ -52,13 +52,15 @@ export default function MediaCard({
 			} max-w-2xl mx-auto relative`}
 			onMouseEnter={() => setIsHovered(true)}
 			onMouseLeave={() => setIsHovered(false)}
+			role="article"
+			aria-labelledby={`media-title-${id}`}
 		>
 			<div className="w-full sm:w-1/3 h-48 sm:h-auto relative">
 				<Image src={image} alt={romajiTitle} fill className="object-cover" />
 			</div>
 			<div className="w-full sm:w-2/3 p-4 flex flex-col justify-between text-gray-200">
 				<div>
-					<h2 className="text-xl font-bold mb-1 text-white">{romajiTitle}</h2>
+					<h2 id={`media-title-${id}`} className="text-xl font-bold mb-1 text-white">{romajiTitle}</h2>
 					<h3 className="text-md text-gray-400 mb-4">{englishTitle}</h3>
 					<div className="mb-4 space-y-1">
 						<p>
@@ -88,6 +90,7 @@ export default function MediaCard({
 				rel="noopener noreferrer"
 				className="absolute bottom-2 right-2 bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-full transition-colors duration-300"
 				aria-label="View on Anilist"
+				role="link"
 			>
 				<ExternalLink size={20} />
 			</a>

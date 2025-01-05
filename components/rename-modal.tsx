@@ -49,6 +49,7 @@ const RenameModal: React.FC<RenameModalProps> = React.memo(({ isOpen, onClose, c
                     onChange={(e) => setNewListName(e.target.value)}
                     className="p-2 rounded bg-gray-600 text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="Enter new list name"
+                    aria-label="New list name"
                 />
             </div>
         </Modal>

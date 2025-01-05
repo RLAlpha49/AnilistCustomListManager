@@ -82,19 +82,17 @@ export const DynamicSelect = forwardRef<HTMLButtonElement, DynamicSelectProps>(
 		};
 
 		return (
-			<Select
-				value={value}
-				onValueChange={handleSelectChange}
-				onOpenChange={setIsOpen}
-			>
+			<Select value={value} onValueChange={handleSelectChange} onOpenChange={setIsOpen}>
 				<SelectTrigger
 					ref={ref}
 					className={`bg-gray-700 text-gray-200 ${className}`}
 					style={{ width: `${currentWidth + 32}px` }}
+					aria-haspopup="listbox"
+					aria-expanded={isOpen}
 				>
 					<SelectValue placeholder={placeholder} />
 				</SelectTrigger>
-				<SelectContent className="bg-gray-700 text-gray-200">
+				<SelectContent className="bg-gray-700 text-gray-200" role="listbox">
 					<div className="px-2 py-2">
 						<div className="flex items-center px-2 py-1 bg-gray-600 rounded">
 							<FaSearch className="text-gray-400 mr-2" />
@@ -117,7 +115,11 @@ export const DynamicSelect = forwardRef<HTMLButtonElement, DynamicSelectProps>(
 								<SelectGroup key={group.label}>
 									<SelectLabel>{group.label}</SelectLabel>
 									{group.items.map((item) => (
-										<SelectItem key={item.value} value={item.value}>
+										<SelectItem
+											key={item.value}
+											value={item.value}
+											role="option"
+										>
 											{item.label}
 										</SelectItem>
 									))}

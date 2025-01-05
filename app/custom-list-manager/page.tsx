@@ -619,7 +619,7 @@ export default function Page() {
 			<Card className="w-full max-w-5xl mx-auto bg-gray-800 text-gray-100 shadow-2xl p-6 rounded-lg">
 				<CardHeader>
 					<CardTitle className="text-2xl font-bold flex items-center">
-						<FaSort className="mr-2 text-blue-400" />
+						<FaSort className="mr-2 text-blue-400" aria-hidden="true" />
 						Custom List Manager
 					</CardTitle>
 					<CardDescription className="text-gray-300 mt-1">
@@ -636,7 +636,7 @@ export default function Page() {
 								className="bg-blue-600 hover:bg-blue-700 text-white flex items-center"
 								aria-label="Fetch Anime Lists"
 							>
-								<FaArrowDown className="mr-2" />
+								<FaArrowDown className="mr-2" aria-hidden="true" />
 								Fetch Anime Lists
 							</Button>
 							<Button
@@ -644,7 +644,7 @@ export default function Page() {
 								className="bg-blue-600 hover:bg-blue-700 text-white flex items-center"
 								aria-label="Fetch Manga Lists"
 							>
-								<FaArrowDown className="mr-2" />
+								<FaArrowDown className="mr-2" aria-hidden="true" />
 								Fetch Manga Lists
 							</Button>
 							{!isListEmpty && (
@@ -653,7 +653,7 @@ export default function Page() {
 									className="bg-green-600 hover:bg-green-700 text-white flex items-center"
 									aria-label="Add New List"
 								>
-									<FaPlus className="mr-2" />
+									<FaPlus className="mr-2" aria-hidden="true" />
 									Add New List
 								</Button>
 							)}
@@ -669,6 +669,7 @@ export default function Page() {
 								onCheckedChange={(checked: boolean) =>
 									setHideDefaultStatusLists(checked)
 								}
+								aria-label="Hide Default Status Lists"
 							/>
 							<label htmlFor="hideDefaultStatusLists" className="text-gray-200">
 								Hide Default Status Lists
@@ -742,7 +743,7 @@ export default function Page() {
 																}
 																aria-label="Rename List"
 															>
-																<FaEdit />
+																<FaEdit aria-hidden="true" />
 															</Button>
 															<Button
 																variant="ghost"
@@ -752,7 +753,7 @@ export default function Page() {
 																}
 																aria-label="Delete List"
 															>
-																<FaTrash />
+																<FaTrash aria-hidden="true" />
 															</Button>
 														</div>
 													</motion.div>

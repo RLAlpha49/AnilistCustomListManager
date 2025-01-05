@@ -12,14 +12,17 @@ interface BreadcrumbsProps {
 const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ breadcrumbs }) => {
 	return (
 		<nav aria-label="breadcrumb" className="breadcrumbs">
-			<ol>
+			<ol className="list-none p-0 flex">
 				{breadcrumbs.map((breadcrumb, index) => (
-					<li key={index}>
+					<li key={index} className="flex items-center">
 						{breadcrumb.href ? (
-							<a href={breadcrumb.href}>{breadcrumb.name}</a>
+							<a href={breadcrumb.href} aria-current={index === breadcrumbs.length - 1 ? "page" : undefined}>
+								{breadcrumb.name}
+							</a>
 						) : (
-							<span>{breadcrumb.name}</span>
+							<span aria-current="page">{breadcrumb.name}</span>
 						)}
+						{index < breadcrumbs.length - 1 && <span className="mx-2">/</span>}
 					</li>
 				))}
 			</ol>

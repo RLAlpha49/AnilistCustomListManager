@@ -7,13 +7,27 @@ import CustomToast from "@/components/ui/custom-toast";
 const ToastContainer: React.FC = () => {
 	const { toasts, dismiss } = useToast();
 
-	const allowedVariants = ["info", "warning", "error", "success", "default", "destructive"] as const;
-	type AllowedVariant = typeof allowedVariants[number];
+	const allowedVariants = [
+		"info",
+		"warning",
+		"error",
+		"success",
+		"default",
+		"destructive",
+	] as const;
+	type AllowedVariant = (typeof allowedVariants)[number];
 
 	return (
-		<div className="fixed bottom-4 right-4 flex flex-col space-y-2 z-50">
+		<div
+			className="fixed bottom-4 right-4 flex flex-col space-y-2 z-50"
+			role="region"
+			aria-live="polite"
+			aria-label="Notification messages"
+		>
 			{toasts.map((toast: ToastType) => {
-				const variant: AllowedVariant = allowedVariants.includes(toast.variant as AllowedVariant)
+				const variant: AllowedVariant = allowedVariants.includes(
+					toast.variant as AllowedVariant
+				)
 					? (toast.variant as AllowedVariant)
 					: "info";
 
