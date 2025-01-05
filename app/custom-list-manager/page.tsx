@@ -46,6 +46,7 @@ import { fetchAniList } from "@/lib/api";
 import { useAuth } from "@/context/auth-context";
 import Modal from "@/components/ui/modal";
 import { RenameModal } from "@/components/rename-modal";
+import Breadcrumbs from "@/components/breadcrumbs";
 
 interface ListCondition {
 	name: string;
@@ -607,8 +608,14 @@ export default function Page() {
 		}
 	};
 
+	const breadcrumbs = [
+		{ name: "Home", href: "/" },
+		{ name: "Custom List Manager", href: "/custom-list-manager" },
+	];
+
 	return (
 		<Layout>
+			<Breadcrumbs breadcrumbs={breadcrumbs} />
 			<Card className="w-full max-w-5xl mx-auto bg-gray-800 text-gray-100 shadow-2xl p-6 rounded-lg">
 				<CardHeader>
 					<CardTitle className="text-2xl font-bold flex items-center">
@@ -707,7 +714,8 @@ export default function Page() {
 																className="text-gray-400 hover:text-black"
 																onClick={() => {
 																	const newLists = [...lists];
-																	newLists[index].selectedOption = "";
+																	newLists[index].selectedOption =
+																		"";
 																	setLists(newLists);
 																}}
 																aria-label="Clear Condition"
@@ -718,17 +726,20 @@ export default function Page() {
 																value={list.selectedOption || ""}
 																onValueChange={(value: string) => {
 																	const newLists = [...lists];
-																	newLists[index].selectedOption = value;
+																	newLists[index].selectedOption =
+																		value;
 																	setLists(newLists);
 																}}
 																options={getOptions(listType)}
-																	placeholder="Select a condition"
-																	className="w-48"
-																/>
+																placeholder="Select a condition"
+																className="w-48"
+															/>
 															<Button
 																variant="ghost"
 																className="text-yellow-400 hover:text-yellow-600"
-																onClick={() => openRenameModal(list)}
+																onClick={() =>
+																	openRenameModal(list)
+																}
 																aria-label="Rename List"
 															>
 																<FaEdit />
@@ -736,7 +747,9 @@ export default function Page() {
 															<Button
 																variant="ghost"
 																className="text-red-400 hover:text-red-600"
-																onClick={() => handleDelete(list.name)}
+																onClick={() =>
+																	handleDelete(list.name)
+																}
 																aria-label="Delete List"
 															>
 																<FaTrash />

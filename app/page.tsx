@@ -4,10 +4,16 @@ import { Button } from "@/components/ui/button";
 import { CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import Link from "next/link";
 import { FaArrowsAlt, FaSort, FaSyncAlt } from "react-icons/fa";
+import Breadcrumbs from '@/components/breadcrumbs';
 
 export default function Page() {
+	const breadcrumbs = [
+		{ name: 'Home', href: '/' }
+	];
+
 	return (
 		<Layout>
+			<Breadcrumbs breadcrumbs={breadcrumbs} />
 			<div className="flex flex-col items-center justify-center bg-gray-900 text-gray-100 px-4">
 				{/* Hero Section */}
 				<div className="w-full max-w-4xl bg-gray-800 rounded-lg shadow-lg p-8 mb-12">

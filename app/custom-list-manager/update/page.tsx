@@ -13,6 +13,7 @@ import LoadingIndicator from "@/components/loading-indicator";
 import { fetchAniList } from "@/lib/api";
 import { FaPlay, FaPause, FaCheckCircle } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
+import Breadcrumbs from "@/components/breadcrumbs";
 
 interface Tag {
 	name: string;
@@ -550,22 +551,22 @@ export default function Page() {
 					await updateEntry(entry);
 					setUpdatedEntries((prev) => new Set(prev).add(entry.media.id));
 					await delay(1000);
+
+					if (updatedEntries.size + 1 === totalEntries) {
+						setDone(true);
+						setUpdating(false);
+						toast({
+							title: "Success",
+							description: "All entries have been updated successfully!",
+							variant: "success",
+						});
+						break;
+					}
 				} catch (error) {
 					console.error(`Error updating entry ${entry.media.id}:`, error);
-					// Optionally, pause the loop or decide how to handle the error
-					// For example, stop updating further entries
 					setUpdating(false);
 					break;
 				}
-			}
-			if (updatedEntries.size === totalEntries) {
-				setDone(true);
-				setUpdating(false);
-				toast({
-					title: "Success",
-					description: "All entries have been updated successfully!",
-					variant: "success",
-				});
 			}
 		};
 
@@ -606,17 +607,6 @@ export default function Page() {
 		}
 	}, [fetchMediaList, toast, token]);
 
-	useEffect(() => {
-		if (done) {
-			const summary = {
-				totalListsUpdated: lists.length,
-				totalEntriesUpdated: updatedEntries.size,
-			};
-			localStorage.setItem("updateSummary", JSON.stringify(summary));
-			router.push("/completed");
-		}
-	}, [done, lists.length, updatedEntries.size, router]);
-
 	const handleFinish = () => {
 		const summary = {
 			totalListsUpdated: lists.length,
@@ -626,8 +616,15 @@ export default function Page() {
 		router.push("/completed");
 	};
 
+	const breadcrumbs = [
+		{ name: "Home", href: "/" },
+		{ name: "Custom List Manager", href: "/custom-list-manager" },
+		{ name: "Update", href: "/custom-list-manager/update" },
+	];
+
 	return (
 		<Layout>
+			<Breadcrumbs breadcrumbs={breadcrumbs} />
 			<Card className="w-full max-w-4xl mx-auto bg-gray-800 text-gray-100 rounded-lg shadow-lg">
 				<CardHeader>
 					<CardTitle className="text-2xl">🚀 Update Custom Lists</CardTitle>
@@ -762,44 +759,42 @@ export default function Page() {
 								<div className="flex justify-center items-center h-40">
 									<LoadingIndicator />
 								</div>
-							) : mediaList.length > 0 ? (
-								<AnimatePresence>
-									{mediaList.map((entry) => (
-										<MediaCard
-											key={entry.media.id}
-											id={entry.media.id}
-											image={entry.media.coverImage.extraLarge}
-											romajiTitle={entry.media.title.romaji}
-											englishTitle={entry.media.title.english || "N/A"}
-											status={entry.status}
-											score={entry.score}
-											repeatCount={entry.repeat}
-											customListChanges={Object.entries(entry.lists)
-												.filter(
-													([list, value]) =>
-														value !== undefined &&
-														value !== entry.customLists[list]
-												)
-												.map(
-													([list, value]) =>
-														`${list}: ${
-															value
-																? "Add to list"
-																: "Remove from list"
-														}`
-												)}
-											anilistLink={getMediaUrl(entry)}
-											isUpdated={updatedEntries.has(entry.media.id)}
-											onAnimationEnd={() =>
-												handleAnimationEnd(entry.media.id)
-											}
-										/>
-									))}
-								</AnimatePresence>
 							) : (
-								<p className="text-center text-gray-300">
-									No entries found to update.
-								</p>
+								mediaList.length > 0 && (
+									<AnimatePresence>
+										{mediaList.map((entry) => (
+											<MediaCard
+												key={entry.media.id}
+												id={entry.media.id}
+												image={entry.media.coverImage.extraLarge}
+												romajiTitle={entry.media.title.romaji}
+												englishTitle={entry.media.title.english || "N/A"}
+												status={entry.status}
+												score={entry.score}
+												repeatCount={entry.repeat}
+												customListChanges={Object.entries(entry.lists)
+													.filter(
+														([list, value]) =>
+															value !== undefined &&
+															value !== entry.customLists[list]
+													)
+													.map(
+														([list, value]) =>
+															`${list}: ${
+																value
+																	? "Add to list"
+																	: "Remove from list"
+															}`
+													)}
+												anilistLink={getMediaUrl(entry)}
+												isUpdated={updatedEntries.has(entry.media.id)}
+												onAnimationEnd={() =>
+													handleAnimationEnd(entry.media.id)
+												}
+											/>
+										))}
+									</AnimatePresence>
+								)
 							)}
 						</div>
 					)}

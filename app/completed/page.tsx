@@ -1,14 +1,15 @@
 "use client";
 
-import Layout from '@/components/layout'
+import Layout from "@/components/layout";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { FaCheckCircle, FaHome, FaList, FaGithub } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import ToastContainer from '@/components/ui/toast-container';
-import { toast } from '@/hooks/use-toast';
+import ToastContainer from "@/components/ui/toast-container";
+import { toast } from "@/hooks/use-toast";
+import Breadcrumbs from "@/components/breadcrumbs";
 
 interface Summary {
 	totalListsUpdated: number;
@@ -26,7 +27,12 @@ export default function CompletedPage({ summary }: CompletedPageProps): JSX.Elem
 		totalEntriesUpdated: 0,
 	});
 
+	const hasFetchedSummary = useRef(false);
+
 	useEffect(() => {
+		if (hasFetchedSummary.current) return;
+		hasFetchedSummary.current = true;
+
 		const storedSummary = localStorage.getItem("updateSummary");
 		let summaryData: Summary = { totalListsUpdated: 0, totalEntriesUpdated: 0 };
 
@@ -54,8 +60,14 @@ export default function CompletedPage({ summary }: CompletedPageProps): JSX.Elem
 		router.push("/custom-list-manager");
 	};
 
+	const breadcrumbs = [
+		{ name: "Home", href: "/" },
+		{ name: "Completed", href: "/completed" },
+	];
+
 	return (
 		<Layout>
+			<Breadcrumbs breadcrumbs={breadcrumbs} />
 			<div className="flex items-center justify-center bg-gray-900 text-gray-100 px-4">
 				<Card className="w-full max-w-lg bg-gray-800 shadow-xl rounded-lg overflow-hidden">
 					<CardHeader className="text-center">
@@ -67,7 +79,9 @@ export default function CompletedPage({ summary }: CompletedPageProps): JSX.Elem
 						>
 							<FaCheckCircle className="text-green-500 w-16 h-16" />
 						</motion.div>
-						<CardTitle className="mt-4 text-3xl font-bold text-white">Update Completed!</CardTitle>
+						<CardTitle className="mt-4 text-3xl font-bold text-white">
+							Update Completed!
+						</CardTitle>
 						<CardDescription className="mt-2 text-gray-300">
 							Your custom lists have been successfully updated.
 						</CardDescription>
@@ -79,7 +93,8 @@ export default function CompletedPage({ summary }: CompletedPageProps): JSX.Elem
 							transition={{ delay: 0.3, duration: 0.5 }}
 							className="mt-4 space-y-2"
 						>
-							{localSummary.totalListsUpdated === 0 && localSummary.totalEntriesUpdated === 0 ? (
+							{localSummary.totalListsUpdated === 0 &&
+							localSummary.totalEntriesUpdated === 0 ? (
 								<div className="text-yellow-400 text-center">
 									<p>No update information was found for your recent update.</p>
 								</div>
@@ -87,7 +102,9 @@ export default function CompletedPage({ summary }: CompletedPageProps): JSX.Elem
 								<>
 									<div className="flex justify-between">
 										<span className="text-white">Total Lists:</span>
-										<span className="font-semibold text-white">{localSummary.totalListsUpdated}</span>
+										<span className="font-semibold text-white">
+											{localSummary.totalListsUpdated}
+										</span>
 									</div>
 									<div className="flex justify-between">
 										<span className="text-white">Total Entries Updated:</span>
@@ -135,7 +152,9 @@ export default function CompletedPage({ summary }: CompletedPageProps): JSX.Elem
 							transition={{ delay: 0.6, duration: 0.5 }}
 							className="mt-8 text-center"
 						>
-							<h2 className="text-2xl font-semibold text-white mb-4">Check Out My Other Projects</h2>
+							<h2 className="text-2xl font-semibold text-white mb-4">
+								Check Out My Other Projects
+							</h2>
 							<div className="flex flex-wrap justify-center items-center space-x-2 space-y-2 overflow-auto max-h-40">
 								<motion.a
 									href="https://github.com/RLAlpha49/AniCards"

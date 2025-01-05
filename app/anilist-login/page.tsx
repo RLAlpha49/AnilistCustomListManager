@@ -11,6 +11,7 @@ import { useAuth } from "@/context/auth-context";
 import { useToast } from "@/hooks/use-toast";
 import { fetchAniList } from "@/lib/api";
 import { motion } from "framer-motion";
+import Breadcrumbs from "@/components/breadcrumbs";
 
 const ANILIST_AUTH_URL = "https://anilist.co/api/v2/oauth/authorize";
 const CLIENT_ID = process.env.NEXT_PUBLIC_ANILIST_CLIENT_ID;
@@ -84,8 +85,14 @@ export default function Page() {
 		router.push("/");
 	};
 
+	const breadcrumbs = [
+		{ name: "Home", href: "/" },
+		{ name: "AniList Login", href: "/anilist-login" },
+	];
+
 	return (
 		<Layout>
+			<Breadcrumbs breadcrumbs={breadcrumbs} />
 			<div className="flex items-center justify-center px-4">
 				<Card className="w-full max-w-4xl bg-gray-800 text-gray-100 shadow-2xl flex flex-col md:flex-row overflow-hidden rounded-lg">
 					{/* Left Side - Animated Illustration */}
