@@ -94,7 +94,8 @@ export default function Page() {
 	const [updatedEntries, setUpdatedEntries] = useState<Set<number>>(new Set());
 	const isPausedRef = useRef<boolean>(false);
 	const [page, setPage] = useState<number>(1);
-	const itemsPerPage = 10; // Adjust as needed
+	const [isRateLimited, setIsRateLimited] = useState<boolean>(false);
+	const itemsPerPage = 10;
 
 	useEffect(() => {
 		setUserId(localStorage.getItem("userId"));
@@ -483,12 +484,14 @@ export default function Page() {
 					token!,
 					(retryAttempt: number) => {
 						setRetryCountdown(60);
+						setIsRateLimited(true);
 						isPausedRef.current = true;
 						const countdownInterval = setInterval(() => {
 							setRetryCountdown((prev) => {
 								if (prev <= 1) {
 									clearInterval(countdownInterval);
 									isPausedRef.current = false;
+									setIsRateLimited(false);
 									return -1;
 								}
 								return prev - 1;
@@ -516,7 +519,7 @@ export default function Page() {
 							"Exceeded maximum retry attempts due to rate limiting. Update paused.",
 						variant: "error",
 					});
-					isPausedRef.current = true;
+					setIsRateLimited(true);
 				}
 				throw error;
 			}
@@ -586,15 +589,23 @@ export default function Page() {
 				variant: "default",
 			});
 		} else {
-			isPausedRef.current = false;
-			startUpdate();
-			toast({
-				title: "Updating",
-				description: "Update process has started.",
-				variant: "default",
-			});
+			if (!isRateLimited) {
+				isPausedRef.current = false;
+				startUpdate();
+				toast({
+					title: "Updating",
+					description: "Update process has started.",
+					variant: "default",
+				});
+			} else {
+				toast({
+					title: "Rate Limited",
+					description: "Cannot start update while rate limited.",
+					variant: "error",
+				});
+			}
 		}
-	}, [updating, startUpdate, toast]);
+	}, [updating, startUpdate, isRateLimited, toast]);
 
 	useEffect(() => {
 		const token = localStorage.getItem("anilistToken");
@@ -659,17 +670,24 @@ export default function Page() {
 					<div className="flex flex-col items-center space-y-6">
 						<Button
 							onClick={toggleUpdate}
-							disabled={done}
+							disabled={done || isRateLimited}
 							className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full flex items-center space-x-2 shadow-md transition-transform transform hover:scale-105"
 							aria-label={
-								!updating && !isPausedRef.current
+								isRateLimited
+									? "Rate limited. Please wait."
+									: !updating && !isPausedRef.current
 									? "Start updating"
 									: isPausedRef.current
 									? "Resume updating"
 									: "Pause updating"
 							}
 						>
-							{!updating && !isPausedRef.current ? (
+							{isRateLimited ? (
+								<>
+									<FaPause aria-hidden="true" />
+									<span>Rate Limited</span>
+								</>
+							) : !updating && !isPausedRef.current ? (
 								<>
 									<FaPlay aria-hidden="true" />
 									<span>Start</span>

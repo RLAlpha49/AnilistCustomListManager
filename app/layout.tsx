@@ -14,12 +14,6 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
 		<html lang="en">
-			<head>
-				<meta charSet="UTF-8" />
-				<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-				<title>Anilist Custom List Manager</title>
-				<meta name="description" content="Manage your anime and manga lists with ease" />
-			</head>
 			<body className={inter.className}>
 				<AuthProvider>{children}</AuthProvider>
 				<Script src="/googleAnalytics.js" strategy="afterInteractive" />
