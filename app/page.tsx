@@ -1,3 +1,5 @@
+"use client";
+
 import Layout from "@/components/layout";
 import ToastContainer from "@/components/ui/toast-container";
 import { Button } from "@/components/ui/button";
@@ -5,8 +7,20 @@ import { CardContent, CardHeader, CardTitle, CardDescription } from "@/component
 import Link from "next/link";
 import { FaArrowsAlt, FaSort, FaSyncAlt } from "react-icons/fa";
 import Breadcrumbs from "@/components/breadcrumbs";
+import { useToast } from "@/hooks/use-toast";
 
 export default function Page() {
+	const { toast } = useToast();
+
+	const clearCache = () => {
+		localStorage.clear();
+		toast({
+			title: "Cache cleared!",
+			description: "Your cache has been cleared.",
+			variant: "success",
+		});
+	};
+
 	const breadcrumbs = [{ name: "Home", href: "/" }];
 
 	return (
@@ -90,6 +104,17 @@ export default function Page() {
 							your lists are always up-to-date.
 						</p>
 					</div>
+				</div>
+
+				{/* Clear Cache Button */}
+				<div className="mb-12">
+					<Button
+						onClick={clearCache}
+						className="bg-red-600 hover:bg-red-700 text-white"
+						aria-label="Clear Cache"
+					>
+						Clear Cache
+					</Button>
 				</div>
 			</div>
 			<ToastContainer />

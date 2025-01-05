@@ -6,6 +6,7 @@ import { useState } from "react";
 import { FaQuestionCircle, FaChevronDown, FaChevronUp, FaSearch } from "react-icons/fa";
 import Breadcrumbs from "@/components/breadcrumbs";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 
 interface FAQItem {
 	question: string;
@@ -213,6 +214,11 @@ export default function FAQPage() {
 								</AnimatePresence>
 							</div>
 						))}
+					</div>
+					<div className="mt-8 text-center">
+						<Link href="/" className="text-blue-500 hover:underline">
+							Back to Home
+						</Link>
 					</div>
 				</div>
 			</div>
