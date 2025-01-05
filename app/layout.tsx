@@ -2,6 +2,7 @@ import './globals.css';
 import { Inter } from 'next/font/google';
 import { AuthProvider } from "@/context/auth-context";
 import Script from 'next/script';
+import { Analytics } from '@vercel/analytics/next';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -17,11 +18,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <title>Anilist Custom List Manager</title>
+      </head>
       <body className={inter.className}>
         <AuthProvider>
           {children}
         </AuthProvider>
         <Script src="/googleAnalytics.js" strategy="afterInteractive" />
+        <Analytics />
       </body>
     </html>
   );
