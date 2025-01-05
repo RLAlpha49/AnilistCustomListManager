@@ -62,6 +62,11 @@ export default function Page() {
 	const handleLogin = (): void => {
 		if (!CLIENT_ID) {
 			console.error("AniList Client ID is not defined.");
+			toast({
+				title: "Error",
+				description: "AniList Client ID is not defined.",
+				variant: "error",
+			});
 			return;
 		}
 		const responseType: string = "token";
