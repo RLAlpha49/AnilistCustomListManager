@@ -93,6 +93,8 @@ export default function Page() {
 	const updateProcessRef = useRef<Promise<void> | null>(null);
 	const [updatedEntries, setUpdatedEntries] = useState<Set<number>>(new Set());
 	const isPausedRef = useRef<boolean>(false);
+	const [page, setPage] = useState<number>(1);
+	const itemsPerPage = 10; // Adjust as needed
 
 	useEffect(() => {
 		setUserId(localStorage.getItem("userId"));
@@ -622,6 +624,26 @@ export default function Page() {
 		{ name: "Update", href: "/custom-list-manager/update" },
 	];
 
+	useEffect(() => {
+		const observer = new IntersectionObserver(
+			(entries) => {
+				if (entries[0].isIntersecting) {
+					setPage((prevPage) => prevPage + 1);
+				}
+			},
+			{ threshold: 1.0 }
+		);
+
+		const target = document.querySelector("#load-more-trigger");
+		if (target) observer.observe(target);
+
+		return () => {
+			if (target) observer.unobserve(target);
+		};
+	}, []);
+
+	const currentEntries = mediaList.slice(0, page * itemsPerPage);
+
 	return (
 		<Layout>
 			<Breadcrumbs breadcrumbs={breadcrumbs} />
@@ -760,9 +782,9 @@ export default function Page() {
 									<LoadingIndicator />
 								</div>
 							) : (
-								mediaList.length > 0 && (
+								currentEntries.length > 0 && (
 									<AnimatePresence>
-										{mediaList.map((entry) => (
+										{currentEntries.map((entry) => (
 											<MediaCard
 												key={entry.media.id}
 												id={entry.media.id}
@@ -798,6 +820,7 @@ export default function Page() {
 							)}
 						</div>
 					)}
+					<div id="load-more-trigger" className="h-10"></div>
 				</CardContent>
 			</Card>
 			<ToastContainer />
