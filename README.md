@@ -1,47 +1,69 @@
-# Custom List Manager for AniList
+# Anilist Custom List Manager
 
-This project is a Vue.js application that allows users to manage their AniList in a more personalized way. It provides
-features to fetch the list of the authenticated AniList user, move entries to specific custom lists, and sort entries
-based on status, score, rereads, and type (Manga, Manwha, Manhua).
+## Table of Contents
+
+- [Introduction](#introduction)
+- [Features](#features)
+- [Installation](#installation)
+- [License](#license)
+
+## Introduction
+
+**Anilist Custom List Manager** is a tool designed to enhance your Anilist experience by allowing you to manage your anime and manga lists effortlessly.
 
 ## Features
 
-- Fetch the list of the authenticated AniList user
-- Move your entries to specific custom lists
-- Sort entries based on status, score, rereads, genres, tags, and type (Manga, Manwha, Manhua)
+- **Fetch Anime and Manga Lists:** Easily retrieve your existing lists from Anilist.
+- **Custom List Management:** Organize your entries into personalized lists for better tracking and organization.
+- **Sort Entries:** Sort your entries based on status, score, rereads, genres, tags, and type to quickly find what you're looking for.
+- **Automatic Updates:** Automatically update entries based on the conditions you set, ensuring your lists are up-to-date.
+- **User-Friendly Interface:** Built with a clean and intuitive UI using Next.js, Tailwind CSS, and Radix UI components.
 
 ## Installation
 
-1. Clone the repository
-    ```bash
-    git clone https://github.com/RLAlpha49/AnilistListManager.git
-    ```
+1. **Clone the Repository**
 
-2. Install the dependencies
-    ```bash
-    npm install
-    ```
+   ```bash
+   git clone https://github.com/RLAlpha49/anilist-custom-list-manager.git
+   cd anilist-custom-list-manager
+   ```
 
-3. Create a `.env` file in the root directory and add the following environment variables
-    ```bash
-    VUE_APP_ANILIST_CLIENT_ID=your_anilist_client_id
-    ```
+2. **Install Dependencies**
 
-4. Run the application
-    ```bash
-    npm run serve
-    ```
+   Ensure you have [Node.js](https://nodejs.org/) installed. Then, install the required packages:
 
-## Usage
+   ```bash
+   npm install
+   ```
 
-1. Login with your AniList account.
-2. Choose between Anime and Manga lists.
-3. Manage your custom lists as per your needs.
+   or using Yarn:
 
-## Contributing
+   ```bash
+   yarn install
+   ```
 
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+3. **Configure Environment Variables**
+
+   Create a `.env` file in the root directory and add your Anilist API credentials:
+
+   ```env
+   NEXT_PUBLIC_ANILIST_CLIENT_ID=your_client_id
+   ```
+
+4. **Run the Development Server**
+
+   ```bash
+   npm run dev
+   ```
+
+   or using Yarn:
+
+   ```bash
+   yarn dev
+   ```
+
+   Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 ## License
 
-[GPL-3.0](LICENSE)
+This project is licensed under the [MIT License](LICENSE). You are free to use, modify, and distribute this software as per the license terms.

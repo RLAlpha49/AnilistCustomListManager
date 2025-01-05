@@ -1,4 +1,9 @@
 User-agent: *
 Disallow: /
 Allow: /$
-Allow: /custom-list-manager/custom-list-home
+Allow: /_not-found
+Allow: /anilist-login
+Allow: /anilist-redirect
+Allow: /completed
+Allow: /custom-list-manager
+Allow: /custom-list-manager/update
