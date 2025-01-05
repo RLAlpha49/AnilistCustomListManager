@@ -41,9 +41,9 @@ export default function Page() {
 								variant="outline"
 								asChild
 								className="text-black hover:text-white border-gray-600 hover:bg-gray-700 transition-colors"
-								aria-label="Learn more about Anilist Custom List Manager"
+								aria-label="Frequently Asked Questions about Anilist Custom List Manager"
 							>
-								<Link href="/about">Learn More</Link>
+								<Link href="/faq">FAQ</Link>
 							</Button>
 						</div>
 					</CardContent>
