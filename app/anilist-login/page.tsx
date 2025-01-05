@@ -13,7 +13,7 @@ import { fetchAniList } from "@/lib/api";
 import { motion } from "framer-motion";
 
 const ANILIST_AUTH_URL = "https://anilist.co/api/v2/oauth/authorize";
-const CLIENT_ID = process.env.NEXT_PUBLIC_ANILIST_CLIENT_ID || process.env.ANILIST_CLIENT_ID;
+const CLIENT_ID = process.env.NEXT_PUBLIC_ANILIST_CLIENT_ID;
 
 export default function Page() {
 	const { isLoggedIn, login, logout } = useAuth();
