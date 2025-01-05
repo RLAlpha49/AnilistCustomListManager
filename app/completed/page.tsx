@@ -10,6 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import ToastContainer from "@/components/ui/toast-container";
 import { toast } from "@/hooks/use-toast";
 import Breadcrumbs from "@/components/breadcrumbs";
+import { getItemWithExpiry, removeItemWithExpiry } from "@/lib/local-storage";
 
 interface Summary {
 	totalListsUpdated: number;
@@ -33,12 +34,12 @@ export default function CompletedPage({ summary }: CompletedPageProps): JSX.Elem
 		if (hasFetchedSummary.current) return;
 		hasFetchedSummary.current = true;
 
-		const storedSummary = localStorage.getItem("updateSummary");
+		const storedSummary = getItemWithExpiry("updateSummary");
 		let summaryData: Summary = { totalListsUpdated: 0, totalEntriesUpdated: 0 };
 
 		if (storedSummary) {
 			summaryData = JSON.parse(storedSummary);
-			localStorage.removeItem("updateSummary");
+			removeItemWithExpiry("updateSummary");
 		} else if (summary) {
 			summaryData = summary;
 		} else {

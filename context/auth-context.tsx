@@ -1,5 +1,6 @@
 'use client';
 
+import { getItemWithExpiry, removeItemWithExpiry, setItemWithExpiry } from "@/lib/local-storage";
 import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
 
 interface AuthContextType {
@@ -18,8 +19,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 	const [token, setToken] = useState<string | null>(null);
 
 	useEffect(() => {
-		const storedToken = localStorage.getItem("anilistToken");
-		const storedUserId = localStorage.getItem("userId");
+		const storedToken = getItemWithExpiry("anilistToken");
+		const storedUserId = getItemWithExpiry("userId");
 		if (storedToken && storedUserId) {
 			setToken(storedToken);
 			setUserId(storedUserId);
@@ -31,16 +32,16 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 		setToken(newToken);
 		setUserId(newUserId);
 		setIsLoggedIn(true);
-		localStorage.setItem("anilistToken", newToken);
-		localStorage.setItem("userId", newUserId);
+		setItemWithExpiry("anilistToken", newToken, 60 * 60 * 24 * 7 * 1000);
+		setItemWithExpiry("userId", newUserId, 60 * 60 * 24 * 7 * 1000);
 	};
 
 	const logout = () => {
 		setToken(null);
 		setUserId(null);
 		setIsLoggedIn(false);
-		localStorage.removeItem("anilistToken");
-		localStorage.removeItem("userId");
+		removeItemWithExpiry("anilistToken");
+		removeItemWithExpiry("userId");
 	};
 
 	return (

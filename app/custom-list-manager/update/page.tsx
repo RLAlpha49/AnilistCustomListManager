@@ -11,6 +11,7 @@ import { useToast } from "@/hooks/use-toast";
 import MediaCard from "@/components/media-card";
 import LoadingIndicator from "@/components/loading-indicator";
 import { fetchAniList } from "@/lib/api";
+import { getItemWithExpiry, setItemWithExpiry } from "@/lib/local-storage";
 import { FaPlay, FaPause, FaCheckCircle } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import Breadcrumbs from "@/components/breadcrumbs";
@@ -98,13 +99,13 @@ export default function Page() {
 	const itemsPerPage = 10;
 
 	useEffect(() => {
-		setUserId(localStorage.getItem("userId"));
-		setListType(localStorage.getItem("listType") === "MANGA" ? "MANGA" : "ANIME");
-		setLists(JSON.parse(localStorage.getItem("lists") || "[]"));
+		setUserId(getItemWithExpiry("userId"));
+		setListType(getItemWithExpiry("listType") === "MANGA" ? "MANGA" : "ANIME");
+		setLists(JSON.parse(getItemWithExpiry("lists") || "[]"));
 		setHideDefaultStatusLists(
-			JSON.parse(localStorage.getItem("hideDefaultStatusLists") || "true")
+			JSON.parse(getItemWithExpiry("hideDefaultStatusLists") || "true")
 		);
-		setToken(localStorage.getItem("anilistToken"));
+		setToken(getItemWithExpiry("anilistToken"));
 	}, []);
 
 	const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -171,7 +172,7 @@ export default function Page() {
 		`;
 
 	const fetchMediaList = useCallback(async () => {
-		if (!userId && localStorage.getItem("userId") === null) {
+		if (!userId && getItemWithExpiry("userId") === null) {
 			toast({
 				title: "Error",
 				description: "User ID is not available",
@@ -608,7 +609,7 @@ export default function Page() {
 	}, [updating, startUpdate, isRateLimited, toast]);
 
 	useEffect(() => {
-		const token = localStorage.getItem("anilistToken");
+		const token = getItemWithExpiry("anilistToken");
 		if (token) {
 			fetchMediaList();
 		} else {
@@ -625,7 +626,7 @@ export default function Page() {
 			totalListsUpdated: lists.length,
 			totalEntriesUpdated: updatedEntries.size,
 		};
-		localStorage.setItem("updateSummary", JSON.stringify(summary));
+		setItemWithExpiry("updateSummary", JSON.stringify(summary), 60 * 60 * 24 * 1000);
 		router.push("/completed");
 	};
 

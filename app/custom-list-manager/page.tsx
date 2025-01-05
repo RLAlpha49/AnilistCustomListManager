@@ -43,6 +43,7 @@ import {
 	tags,
 } from "@/lib/options";
 import { fetchAniList } from "@/lib/api";
+import { setItemWithExpiry, getItemWithExpiry } from "@/lib/local-storage";
 import { useAuth } from "@/context/auth-context";
 import Modal from "@/components/ui/modal";
 import { RenameModal } from "@/components/rename-modal";
@@ -110,7 +111,7 @@ export default function Page() {
 			const getAuthToken = (): string => {
 				let authToken = token;
 				if (!authToken) {
-					authToken = localStorage.getItem("anilistToken");
+					authToken = getItemWithExpiry("anilistToken");
 					if (!authToken) {
 						throw new Error("Anilist token not found");
 					}
@@ -193,15 +194,16 @@ export default function Page() {
 				name: list.name,
 				condition: list.selectedOption || "",
 			}));
-			localStorage.setItem(
+			setItemWithExpiry(
 				listType === "ANIME" ? "conditionsAnime" : "conditionsManga",
-				JSON.stringify(newConditions)
+				JSON.stringify(newConditions),
+				60 * 60 * 24 * 1000
 			);
 		}
 	}, [lists, listType]);
 
 	useEffect(() => {
-		localStorage.setItem("hideDefaultStatusLists", JSON.stringify(hideDefaultStatusLists));
+		setItemWithExpiry("hideDefaultStatusLists", hideDefaultStatusLists, 60 * 60 * 24 * 1000);
 	}, [hideDefaultStatusLists]);
 
 	const getDefaultOption = useCallback((listName: string): string | null => {
@@ -352,7 +354,7 @@ export default function Page() {
 			try {
 				let authToken = token;
 				if (!authToken) {
-					authToken = localStorage.getItem("anilistToken");
+					authToken = getItemWithExpiry("anilistToken");
 					if (!authToken) {
 						throw new Error("Anilist token not found");
 					}
@@ -426,10 +428,18 @@ export default function Page() {
 
 	const proceedToNextStep = (): void => {
 		setShowPopup(false);
-		localStorage.setItem("lists", JSON.stringify(lists.filter((list) => list.selectedOption)));
-		localStorage.setItem("listType", listType);
-		localStorage.setItem("userId", userId?.toString() || "");
-		localStorage.setItem("hideDefaultStatusLists", JSON.stringify(hideDefaultStatusLists));
+		setItemWithExpiry(
+			"lists",
+			JSON.stringify(lists.filter((list) => list.selectedOption)),
+			60 * 60 * 24 * 1000
+		);
+		setItemWithExpiry("listType", listType, 60 * 60 * 24 * 1000);
+		setItemWithExpiry("userId", userId?.toString() || "", 60 * 60 * 24 * 1000);
+		setItemWithExpiry(
+			"hideDefaultStatusLists",
+			JSON.stringify(hideDefaultStatusLists),
+			60 * 60 * 24 * 1000
+		);
 		router.push("/custom-list-manager/update");
 	};
 

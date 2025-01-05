@@ -5,6 +5,7 @@ import ToastContainer from "@/components/ui/toast-container";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Card, CardContent } from "@/components/ui/card";
+import { setItemWithExpiry } from "@/lib/local-storage";
 
 export default function Page() {
 	const router = useRouter();
@@ -28,9 +29,7 @@ export default function Page() {
 
 	const saveToken = (accessToken: string): void => {
 		try {
-			localStorage.setItem("anilistToken", accessToken);
-			const expirationTime: number = Date.now() + 24 * 60 * 60 * 1000;
-			localStorage.setItem("anilistTokenExpiration", expirationTime.toString());
+			setItemWithExpiry("anilistToken", accessToken, 60 * 60 * 24 * 7 * 1000);
 		} catch (error) {
 			console.error("Failed to save token:", error);
 		}
