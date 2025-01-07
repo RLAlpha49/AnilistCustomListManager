@@ -4,7 +4,7 @@ import Layout from "@/components/layout";
 import ToastContainer from "@/components/ui/toast-container";
 
 // External Imports
-import { useState, useEffect, useCallback, useRef, useMemo } from "react";
+import { useState, useEffect, useCallback, useRef, useMemo, Suspense } from "react";
 import {
 	DndContext,
 	closestCenter,
@@ -48,6 +48,7 @@ import { useAuth } from "@/context/auth-context";
 import Modal from "@/components/ui/modal";
 import { RenameModal } from "@/components/rename-modal";
 import Breadcrumbs from "@/components/breadcrumbs";
+import { Trans } from "@lingui/react";
 
 interface ListCondition {
 	name: string;
@@ -66,7 +67,7 @@ interface OptionGroup {
 	items: { label: string; value: string }[];
 }
 
-export default function Page() {
+function PageData() {
 	// State Hooks
 	const [lists, setLists] = useState<CustomList[]>([]);
 	const [loading, setLoading] = useState<boolean>(false);
@@ -80,7 +81,7 @@ export default function Page() {
 	const [originalSectionOrder, setOriginalSectionOrder] = useState<string[]>([]);
 
 	// Ref Hooks
-	const updateSectionOrderRef = useRef<(newOrder: string[]) => Promise<void>>();
+	const updateSectionOrderRef = useRef<(newOrder: string[]) => Promise<void> | null>(null);
 
 	// Other Hooks
 	const { toast } = useToast();
@@ -158,15 +159,25 @@ export default function Page() {
 			try {
 				await fetchAniListData(query, variables);
 				toast({
-					title: "Success",
-					description: "List order updated successfully.",
+					title: <Trans id="toast.success_title" message="Success" />,
+					description: (
+						<Trans
+							id="toast.success_description_order_updated"
+							message="List order updated successfully."
+						/>
+					),
 					variant: "success",
 				});
 			} catch (error: any) {
 				console.error("Error updating sectionOrder:", error.message);
 				toast({
-					title: "Error",
-					description: error.message || "Failed to update list order.",
+					title: <Trans id="toast.error_title" message="Error" />,
+					description: error.message || (
+						<Trans
+							id="toast.error_description_order_update_failed"
+							message="Failed to update list order."
+						/>
+					),
 					variant: "error",
 				});
 			}
@@ -328,8 +339,13 @@ export default function Page() {
 		async (type: "ANIME" | "MANGA"): Promise<void> => {
 			if (!userId) {
 				toast({
-					title: "Error",
-					description: "User ID is not available.",
+					title: <Trans id="toast.error_title" message="Error" />,
+					description: (
+						<Trans
+							id="toast.error_description_user_id_unavailable"
+							message="User ID is not available."
+						/>
+					),
 					variant: "error",
 				});
 				return;
@@ -390,8 +406,13 @@ export default function Page() {
 			} catch (error: any) {
 				console.error("Error in fetchLists:", error.message);
 				toast({
-					title: "Error",
-					description: error.message || "Failed to fetch lists.",
+					title: <Trans id="toast.error_title" message="Error" />,
+					description: error.message || (
+						<Trans
+							id="toast.error_description_fetch_lists_failed"
+							message="Failed to fetch lists."
+						/>
+					),
 					variant: "error",
 				});
 				setLoading(false);
@@ -459,8 +480,13 @@ export default function Page() {
 			);
 			if (duplicate) {
 				toast({
-					title: "Error",
-					description: "A list with this name already exists.",
+					title: <Trans id="toast.error_title" message="Error" />,
+					description: (
+						<Trans
+							id="toast.error_description_duplicate_list"
+							message="A list with this name already exists."
+						/>
+					),
 					variant: "error",
 				});
 				return;
@@ -495,15 +521,27 @@ export default function Page() {
 			try {
 				await fetchAniListData(query, variables);
 				toast({
-					title: "Success",
-					description: `List renamed to "${trimmedName}" and updated successfully.`,
+					title: <Trans id="toast.success_title" message="Success" />,
+					description:
+						`${trimmedName}` +
+						(
+							<Trans
+								id="toast.success_description_list_renamed"
+								message=" has been renamed and updated successfully."
+							/>
+						),
 					variant: "success",
 				});
 			} catch (error: any) {
 				console.error("Error updating list names:", error.message);
 				toast({
-					title: "Error",
-					description: error.message || "Failed to update list names.",
+					title: <Trans id="toast.error_title" message="Error" />,
+					description: error.message || (
+						<Trans
+							id="toast.error_description_rename_failed"
+							message="Failed to update list names."
+						/>
+					),
 					variant: "error",
 				});
 			}
@@ -543,15 +581,27 @@ export default function Page() {
 		try {
 			await fetchAniListData(query, variables);
 			toast({
-				title: "Deleted",
-				description: `List "${listName}" has been deleted and updated successfully.`,
+				title: <Trans id="toast.deleted_title" message="Deleted" />,
+				description:
+					`${listName}` +
+					(
+						<Trans
+							id="toast.deleted_description"
+							message="has been deleted and updated successfully."
+						/>
+					),
 				variant: "success",
 			});
 		} catch (error: any) {
 			console.error("Error deleting list:", error.message);
 			toast({
-				title: "Error",
-				description: error.message || "Failed to delete list.",
+				title: <Trans id="toast.error_title" message="Error" />,
+				description: error.message || (
+					<Trans
+						id="toast.error_description_delete_failed"
+						message="Failed to delete list."
+					/>
+				),
 				variant: "error",
 			});
 		}
@@ -565,8 +615,13 @@ export default function Page() {
 			);
 			if (duplicate) {
 				toast({
-					title: "Error",
-					description: "A list with this name already exists.",
+					title: <Trans id="toast.error_title" message="Error" />,
+					description: (
+						<Trans
+							id="toast.error_description_duplicate_list"
+							message="A list with this name already exists."
+						/>
+					),
 					variant: "error",
 				});
 				return;
@@ -603,15 +658,27 @@ export default function Page() {
 			try {
 				await fetchAniListData(query, variables);
 				toast({
-					title: "Success",
-					description: `List "${newListName.trim()}" has been added and updated successfully.`,
+					title: <Trans id="toast.success_title" message="Success" />,
+					description:
+						`${newListName.trim()}` +
+						(
+							<Trans
+								id="toast.success_description_list_added"
+								message=" has been added and updated successfully."
+							/>
+						),
 					variant: "success",
 				});
 			} catch (error: any) {
 				console.error("Error adding new list:", error.message);
 				toast({
-					title: "Error",
-					description: error.message || "Failed to add new list.",
+					title: <Trans id="toast.error_title" message="Error" />,
+					description: error.message || (
+						<Trans
+							id="toast.error_description_add_failed"
+							message="Failed to add new list."
+						/>
+					),
 					variant: "error",
 				});
 			}
@@ -620,7 +687,10 @@ export default function Page() {
 
 	const breadcrumbs = [
 		{ name: "Home", href: "/" },
-		{ name: "Custom List Manager", href: "/custom-list-manager" },
+		{
+			name: "Custom List Manager",
+			href: "/custom-list-manager",
+		},
 	];
 
 	return (
@@ -630,10 +700,13 @@ export default function Page() {
 				<CardHeader>
 					<CardTitle className="text-2xl font-bold flex items-center">
 						<FaSort className="mr-2 text-blue-400" aria-hidden="true" />
-						Custom List Manager
+						<Trans id="page.custom_list_manager.title" message="Custom List Manager" />
 					</CardTitle>
 					<CardDescription className="text-gray-300 mt-1">
-						Organize and manage your AniList entries effortlessly.
+						<Trans
+							id="page.custom_list_manager.description"
+							message="Organize and manage your AniList entries effortlessly."
+						/>
 					</CardDescription>
 				</CardHeader>
 				<CardContent>
@@ -647,7 +720,7 @@ export default function Page() {
 								aria-label="Fetch Anime Lists"
 							>
 								<FaArrowDown className="mr-2" aria-hidden="true" />
-								Fetch Anime Lists
+								<Trans id="button.fetch_anime_lists" message="Fetch Anime Lists" />
 							</Button>
 							<Button
 								onClick={() => fetchLists("MANGA")}
@@ -655,7 +728,7 @@ export default function Page() {
 								aria-label="Fetch Manga Lists"
 							>
 								<FaArrowDown className="mr-2" aria-hidden="true" />
-								Fetch Manga Lists
+								<Trans id="button.fetch_manga_lists" message="Fetch Manga Lists" />
 							</Button>
 							{!isListEmpty && (
 								<Button
@@ -664,7 +737,7 @@ export default function Page() {
 									aria-label="Add New List"
 								>
 									<FaPlus className="mr-2" aria-hidden="true" />
-									Add New List
+									<Trans id="button.add_new_list" message="Add New List" />
 								</Button>
 							)}
 						</div>
@@ -682,7 +755,10 @@ export default function Page() {
 								aria-label="Hide Default Status Lists"
 							/>
 							<label htmlFor="hideDefaultStatusLists" className="text-gray-200">
-								Hide Default Status Lists
+								<Trans
+									id="label.hide_default_status_lists"
+									message="Hide Default Status Lists"
+								/>
 							</label>
 						</div>
 					)}
@@ -742,7 +818,14 @@ export default function Page() {
 																	setLists(newLists);
 																}}
 																options={getOptions(listType)}
-																placeholder="Select a condition"
+																placeholder={
+																	(
+																		<Trans
+																			id="placeholder.select_condition"
+																			message="Select a condition"
+																		/>
+																	) as unknown as string
+																}
 																className="w-48"
 															/>
 															<Button
@@ -784,7 +867,7 @@ export default function Page() {
 							className="text-black hover:text-white border-gray-600 hover:bg-gray-700 transition-colors flex items-center"
 							aria-label="Back to Login"
 						>
-							Back
+							<Trans id="button.back" message="Back" />
 						</Button>
 						<Button
 							onClick={confirmAndNavigate}
@@ -792,7 +875,7 @@ export default function Page() {
 							disabled={!dataLoaded}
 							aria-label="Proceed to Update"
 						>
-							Next
+							<Trans id="button.next" message="Next" />
 						</Button>
 					</div>
 				</CardContent>
@@ -802,7 +885,14 @@ export default function Page() {
 					isOpen={showPopup}
 					onClose={() => setShowPopup(false)}
 					onConfirm={proceedToNextStep}
-					title="Confirm Conditions"
+					title={
+						(
+							<Trans
+								id="modal.confirm_conditions_title"
+								message="Confirm Conditions"
+							/>
+						) as unknown as string
+					}
 				>
 					<ul className="list-disc list-inside text-gray-200 mb-4">
 						{lists
@@ -823,5 +913,13 @@ export default function Page() {
 			</Card>
 			<ToastContainer />
 		</Layout>
+	);
+}
+
+export default function Page() {
+	return (
+		<Suspense fallback={<LoadingIndicator />}>
+			<PageData />
+		</Suspense>
 	);
 }

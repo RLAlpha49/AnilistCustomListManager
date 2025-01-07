@@ -8,9 +8,9 @@ const TOAST_LIMIT = 5;
 const TOAST_REMOVE_DELAY = 3000;
 
 // Renamed to ToastType to avoid naming conflicts
-export interface ToastType extends ToastProps {
+export interface ToastType extends Omit<ToastProps, 'title'> {
 	id: string;
-	title?: string;
+	title?: string | React.ReactNode;
 	description?: React.ReactNode;
 	action?: ToastActionElement;
 }

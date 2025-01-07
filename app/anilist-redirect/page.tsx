@@ -2,12 +2,14 @@
 
 import Layout from "@/components/layout";
 import ToastContainer from "@/components/ui/toast-container";
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Card, CardContent } from "@/components/ui/card";
 import { setItemWithExpiry } from "@/lib/local-storage";
+import { Trans } from "@lingui/react";
+import LoadingIndicator from "@/components/loading-indicator";
 
-export default function Page() {
+function PageData() {
 	const router = useRouter();
 
 	useEffect(() => {
@@ -43,10 +45,20 @@ export default function Page() {
 				aria-live="polite"
 			>
 				<CardContent className="p-6">
-					<p className="text-center text-lg">Processing login...</p>
+					<p className="text-center text-lg">
+						<Trans id="status.processing_login" message="Processing login..." />
+					</p>
 				</CardContent>
 			</Card>
 			<ToastContainer />
 		</Layout>
+	);
+}
+
+export default function Page() {
+	return (
+		<Suspense fallback={<LoadingIndicator />}>
+			<PageData />
+		</Suspense>
 	);
 }

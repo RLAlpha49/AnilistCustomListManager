@@ -2,7 +2,7 @@
 
 import Layout from "@/components/layout";
 import ToastContainer from "@/components/ui/toast-container";
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useRef, Suspense } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -15,6 +15,7 @@ import { getItemWithExpiry, setItemWithExpiry } from "@/lib/local-storage";
 import { FaPlay, FaPause, FaCheckCircle } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import Breadcrumbs from "@/components/breadcrumbs";
+import { Trans } from "@lingui/react";
 
 interface Tag {
 	name: string;
@@ -73,7 +74,7 @@ interface MutationResponse {
 	};
 }
 
-export default function Page() {
+function PageData() {
 	const [mediaList, setMediaList] = useState<MediaEntry[]>([]);
 	const [loading, setLoading] = useState<boolean>(true);
 	const [updating, setUpdating] = useState<boolean>(false);
@@ -174,8 +175,13 @@ export default function Page() {
 	const fetchMediaList = useCallback(async () => {
 		if (!userId && getItemWithExpiry("userId") === null) {
 			toast({
-				title: "Error",
-				description: "User ID is not available",
+				title: <Trans id="toast.error_title" message="Error" />,
+				description: (
+					<Trans
+						id="toast.error_description_user_id_unavailable"
+						message="User ID is not available."
+					/>
+				),
 				variant: "error",
 			});
 			return;
@@ -205,8 +211,13 @@ export default function Page() {
 					},
 					(error: Error) => {
 						toast({
-							title: "Error",
-							description: `Failed to fetch media list: ${error.message}`,
+							title: <Trans id="toast.error_title" message="Error" />,
+							description: (
+								<Trans
+									id="toast.error_description_fetch_lists_failed"
+									message={`Failed to fetch media list: ${error.message}`}
+								/>
+							),
 							variant: "error",
 						});
 					}
@@ -427,8 +438,13 @@ export default function Page() {
 				if (entries.length === 0) {
 					setDone(true);
 					toast({
-						title: "Info",
-						description: "No entries to update.",
+						title: <Trans id="toast.info_title_no_entries" message="Info" />,
+						description: (
+							<Trans
+								id="toast.no_entries_to_update"
+								message="No entries to update."
+							/>
+						),
 						variant: "info",
 					});
 				}
@@ -436,8 +452,16 @@ export default function Page() {
 		} catch (error: any) {
 			setLoading(false);
 			toast({
-				title: "Error",
-				description: `An unexpected error occurred: ${error.message}`,
+				title: <Trans id="toast.error_title" message="Error" />,
+				description: (
+					<>
+						<Trans
+							id="toast.error_unexpected"
+							message="An unexpected error occurred: "
+						/>
+						{error.message}
+					</>
+				),
 				variant: "error",
 			});
 		}
@@ -501,8 +525,14 @@ export default function Page() {
 					},
 					(error: Error) => {
 						toast({
-							title: "Error",
-							description: `Failed to update entry "${entry.media.title.romaji}": ${error.message}`,
+							title: <Trans id="toast.error_title" message="Error" />,
+							description:
+								(
+									<Trans
+										id="toast.error_description_update_failed"
+										message="Failed to update entry "
+									/>
+								) + `${entry.media.title.romaji}: ${error.message}`,
 							variant: "error",
 						});
 						if (error.message === "Max retries reached for rate limiting.") {
@@ -515,9 +545,13 @@ export default function Page() {
 			} catch (error: any) {
 				if (error.message === "Max retries reached for rate limiting.") {
 					toast({
-						title: "Rate Limited",
-						description:
-							"Exceeded maximum retry attempts due to rate limiting. Update paused.",
+						title: <Trans id="toast.rate_limited_title" message="Rate Limited" />,
+						description: (
+							<Trans
+								id="toast.rate_limited_description"
+								message="Exceeded maximum retry attempts due to rate limiting. Update paused."
+							/>
+						),
 						variant: "error",
 					});
 					setIsRateLimited(true);
@@ -562,8 +596,13 @@ export default function Page() {
 						setDone(true);
 						setUpdating(false);
 						toast({
-							title: "Success",
-							description: "All entries have been updated successfully!",
+							title: <Trans id="toast.success_title" message="Success" />,
+							description: (
+								<Trans
+									id="toast.success_all_updated"
+									message="All entries have been updated successfully!"
+								/>
+							),
 							variant: "success",
 						});
 						break;
@@ -585,8 +624,13 @@ export default function Page() {
 			isPausedRef.current = true;
 			setUpdating(false);
 			toast({
-				title: "Paused",
-				description: "Update process has been paused.",
+				title: <Trans id="toast.paused_title" message="Paused" />,
+				description: (
+					<Trans
+						id="toast.paused_description"
+						message="Update process has been paused."
+					/>
+				),
 				variant: "default",
 			});
 		} else {
@@ -594,14 +638,24 @@ export default function Page() {
 				isPausedRef.current = false;
 				startUpdate();
 				toast({
-					title: "Updating",
-					description: "Update process has started.",
+					title: <Trans id="toast.updating_title" message="Updating" />,
+					description: (
+						<Trans
+							id="toast.updating_description"
+							message="Update process has started."
+						/>
+					),
 					variant: "default",
 				});
 			} else {
 				toast({
-					title: "Rate Limited",
-					description: "Cannot start update while rate limited.",
+					title: <Trans id="toast.rate_limited_title" message="Rate Limited" />,
+					description: (
+						<Trans
+							id="toast.rate_limited_cannot_start"
+							message="Cannot start update while rate limited."
+						/>
+					),
 					variant: "error",
 				});
 			}
@@ -614,8 +668,13 @@ export default function Page() {
 			fetchMediaList();
 		} else {
 			toast({
-				title: "Error",
-				description: "Anilist token not found in local storage",
+				title: <Trans id="toast.error_title" message="Error" />,
+				description: (
+					<Trans
+						id="toast.error_anilist_token_not_found"
+						message="Anilist token not found in local storage"
+					/>
+				),
 				variant: "error",
 			});
 		}
@@ -661,10 +720,14 @@ export default function Page() {
 			<Breadcrumbs breadcrumbs={breadcrumbs} />
 			<Card className="w-full max-w-4xl mx-auto bg-gray-800 text-gray-100 rounded-lg shadow-lg">
 				<CardHeader>
-					<CardTitle className="text-2xl">🚀 Update Custom Lists</CardTitle>
+					<CardTitle className="text-2xl">
+						🚀 <Trans id="title.update_custom_lists" message="Update Custom Lists" />
+					</CardTitle>
 					<CardDescription className="text-gray-300">
-						Start updating your AniList with customized conditions. You can pause or
-						resume the update process at any time.
+						<Trans
+							id="description.update_custom_lists"
+							message="Start updating your AniList with customized conditions. You can pause or resume the update process at any time."
+						/>
 					</CardDescription>
 				</CardHeader>
 				<CardContent>
@@ -686,29 +749,39 @@ export default function Page() {
 							{isRateLimited ? (
 								<>
 									<FaPause aria-hidden="true" />
-									<span>Rate Limited</span>
+									<span>
+										<Trans id="button.rate_limited" message="Rate Limited" />
+									</span>
 								</>
 							) : !updating && !isPausedRef.current ? (
 								<>
 									<FaPlay aria-hidden="true" />
-									<span>Start</span>
+									<span>
+										<Trans id="button.start" message="Start" />
+									</span>
 								</>
 							) : !done ? (
 								isPausedRef.current ? (
 									<>
 										<FaPlay aria-hidden="true" />
-										<span>Resume</span>
+										<span>
+											<Trans id="button.resume" message="Resume" />
+										</span>
 									</>
 								) : (
 									<>
 										<FaPause aria-hidden="true" />
-										<span>Pause</span>
+										<span>
+											<Trans id="button.pause" message="Pause" />
+										</span>
 									</>
 								)
 							) : (
 								<>
 									<FaCheckCircle aria-hidden="true" />
-									<span>Finished</span>
+									<span>
+										<Trans id="button.finished" message="Finished" />
+									</span>
 								</>
 							)}
 						</Button>
@@ -727,7 +800,8 @@ export default function Page() {
 								/>
 							</div>
 							<p className="mt-2 text-center text-gray-300">
-								{updatedEntries.size} / {totalEntries} Updated
+								{updatedEntries.size} / {totalEntries}{" "}
+								<Trans id="text.updated" message="Updated" />
 							</p>
 						</div>
 						{currentEntry && !done && (
@@ -738,7 +812,8 @@ export default function Page() {
 								className="w-full bg-gray-700 p-4 rounded-lg shadow-inner"
 							>
 								<p className="text-gray-200">
-									Updating: <strong>{currentEntry.media.title.romaji}</strong>
+									<Trans id="text.updating_entry" message="Updating: " />
+									<strong>{currentEntry.media.title.romaji}</strong>
 								</p>
 							</motion.div>
 						)}
@@ -749,7 +824,12 @@ export default function Page() {
 								className="flex items-center space-x-2 text-green-400"
 							>
 								<FaCheckCircle size={24} aria-hidden="true" />
-								<span className="text-xl">All entries have been updated!</span>
+								<span className="text-xl">
+									<Trans
+										id="text.all_entries_updated"
+										message="All entries have been updated!"
+									/>
+								</span>
 							</motion.div>
 						)}
 						<div className="flex justify-between w-full">
@@ -760,7 +840,9 @@ export default function Page() {
 								aria-label="Back to Custom List Manager"
 							>
 								<Link href="/custom-list-manager">
-									<span>Back</span>
+									<span>
+										<Trans id="button.back" message="Back" />
+									</span>
 								</Link>
 							</Button>
 							<Button
@@ -768,7 +850,9 @@ export default function Page() {
 								className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md shadow-sm flex items-center space-x-2"
 								aria-label="Finish updating"
 							>
-								<span>Finish</span>
+								<span>
+									<Trans id="button.finish" message="Finish" />
+								</span>
 							</Button>
 						</div>
 					</div>
@@ -783,9 +867,20 @@ export default function Page() {
 					{showNotice && (
 						<div className="mt-6 px-4 py-3 bg-yellow-100 text-yellow-800 rounded-lg flex justify-between items-center">
 							<span>
-								Note: Media entries with <strong>hiddenFromStatusLists</strong> set
-								to true and not associated with any custom lists will not be
-								returned by the query and will not be displayed here.
+								<Trans
+									id="text.notice_hidden_entries"
+									message="Note: Media entries with"
+								/>{" "}
+								<strong>
+									<Trans
+										id="text.notice_hidden_from_status_lists"
+										message="hiddenFromStatusLists"
+									/>
+								</strong>{" "}
+								<Trans
+									id="text.notice_set_true"
+									message="set to true and not associated with any custom lists will not be returned by the query and will not be displayed here."
+								/>
 							</span>
 							<button
 								onClick={() => setShowNotice(false)}
@@ -812,7 +907,15 @@ export default function Page() {
 												id={entry.media.id}
 												image={entry.media.coverImage.extraLarge}
 												romajiTitle={entry.media.title.romaji}
-												englishTitle={entry.media.title.english || "N/A"}
+												englishTitle={
+													entry.media.title.english ||
+													((
+														<Trans
+															id="text.not_available"
+															message="N/A"
+														/>
+													) as unknown as string)
+												}
 												status={entry.status}
 												score={entry.score}
 												repeatCount={entry.repeat}
@@ -847,5 +950,13 @@ export default function Page() {
 			</Card>
 			<ToastContainer />
 		</Layout>
+	);
+}
+
+export default function Page() {
+	return (
+		<Suspense fallback={<LoadingIndicator />}>
+			<PageData />
+		</Suspense>
 	);
 }

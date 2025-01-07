@@ -2,7 +2,7 @@
 
 import Layout from "@/components/layout";
 import ToastContainer from "@/components/ui/toast-container";
-import { useEffect, useCallback, useState } from "react";
+import { useEffect, useCallback, useState, Suspense } from "react";
 import { useRouter } from "next/navigation";
 import { FaSignInAlt, FaTimesCircle, FaHome } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
@@ -13,11 +13,13 @@ import { fetchAniList } from "@/lib/api";
 import { motion } from "framer-motion";
 import Breadcrumbs from "@/components/breadcrumbs";
 import { getItemWithExpiry, removeItemWithExpiry } from "@/lib/local-storage";
+import { Trans } from "@lingui/react";
+import LoadingIndicator from "@/components/loading-indicator";
 
 const ANILIST_AUTH_URL = "https://anilist.co/api/v2/oauth/authorize";
 const CLIENT_ID = process.env.NEXT_PUBLIC_ANILIST_CLIENT_ID;
 
-export default function Page() {
+function PageData() {
 	const { isLoggedIn, login, logout } = useAuth();
 	const router = useRouter();
 	const { toast } = useToast();
@@ -38,8 +40,13 @@ export default function Page() {
 				login(token, newUserId.toString());
 			} catch (error: any) {
 				toast({
-					title: "Error",
-					description: error.message || "Failed to fetch viewer ID.",
+					title: <Trans id="error.generic_error" message="Error" />,
+					description: (
+						<Trans
+							id="error.failed_fetch_viewer_id"
+							message="Failed to fetch viewer ID."
+						/>
+					),
 					variant: "error",
 				});
 			}
@@ -61,10 +68,20 @@ export default function Page() {
 
 	const handleLogin = (): void => {
 		if (!CLIENT_ID) {
-			console.error("AniList Client ID is not defined.");
+			console.error(
+				<Trans
+					id="error.client_id_not_defined"
+					message="AniList Client ID is not defined."
+				/>
+			);
 			toast({
-				title: "Error",
-				description: "AniList Client ID is not defined.",
+				title: <Trans id="error.generic_error" message="Error" />,
+				description: (
+					<Trans
+						id="error.client_id_not_defined"
+						message="AniList Client ID is not defined."
+					/>
+				),
 				variant: "error",
 			});
 			return;
@@ -103,8 +120,15 @@ export default function Page() {
 					>
 						<motion.img
 							src="/images/anilist-illustration.png"
-							alt="AniList Illustration"
-							className="w-full h-auto object-contain"
+							alt={
+								(
+									<Trans
+										id="illustration.anilist"
+										message="AniList Illustration"
+									/>
+								) as unknown as string
+							}
+							className="w-full h-auto"
 						/>
 					</motion.div>
 
@@ -113,16 +137,17 @@ export default function Page() {
 						initial={{ opacity: 0, x: 50 }}
 						animate={{ opacity: 1, x: 0 }}
 						transition={{ duration: 1 }}
-						className="md:w-1/2 p-8 flex flex-col justify-center"
+						className="md:w-1/2 p-8"
 					>
 						<CardHeader>
-							<CardTitle className="text-3xl font-bold flex items-center">
-								<FaSignInAlt className="mr-2 text-blue-400" aria-hidden="true" />
-								AniList Login
+							<CardTitle className="text-2xl font-bold text-white">
+								<Trans id="title.anilist_login" message="AniList Login" />
 							</CardTitle>
 							<CardDescription className="text-gray-300 mt-2">
-								Connect your AniList account to manage your custom lists
-								effortlessly.
+								<Trans
+									id="description.connect_account"
+									message="Connect your AniList account to manage your custom lists effortlessly."
+								/>
 							</CardDescription>
 						</CardHeader>
 						<CardContent>
@@ -138,7 +163,10 @@ export default function Page() {
 										aria-label="Login with AniList"
 									>
 										<FaSignInAlt className="mr-2" aria-hidden="true" />
-										Login with AniList
+										<Trans
+											id="button.login_with_anilist"
+											message="Login with AniList"
+										/>
 									</Button>
 								</motion.div>
 								{isLoggedIn && (
@@ -154,12 +182,22 @@ export default function Page() {
 											aria-label="Clear Cached Token"
 										>
 											<FaTimesCircle className="mr-2" aria-hidden="true" />
-											Clear Cached Token
+											<Trans
+												id="button.clear_cached_token"
+												message="Clear Cached Token"
+											/>
 										</Button>
 									</motion.div>
 								)}
 								<p className="text-center text-gray-200">
-									{isLoggedIn ? "You are logged in." : "You are not logged in."}
+									{isLoggedIn ? (
+										<Trans id="status.logged_in" message="You are logged in." />
+									) : (
+										<Trans
+											id="status.not_logged_in"
+											message="You are not logged in."
+										/>
+									)}
 								</p>
 								<div className="flex justify-between">
 									<motion.div
@@ -173,7 +211,7 @@ export default function Page() {
 											aria-label="Navigate to Home"
 										>
 											<FaHome className="mr-2" aria-hidden="true" />
-											Home
+											<Trans id="button.home" message="Home" />
 										</Button>
 									</motion.div>
 									<motion.div
@@ -188,7 +226,7 @@ export default function Page() {
 											} w-full py-3 rounded-md shadow-md transition-transform`}
 											aria-label="Proceed to Next Step"
 										>
-											Next
+											<Trans id="button.next" message="Next" />
 										</Button>
 									</motion.div>
 								</div>
@@ -216,7 +254,12 @@ export default function Page() {
 													d="M4 12a8 8 0 018-8v8H4z"
 												></path>
 											</svg>
-											<span className="text-gray-300">Processing...</span>
+											<span className="text-gray-300">
+												<Trans
+													id="status.processing"
+													message="Processing..."
+												/>
+											</span>
 										</>
 									)}
 								</div>
@@ -227,5 +270,13 @@ export default function Page() {
 			</div>
 			<ToastContainer />
 		</Layout>
+	);
+}
+
+export default function Page() {
+	return (
+		<Suspense fallback={<LoadingIndicator />}>
+			<PageData />
+		</Suspense>
 	);
 }

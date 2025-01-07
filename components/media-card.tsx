@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { ExternalLink } from "lucide-react";
+import { Trans } from "@lingui/react";
 
 interface MediaCardProps {
 	id: number;
@@ -60,23 +61,39 @@ export default function MediaCard({
 			</div>
 			<div className="w-full sm:w-2/3 p-4 flex flex-col justify-between text-gray-200">
 				<div>
-					<h2 id={`media-title-${id}`} className="text-xl font-bold mb-1 text-white">{romajiTitle}</h2>
+					<h2 id={`media-title-${id}`} className="text-xl font-bold mb-1 text-white">
+						{romajiTitle}
+					</h2>
 					<h3 className="text-md text-gray-400 mb-4">{englishTitle}</h3>
 					<div className="mb-4 space-y-1">
 						<p>
-							<strong className="text-blue-300">Status:</strong> {status}
+							<strong className="text-blue-300">
+								<Trans id="label.status" message="Status:" />
+							</strong>{" "}
+							{status}
 						</p>
 						<p>
-							<strong className="text-blue-300">Score:</strong>{" "}
-							{score !== null ? score : "N/A"}
+							<strong className="text-blue-300">
+								<Trans id="label.score" message="Score:" />
+							</strong>{" "}
+							{score !== null ? (
+								score
+							) : (
+								<Trans id="text.not_available" message="N/A" />
+							)}
 						</p>
 						<p>
-							<strong className="text-blue-300">Repeat Count:</strong> {repeatCount}
+							<strong className="text-blue-300">
+								<Trans id="label.repeat_count" message="Repeat Count:" />
+							</strong>{" "}
+							{repeatCount}
 						</p>
 					</div>
 				</div>
 				<div>
-					<h4 className="font-semibold mb-2 text-blue-300">Custom List Changes:</h4>
+					<h4 className="font-semibold mb-2 text-blue-300">
+						<Trans id="title.custom_list_changes" message="Custom List Changes:" />
+					</h4>
 					<ul className="list-disc list-inside text-sm">
 						{customListChanges.map((change, index) => (
 							<li key={index}>{change}</li>

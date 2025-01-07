@@ -2,7 +2,7 @@
 
 import Layout from "@/components/layout";
 import { useRouter } from "next/navigation";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, Suspense, JSX } from "react";
 import { motion } from "framer-motion";
 import { FaCheckCircle, FaHome, FaList, FaGithub } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
@@ -11,6 +11,8 @@ import ToastContainer from "@/components/ui/toast-container";
 import { toast } from "@/hooks/use-toast";
 import Breadcrumbs from "@/components/breadcrumbs";
 import { getItemWithExpiry, removeItemWithExpiry } from "@/lib/local-storage";
+import { Trans } from "@lingui/react";
+import LoadingIndicator from "@/components/loading-indicator";
 
 interface Summary {
 	totalListsUpdated: number;
@@ -21,7 +23,7 @@ interface CompletedPageProps {
 	summary?: Summary;
 }
 
-export default function CompletedPage({ summary }: CompletedPageProps): JSX.Element {
+function PageData({ summary }: CompletedPageProps): JSX.Element {
 	const router = useRouter();
 	const [localSummary, setLocalSummary] = useState<Summary>({
 		totalListsUpdated: 0,
@@ -44,8 +46,13 @@ export default function CompletedPage({ summary }: CompletedPageProps): JSX.Elem
 			summaryData = summary;
 		} else {
 			toast({
-				title: "No Update Information",
-				description: "No summary data was found for your recent update.",
+				title: <Trans id="toast.no_update_information" message="No Update Information" />,
+				description: (
+					<Trans
+						id="toast.no_summary_found"
+						message="No summary data was found for your recent update."
+					/>
+				),
 				variant: "warning",
 			});
 		}
@@ -84,10 +91,13 @@ export default function CompletedPage({ summary }: CompletedPageProps): JSX.Elem
 							/>
 						</motion.div>
 						<CardTitle className="mt-4 text-3xl font-bold text-white">
-							Update Completed!
+							<Trans id="status.update_completed_title" message="Update Completed!" />
 						</CardTitle>
 						<CardDescription className="mt-2 text-gray-300">
-							Your custom lists have been successfully updated.
+							<Trans
+								id="description.update_completed"
+								message="Your custom lists have been successfully updated."
+							/>
 						</CardDescription>
 					</CardHeader>
 					<CardContent>
@@ -100,18 +110,30 @@ export default function CompletedPage({ summary }: CompletedPageProps): JSX.Elem
 							{localSummary.totalListsUpdated === 0 &&
 							localSummary.totalEntriesUpdated === 0 ? (
 								<div className="text-yellow-400 text-center">
-									<p>No update information was found for your recent update.</p>
+									<p>
+										<Trans
+											id="status.no_update_info"
+											message="No update information was found for your recent update."
+										/>
+									</p>
 								</div>
 							) : (
 								<>
 									<div className="flex justify-between">
-										<span className="text-white">Total Lists:</span>
+										<span className="text-white">
+											<Trans id="text.total_lists" message="Total Lists:" />
+										</span>
 										<span className="font-semibold text-white">
 											{localSummary.totalListsUpdated}
 										</span>
 									</div>
 									<div className="flex justify-between">
-										<span className="text-white">Total Entries Updated:</span>
+										<span className="text-white">
+											<Trans
+												id="text.total_entries_updated"
+												message="Total Entries Updated:"
+											/>
+										</span>
 										<span className="font-semibold text-white">
 											{localSummary.totalEntriesUpdated}
 										</span>
@@ -131,7 +153,7 @@ export default function CompletedPage({ summary }: CompletedPageProps): JSX.Elem
 									aria-label="Manage Lists Again"
 								>
 									<FaList className="mr-2" aria-hidden="true" />
-									Manage Lists
+									<Trans id="button.manage_lists" message="Manage Lists" />
 								</Button>
 							</motion.div>
 							<motion.div
@@ -146,7 +168,7 @@ export default function CompletedPage({ summary }: CompletedPageProps): JSX.Elem
 									aria-label="Go to Home"
 								>
 									<FaHome className="mr-2" aria-hidden="true" />
-									Home
+									<Trans id="button.home" message="Home" />
 								</Button>
 							</motion.div>
 						</div>
@@ -157,7 +179,10 @@ export default function CompletedPage({ summary }: CompletedPageProps): JSX.Elem
 							className="mt-8 text-center"
 						>
 							<h2 className="text-2xl font-semibold text-white mb-4">
-								Check Out My Other Projects
+								<Trans
+									id="header.check_out_projects"
+									message="Check Out My Other Projects"
+								/>
 							</h2>
 							<div className="flex flex-wrap justify-center items-center space-x-2 space-y-2 overflow-auto max-h-40">
 								<motion.a
@@ -171,7 +196,7 @@ export default function CompletedPage({ summary }: CompletedPageProps): JSX.Elem
 								>
 									<Button className="flex items-center justify-center bg-purple-600 hover:bg-purple-700 text-white">
 										<FaGithub className="mr-2" aria-hidden="true" />
-										AniCards
+										<Trans id="button.anicards" message="AniCards" />
 									</Button>
 								</motion.a>
 								<motion.a
@@ -185,7 +210,10 @@ export default function CompletedPage({ summary }: CompletedPageProps): JSX.Elem
 								>
 									<Button className="flex items-center justify-center bg-green-600 hover:bg-green-700 text-white">
 										<FaGithub className="mr-2" aria-hidden="true" />
-										AniSearchModel
+										<Trans
+											id="button.anisearchmodel"
+											message="AniSearchModel"
+										/>
 									</Button>
 								</motion.a>
 								<motion.a
@@ -199,7 +227,7 @@ export default function CompletedPage({ summary }: CompletedPageProps): JSX.Elem
 								>
 									<Button className="flex items-center justify-center bg-yellow-600 hover:bg-yellow-700 text-white">
 										<FaGithub className="mr-2" aria-hidden="true" />
-										AniSearch
+										<Trans id="button.anisearch" message="AniSearch" />
 									</Button>
 								</motion.a>
 								<motion.a
@@ -213,7 +241,10 @@ export default function CompletedPage({ summary }: CompletedPageProps): JSX.Elem
 								>
 									<Button className="flex items-center justify-center bg-indigo-600 hover:bg-indigo-700 text-white">
 										<FaGithub className="mr-2" aria-hidden="true" />
-										SpotifySkipTracker
+										<Trans
+											id="button.spotifyskiptracker"
+											message="SpotifySkipTracker"
+										/>
 									</Button>
 								</motion.a>
 								<motion.a
@@ -227,7 +258,10 @@ export default function CompletedPage({ summary }: CompletedPageProps): JSX.Elem
 								>
 									<Button className="flex items-center justify-center bg-red-600 hover:bg-red-700 text-white">
 										<FaGithub className="mr-2" aria-hidden="true" />
-										Anilist-Manga-Updater
+										<Trans
+											id="button.anilistmangaupdater"
+											message="Anilist-Manga-Updater"
+										/>
 									</Button>
 								</motion.a>
 							</div>
@@ -237,5 +271,13 @@ export default function CompletedPage({ summary }: CompletedPageProps): JSX.Elem
 			</div>
 			<ToastContainer />
 		</Layout>
+	);
+}
+
+export default function Page() {
+	return (
+		<Suspense fallback={<LoadingIndicator />}>
+			<PageData />
+		</Suspense>
 	);
 }
