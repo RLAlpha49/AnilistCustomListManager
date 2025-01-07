@@ -120,14 +120,7 @@ function PageData() {
 					>
 						<motion.img
 							src="/images/anilist-illustration.png"
-							alt={
-								(
-									<Trans
-										id="illustration.anilist"
-										message="AniList Illustration"
-									/>
-								) as unknown as string
-							}
+							alt="AniList Illustration"
 							className="w-full h-auto"
 						/>
 					</motion.div>

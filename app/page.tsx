@@ -62,14 +62,7 @@ function PageData() {
 							<Button
 								asChild
 								className="bg-blue-600 hover:bg-blue-700 text-white"
-								aria-label={
-									(
-										<Trans
-											id="aria.get_started"
-											message="Get Started with Anilist"
-										/>
-									) as unknown as string
-								}
+								aria-label="Get Started with Anilist"
 							>
 								<Link href="/anilist-login">
 									<Trans id="button.get_started" message="Get Started" />
@@ -79,14 +72,7 @@ function PageData() {
 								variant="outline"
 								asChild
 								className="text-black hover:text-white border-gray-600 hover:bg-gray-700 transition-colors"
-								aria-label={
-									(
-										<Trans
-											id="aria.faq"
-											message="Frequently Asked Questions about Anilist Custom List Manager"
-										/>
-									) as unknown as string
-								}
+								aria-label="Frequently Asked Questions about Anilist Custom List Manager"
 							>
 								<Link href="/faq">
 									<Trans id="button.faq" message="FAQ" />
@@ -156,11 +142,7 @@ function PageData() {
 					<Button
 						onClick={clearCache}
 						className="bg-red-600 hover:bg-red-700 text-white"
-						aria-label={
-							(
-								<Trans id="aria.clear_cache" message="Clear Cache" />
-							) as unknown as string
-						}
+						aria-label="Clear Cache"
 					>
 						<Trans id="button.clear_cache" message="Clear Cache" />
 					</Button>

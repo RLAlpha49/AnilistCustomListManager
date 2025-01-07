@@ -54,26 +54,6 @@ msgid "answer.what_is_anilist_custom_list_manager"
 msgstr "AniList Custom List Manager es una herramienta que te permite organizar y gestionar fácilmente tus listas de anime y manga en AniList. Ofrece funciones avanzadas como crear listas personalizadas, ordenar entradas y establecer condiciones para automatizar las actualizaciones de las listas."
 
 #. js-lingui-explicit-id
-#: app/page.tsx:161
-msgid "aria.clear_cache"
-msgstr "Borrar caché"
-
-#. js-lingui-explicit-id
-#: app/page.tsx:84
-msgid "aria.faq"
-msgstr "Preguntas frecuentes sobre el gestor de listas personalizadas de Anilist"
-
-#. js-lingui-explicit-id
-#: app/page.tsx:67
-msgid "aria.get_started"
-msgstr "Empieza con Anilist"
-
-#. js-lingui-explicit-id
-#: components/rename-modal.tsx:64
-msgid "aria.new_list_name"
-msgstr "Nuevo nombre de lista"
-
-#. js-lingui-explicit-id
 #: app/custom-list-manager/page.tsx:740
 msgid "button.add_new_list"
 msgstr "Añadir nueva lista"
@@ -105,17 +85,17 @@ msgid "button.back"
 msgstr "Volver"
 
 #. js-lingui-explicit-id
-#: app/page.tsx:165
+#: app/page.tsx:147
 msgid "button.clear_cache"
 msgstr "Borrar caché"
 
 #. js-lingui-explicit-id
-#: app/anilist-login/page.tsx:185
+#: app/anilist-login/page.tsx:178
 msgid "button.clear_cached_token"
 msgstr "Borrar token de caché"
 
 #. js-lingui-explicit-id
-#: app/page.tsx:92
+#: app/page.tsx:78
 msgid "button.faq"
 msgstr "FAQ"
 
@@ -140,18 +120,18 @@ msgid "button.finished"
 msgstr "Finalizado"
 
 #. js-lingui-explicit-id
-#: app/page.tsx:75
+#: app/page.tsx:68
 msgid "button.get_started"
 msgstr "Empezar"
 
 #. js-lingui-explicit-id
 #: app/completed/page.tsx:171
-#: app/anilist-login/page.tsx:214
+#: app/anilist-login/page.tsx:207
 msgid "button.home"
 msgstr "Inicio"
 
 #. js-lingui-explicit-id
-#: app/anilist-login/page.tsx:166
+#: app/anilist-login/page.tsx:159
 msgid "button.login_with_anilist"
 msgstr "Iniciar sesión con AniList"
 
@@ -162,7 +142,7 @@ msgstr "Gestionar listas"
 
 #. js-lingui-explicit-id
 #: app/custom-list-manager/page.tsx:878
-#: app/anilist-login/page.tsx:229
+#: app/anilist-login/page.tsx:222
 msgid "button.next"
 msgstr "Siguiente"
 
@@ -230,12 +210,12 @@ msgid "description.cache_cleared_description"
 msgstr "Tu caché se ha borrado."
 
 #. js-lingui-explicit-id
-#: app/anilist-login/page.tsx:147
+#: app/anilist-login/page.tsx:140
 msgid "description.connect_account"
 msgstr "Conecta tu cuenta de AniList para gestionar tus listas personalizadas sin esfuerzo."
 
 #. js-lingui-explicit-id
-#: app/faq/page.tsx:195
+#: app/faq/page.tsx:198
 msgid "description.find_answers"
 msgstr "Encuentra respuestas a las preguntas más comunes sobre el Gestor de Listas Personalizadas de AniList."
 
@@ -277,32 +257,32 @@ msgid "error.generic_error"
 msgstr "Error"
 
 #. js-lingui-explicit-id
-#: app/page.tsx:109
+#: app/page.tsx:95
 msgid "feature.move_entries"
 msgstr "Mueve tus entradas"
 
 #. js-lingui-explicit-id
-#: app/page.tsx:112
+#: app/page.tsx:98
 msgid "feature.move_entries_description"
 msgstr "Mueve sin esfuerzo tus entradas a listas personalizadas específicas, manteniendo tu Anilist organizada según tus preferencias."
 
 #. js-lingui-explicit-id
-#: app/page.tsx:126
+#: app/page.tsx:112
 msgid "feature.sort_entries"
 msgstr "Ordenar entradas"
 
 #. js-lingui-explicit-id
-#: app/page.tsx:129
+#: app/page.tsx:115
 msgid "feature.sort_entries_description"
 msgstr "Ordena tus entradas por estado, puntuación, relecturas, géneros, etiquetas y tipo para encontrar rápidamente lo que buscas."
 
 #. js-lingui-explicit-id
-#: app/page.tsx:143
+#: app/page.tsx:129
 msgid "feature.update_entries"
 msgstr "Actualizar entradas"
 
 #. js-lingui-explicit-id
-#: app/page.tsx:146
+#: app/page.tsx:132
 msgid "feature.update_entries_description"
 msgstr "Actualiza automáticamente las entradas en función de las condiciones que establezcas, garantizando que tus listas estén siempre al día."
 
@@ -310,11 +290,6 @@ msgstr "Actualiza automáticamente las entradas en función de las condiciones q
 #: app/completed/page.tsx:182
 msgid "header.check_out_projects"
 msgstr "Echa un vistazo a mis otros proyectos"
-
-#. js-lingui-explicit-id
-#: app/anilist-login/page.tsx:125
-msgid "illustration.anilist"
-msgstr "Ilustración de AniList"
 
 #. js-lingui-explicit-id
 #: app/custom-list-manager/page.tsx:758
@@ -347,7 +322,7 @@ msgid "languageSelector.warning"
 msgstr "El idioma seleccionado ha sido traducido automáticamente, por lo que es posible que algunos contenidos no sean totalmente precisos o completos."
 
 #. js-lingui-explicit-id
-#: app/faq/page.tsx:324
+#: app/faq/page.tsx:333
 msgid "link.back_to_home"
 msgstr "Volver a Inicio"
 
@@ -365,11 +340,6 @@ msgstr "Organiza y gestiona tus entradas de AniList sin esfuerzo."
 #: app/custom-list-manager/page.tsx:703
 msgid "page.custom_list_manager.title"
 msgstr "Gestor de listas personalizadas"
-
-#. js-lingui-explicit-id
-#: components/rename-modal.tsx:59
-msgid "placeholder.enter_new_list_name"
-msgstr "Introduzca un nuevo nombre de lista"
 
 #. js-lingui-explicit-id
 #: app/custom-list-manager/page.tsx:823
@@ -417,7 +387,7 @@ msgid "question.what_is_anilist_custom_list_manager"
 msgstr "¿Qué es el Gestor de Listas Personalizadas de AniList?"
 
 #. js-lingui-explicit-id
-#: app/anilist-login/page.tsx:194
+#: app/anilist-login/page.tsx:187
 msgid "status.logged_in"
 msgstr "Has iniciado sesión."
 
@@ -427,12 +397,12 @@ msgid "status.no_update_info"
 msgstr "No se ha encontrado información para tu actualización reciente."
 
 #. js-lingui-explicit-id
-#: app/anilist-login/page.tsx:196
+#: app/anilist-login/page.tsx:189
 msgid "status.not_logged_in"
 msgstr "No ha iniciado sesión."
 
 #. js-lingui-explicit-id
-#: app/anilist-login/page.tsx:258
+#: app/anilist-login/page.tsx:251
 msgid "status.processing"
 msgstr "Procesando..."
 
@@ -457,7 +427,6 @@ msgid "text.loading"
 msgstr "Cargando..."
 
 #. js-lingui-explicit-id
-#: app/custom-list-manager/update/page.tsx:913
 #: components/media-card.tsx:82
 msgid "text.not_available"
 msgstr "N/A"
@@ -503,7 +472,7 @@ msgid "title.anilist_custom_list_manager"
 msgstr "Gestor de listas personalizadas de AniList"
 
 #. js-lingui-explicit-id
-#: app/anilist-login/page.tsx:144
+#: app/anilist-login/page.tsx:137
 msgid "title.anilist_login"
 msgstr "Inicio de sesión de AniList"
 
@@ -518,7 +487,7 @@ msgid "title.custom_list_changes"
 msgstr "Cambios en las listas personalizadas:"
 
 #. js-lingui-explicit-id
-#: app/faq/page.tsx:189
+#: app/faq/page.tsx:192
 msgid "title.frequently_asked_questions"
 msgstr "Preguntas frecuentes"
 

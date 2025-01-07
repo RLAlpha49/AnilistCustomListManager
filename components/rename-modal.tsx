@@ -55,13 +55,8 @@ const RenameModal: React.FC<RenameModalProps> = React.memo(
 						value={newListName}
 						onChange={(e) => setNewListName(e.target.value)}
 						className="p-2 rounded bg-gray-600 text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
-						placeholder={
-							<Trans
-								id="placeholder.enter_new_list_name"
-								message="Enter new list name"
-							/> as unknown as string
-						}
-						aria-label={<Trans id="aria.new_list_name" message="New list name" /> as unknown as string}
+						placeholder="Enter new list name"
+						aria-label="New list name"
 					/>
 				</div>
 			</Modal>

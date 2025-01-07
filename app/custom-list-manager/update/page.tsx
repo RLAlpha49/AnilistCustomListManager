@@ -907,15 +907,7 @@ function PageData() {
 												id={entry.media.id}
 												image={entry.media.coverImage.extraLarge}
 												romajiTitle={entry.media.title.romaji}
-												englishTitle={
-													entry.media.title.english ||
-													((
-														<Trans
-															id="text.not_available"
-															message="N/A"
-														/>
-													) as unknown as string)
-												}
+												englishTitle={entry.media.title.english || "N/A"}
 												status={entry.status}
 												score={entry.score}
 												repeatCount={entry.repeat}

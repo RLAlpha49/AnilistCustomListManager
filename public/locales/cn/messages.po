@@ -54,26 +54,6 @@ msgid "answer.what_is_anilist_custom_list_manager"
 msgstr "AniList 自定义列表管理器是一款可让您轻松组织和管理 AniList 上的动画和漫画列表的工具。它提供创建自定义列表、条目排序和设置条件以自动更新列表等高级功能。"
 
 #. js-lingui-explicit-id
-#: app/page.tsx:161
-msgid "aria.clear_cache"
-msgstr "清除缓存"
-
-#. js-lingui-explicit-id
-#: app/page.tsx:84
-msgid "aria.faq"
-msgstr "有关 Anilist 自定义列表管理器的常见问题"
-
-#. js-lingui-explicit-id
-#: app/page.tsx:67
-msgid "aria.get_started"
-msgstr "开始使用 Anilist"
-
-#. js-lingui-explicit-id
-#: components/rename-modal.tsx:64
-msgid "aria.new_list_name"
-msgstr "新列表名称"
-
-#. js-lingui-explicit-id
 #: app/custom-list-manager/page.tsx:740
 msgid "button.add_new_list"
 msgstr "添加新列表"
@@ -105,17 +85,17 @@ msgid "button.back"
 msgstr "返回"
 
 #. js-lingui-explicit-id
-#: app/page.tsx:165
+#: app/page.tsx:147
 msgid "button.clear_cache"
 msgstr "清除缓存"
 
 #. js-lingui-explicit-id
-#: app/anilist-login/page.tsx:185
+#: app/anilist-login/page.tsx:178
 msgid "button.clear_cached_token"
 msgstr "清除缓存令牌"
 
 #. js-lingui-explicit-id
-#: app/page.tsx:92
+#: app/page.tsx:78
 msgid "button.faq"
 msgstr "常见问题"
 
@@ -140,18 +120,18 @@ msgid "button.finished"
 msgstr "完成"
 
 #. js-lingui-explicit-id
-#: app/page.tsx:75
+#: app/page.tsx:68
 msgid "button.get_started"
 msgstr "开始"
 
 #. js-lingui-explicit-id
 #: app/completed/page.tsx:171
-#: app/anilist-login/page.tsx:214
+#: app/anilist-login/page.tsx:207
 msgid "button.home"
 msgstr "首页"
 
 #. js-lingui-explicit-id
-#: app/anilist-login/page.tsx:166
+#: app/anilist-login/page.tsx:159
 msgid "button.login_with_anilist"
 msgstr "登录 AniList"
 
@@ -162,7 +142,7 @@ msgstr "管理列表"
 
 #. js-lingui-explicit-id
 #: app/custom-list-manager/page.tsx:878
-#: app/anilist-login/page.tsx:229
+#: app/anilist-login/page.tsx:222
 msgid "button.next"
 msgstr "下一步"
 
@@ -230,12 +210,12 @@ msgid "description.cache_cleared_description"
 msgstr "您的缓存已清除。"
 
 #. js-lingui-explicit-id
-#: app/anilist-login/page.tsx:147
+#: app/anilist-login/page.tsx:140
 msgid "description.connect_account"
 msgstr "连接您的 AniList 帐户，轻松管理自定义列表。"
 
 #. js-lingui-explicit-id
-#: app/faq/page.tsx:195
+#: app/faq/page.tsx:198
 msgid "description.find_answers"
 msgstr "查找有关 AniList 自定义列表管理器最常见问题的答案。"
 
@@ -277,32 +257,32 @@ msgid "error.generic_error"
 msgstr "错误"
 
 #. js-lingui-explicit-id
-#: app/page.tsx:109
+#: app/page.tsx:95
 msgid "feature.move_entries"
 msgstr "移动条目"
 
 #. js-lingui-explicit-id
-#: app/page.tsx:112
+#: app/page.tsx:98
 msgid "feature.move_entries_description"
 msgstr "轻松地将条目移动到特定的自定义列表，让您的 Anilist 按照您的偏好保持有序。"
 
 #. js-lingui-explicit-id
-#: app/page.tsx:126
+#: app/page.tsx:112
 msgid "feature.sort_entries"
 msgstr "条目排序"
 
 #. js-lingui-explicit-id
-#: app/page.tsx:129
+#: app/page.tsx:115
 msgid "feature.sort_entries_description"
 msgstr "根据状态、评分、重读次数、流派、标签和类型对条目进行排序，以便快速找到要找的内容。"
 
 #. js-lingui-explicit-id
-#: app/page.tsx:143
+#: app/page.tsx:129
 msgid "feature.update_entries"
 msgstr "更新条目"
 
 #. js-lingui-explicit-id
-#: app/page.tsx:146
+#: app/page.tsx:132
 msgid "feature.update_entries_description"
 msgstr "根据你设定的条件自动更新条目，确保你的列表始终是最新的。"
 
@@ -310,11 +290,6 @@ msgstr "根据你设定的条件自动更新条目，确保你的列表始终是
 #: app/completed/page.tsx:182
 msgid "header.check_out_projects"
 msgstr "查看我的其他项目"
-
-#. js-lingui-explicit-id
-#: app/anilist-login/page.tsx:125
-msgid "illustration.anilist"
-msgstr "AniList 插图"
 
 #. js-lingui-explicit-id
 #: app/custom-list-manager/page.tsx:758
@@ -347,7 +322,7 @@ msgid "languageSelector.warning"
 msgstr "所选语言为机器翻译，某些内容可能不完全准确或完整。"
 
 #. js-lingui-explicit-id
-#: app/faq/page.tsx:324
+#: app/faq/page.tsx:333
 msgid "link.back_to_home"
 msgstr "返回首页"
 
@@ -365,11 +340,6 @@ msgstr "轻松组织和管理您的 AniList 条目。"
 #: app/custom-list-manager/page.tsx:703
 msgid "page.custom_list_manager.title"
 msgstr "自定义列表管理器"
-
-#. js-lingui-explicit-id
-#: components/rename-modal.tsx:59
-msgid "placeholder.enter_new_list_name"
-msgstr "输入新列表名称"
 
 #. js-lingui-explicit-id
 #: app/custom-list-manager/page.tsx:823
@@ -417,7 +387,7 @@ msgid "question.what_is_anilist_custom_list_manager"
 msgstr "什么是 AniList 自定义列表管理器？"
 
 #. js-lingui-explicit-id
-#: app/anilist-login/page.tsx:194
+#: app/anilist-login/page.tsx:187
 msgid "status.logged_in"
 msgstr "您已登录。"
 
@@ -427,12 +397,12 @@ msgid "status.no_update_info"
 msgstr "未找到您最近的更新信息。"
 
 #. js-lingui-explicit-id
-#: app/anilist-login/page.tsx:196
+#: app/anilist-login/page.tsx:189
 msgid "status.not_logged_in"
 msgstr "您尚未登录。"
 
 #. js-lingui-explicit-id
-#: app/anilist-login/page.tsx:258
+#: app/anilist-login/page.tsx:251
 msgid "status.processing"
 msgstr "处理中..."
 
@@ -457,7 +427,6 @@ msgid "text.loading"
 msgstr "正在加载..."
 
 #. js-lingui-explicit-id
-#: app/custom-list-manager/update/page.tsx:913
 #: components/media-card.tsx:82
 msgid "text.not_available"
 msgstr "不适用"
@@ -506,7 +475,7 @@ msgid "title.anilist_custom_list_manager"
 msgstr "AniList 自定义列表管理器"
 
 #. js-lingui-explicit-id
-#: app/anilist-login/page.tsx:144
+#: app/anilist-login/page.tsx:137
 msgid "title.anilist_login"
 msgstr "登录"
 
@@ -521,7 +490,7 @@ msgid "title.custom_list_changes"
 msgstr "自定义列表更改："
 
 #. js-lingui-explicit-id
-#: app/faq/page.tsx:189
+#: app/faq/page.tsx:192
 msgid "title.frequently_asked_questions"
 msgstr "常见问题"
 

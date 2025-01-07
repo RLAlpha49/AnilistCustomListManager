@@ -54,26 +54,6 @@ msgid "answer.what_is_anilist_custom_list_manager"
 msgstr "AniList 커스텀 리스트 매니저는 AniList에서 애니메이션과 만화 목록을 쉽게 구성하고 관리할 수 있는 도구입니다. 사용자 지정 목록 생성, 항목 정렬, 목록 업데이트 자동화를 위한 조건 설정 등의 고급 기능을 제공합니다."
 
 #. js-lingui-explicit-id
-#: app/page.tsx:161
-msgid "aria.clear_cache"
-msgstr "캐시 지우기"
-
-#. js-lingui-explicit-id
-#: app/page.tsx:84
-msgid "aria.faq"
-msgstr "애니리스트 커스텀 리스트 매니저에 대해 자주 묻는 질문과 대답"
-
-#. js-lingui-explicit-id
-#: app/page.tsx:67
-msgid "aria.get_started"
-msgstr "애니리스트 시작하기"
-
-#. js-lingui-explicit-id
-#: components/rename-modal.tsx:64
-msgid "aria.new_list_name"
-msgstr "새 목록 이름"
-
-#. js-lingui-explicit-id
 #: app/custom-list-manager/page.tsx:740
 msgid "button.add_new_list"
 msgstr "새 목록 추가"
@@ -105,17 +85,17 @@ msgid "button.back"
 msgstr "뒤로"
 
 #. js-lingui-explicit-id
-#: app/page.tsx:165
+#: app/page.tsx:147
 msgid "button.clear_cache"
 msgstr "캐시 지우기"
 
 #. js-lingui-explicit-id
-#: app/anilist-login/page.tsx:185
+#: app/anilist-login/page.tsx:178
 msgid "button.clear_cached_token"
 msgstr "캐시 토큰 지우기"
 
 #. js-lingui-explicit-id
-#: app/page.tsx:92
+#: app/page.tsx:78
 msgid "button.faq"
 msgstr "FAQ"
 
@@ -140,18 +120,18 @@ msgid "button.finished"
 msgstr "완료"
 
 #. js-lingui-explicit-id
-#: app/page.tsx:75
+#: app/page.tsx:68
 msgid "button.get_started"
 msgstr "시작하기"
 
 #. js-lingui-explicit-id
 #: app/completed/page.tsx:171
-#: app/anilist-login/page.tsx:214
+#: app/anilist-login/page.tsx:207
 msgid "button.home"
 msgstr "홈"
 
 #. js-lingui-explicit-id
-#: app/anilist-login/page.tsx:166
+#: app/anilist-login/page.tsx:159
 msgid "button.login_with_anilist"
 msgstr "AniList로 로그인"
 
@@ -162,7 +142,7 @@ msgstr "목록 관리"
 
 #. js-lingui-explicit-id
 #: app/custom-list-manager/page.tsx:878
-#: app/anilist-login/page.tsx:229
+#: app/anilist-login/page.tsx:222
 msgid "button.next"
 msgstr "다음"
 
@@ -230,12 +210,12 @@ msgid "description.cache_cleared_description"
 msgstr "캐시가 지워졌습니다."
 
 #. js-lingui-explicit-id
-#: app/anilist-login/page.tsx:147
+#: app/anilist-login/page.tsx:140
 msgid "description.connect_account"
 msgstr "AniList 계정을 연결하여 사용자 지정 목록을 손쉽게 관리하세요."
 
 #. js-lingui-explicit-id
-#: app/faq/page.tsx:195
+#: app/faq/page.tsx:198
 msgid "description.find_answers"
 msgstr "애니리스트 사용자 지정 목록 관리자에 대한 가장 일반적인 질문에 대한 답변을 찾아보세요."
 
@@ -277,32 +257,32 @@ msgid "error.generic_error"
 msgstr "오류"
 
 #. js-lingui-explicit-id
-#: app/page.tsx:109
+#: app/page.tsx:95
 msgid "feature.move_entries"
 msgstr "항목 이동"
 
 #. js-lingui-explicit-id
-#: app/page.tsx:112
+#: app/page.tsx:98
 msgid "feature.move_entries_description"
 msgstr "항목을 특정 사용자 지정 목록으로 손쉽게 이동하여 애니리스트를 원하는 대로 정리할 수 있습니다."
 
 #. js-lingui-explicit-id
-#: app/page.tsx:126
+#: app/page.tsx:112
 msgid "feature.sort_entries"
 msgstr "항목 정렬"
 
 #. js-lingui-explicit-id
-#: app/page.tsx:129
+#: app/page.tsx:115
 msgid "feature.sort_entries_description"
 msgstr "상태, 점수, 다시 읽기, 장르, 태그, 유형에 따라 항목을 정렬하여 원하는 항목을 빠르게 찾을 수 있습니다."
 
 #. js-lingui-explicit-id
-#: app/page.tsx:143
+#: app/page.tsx:129
 msgid "feature.update_entries"
 msgstr "항목 업데이트"
 
 #. js-lingui-explicit-id
-#: app/page.tsx:146
+#: app/page.tsx:132
 msgid "feature.update_entries_description"
 msgstr "설정한 조건에 따라 자동으로 항목을 업데이트하여 목록을 항상 최신 상태로 유지하세요."
 
@@ -310,11 +290,6 @@ msgstr "설정한 조건에 따라 자동으로 항목을 업데이트하여 목
 #: app/completed/page.tsx:182
 msgid "header.check_out_projects"
 msgstr "내 다른 프로젝트 확인하기"
-
-#. js-lingui-explicit-id
-#: app/anilist-login/page.tsx:125
-msgid "illustration.anilist"
-msgstr "애니리스트 일러스트레이션"
 
 #. js-lingui-explicit-id
 #: app/custom-list-manager/page.tsx:758
@@ -347,7 +322,7 @@ msgid "languageSelector.warning"
 msgstr "선택한 언어가 기계 번역되어 일부 콘텐츠가 완전히 정확하지 않거나 완전하지 않을 수 있습니다."
 
 #. js-lingui-explicit-id
-#: app/faq/page.tsx:324
+#: app/faq/page.tsx:333
 msgid "link.back_to_home"
 msgstr "홈으로 돌아가기"
 
@@ -365,11 +340,6 @@ msgstr "AniList 항목을 손쉽게 정리하고 관리하세요."
 #: app/custom-list-manager/page.tsx:703
 msgid "page.custom_list_manager.title"
 msgstr "사용자 지정 목록 관리자"
-
-#. js-lingui-explicit-id
-#: components/rename-modal.tsx:59
-msgid "placeholder.enter_new_list_name"
-msgstr "새 목록 이름 입력"
 
 #. js-lingui-explicit-id
 #: app/custom-list-manager/page.tsx:823
@@ -417,7 +387,7 @@ msgid "question.what_is_anilist_custom_list_manager"
 msgstr "애니리스트 커스텀 리스트 매니저란 무엇인가요?"
 
 #. js-lingui-explicit-id
-#: app/anilist-login/page.tsx:194
+#: app/anilist-login/page.tsx:187
 msgid "status.logged_in"
 msgstr "로그인했습니다."
 
@@ -427,12 +397,12 @@ msgid "status.no_update_info"
 msgstr "최근 업데이트에 대한 업데이트 정보를 찾을 수 없습니다."
 
 #. js-lingui-explicit-id
-#: app/anilist-login/page.tsx:196
+#: app/anilist-login/page.tsx:189
 msgid "status.not_logged_in"
 msgstr "로그인하지 않았습니다."
 
 #. js-lingui-explicit-id
-#: app/anilist-login/page.tsx:258
+#: app/anilist-login/page.tsx:251
 msgid "status.processing"
 msgstr "처리 중..."
 
@@ -457,7 +427,6 @@ msgid "text.loading"
 msgstr "로드 중..."
 
 #. js-lingui-explicit-id
-#: app/custom-list-manager/update/page.tsx:913
 #: components/media-card.tsx:82
 msgid "text.not_available"
 msgstr "N/A"
@@ -503,7 +472,7 @@ msgid "title.anilist_custom_list_manager"
 msgstr "애니리스트 사용자 지정 목록 관리자"
 
 #. js-lingui-explicit-id
-#: app/anilist-login/page.tsx:144
+#: app/anilist-login/page.tsx:137
 msgid "title.anilist_login"
 msgstr "애니리스트 로그인"
 
@@ -518,7 +487,7 @@ msgid "title.custom_list_changes"
 msgstr "사용자 지정 목록 변경:"
 
 #. js-lingui-explicit-id
-#: app/faq/page.tsx:189
+#: app/faq/page.tsx:192
 msgid "title.frequently_asked_questions"
 msgstr "자주 묻는 질문"
 

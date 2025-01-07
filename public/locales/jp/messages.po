@@ -54,26 +54,6 @@ msgid "answer.what_is_anilist_custom_list_manager"
 msgstr "AniListカスタムリストマネージャーは、AniList上のアニメや漫画のリストを簡単に整理・管理できるツールです。カスタムリストの作成、エントリの並べ替え、リストの更新を自動化するための条件設定などの高度な機能を提供します。"
 
 #. js-lingui-explicit-id
-#: app/page.tsx:161
-msgid "aria.clear_cache"
-msgstr "キャッシュクリア"
-
-#. js-lingui-explicit-id
-#: app/page.tsx:84
-msgid "aria.faq"
-msgstr "Anilist カスタムリストマネージャーに関するよくある質問"
-
-#. js-lingui-explicit-id
-#: app/page.tsx:67
-msgid "aria.get_started"
-msgstr "Anilistを始める"
-
-#. js-lingui-explicit-id
-#: components/rename-modal.tsx:64
-msgid "aria.new_list_name"
-msgstr "新しいリスト名"
-
-#. js-lingui-explicit-id
 #: app/custom-list-manager/page.tsx:740
 msgid "button.add_new_list"
 msgstr "新しいリストを追加"
@@ -105,17 +85,17 @@ msgid "button.back"
 msgstr "戻る"
 
 #. js-lingui-explicit-id
-#: app/page.tsx:165
+#: app/page.tsx:147
 msgid "button.clear_cache"
 msgstr "キャッシュをクリア"
 
 #. js-lingui-explicit-id
-#: app/anilist-login/page.tsx:185
+#: app/anilist-login/page.tsx:178
 msgid "button.clear_cached_token"
 msgstr "キャッシュされたトークンをクリア"
 
 #. js-lingui-explicit-id
-#: app/page.tsx:92
+#: app/page.tsx:78
 msgid "button.faq"
 msgstr "よくある質問"
 
@@ -140,18 +120,18 @@ msgid "button.finished"
 msgstr "終了"
 
 #. js-lingui-explicit-id
-#: app/page.tsx:75
+#: app/page.tsx:68
 msgid "button.get_started"
 msgstr "始める"
 
 #. js-lingui-explicit-id
 #: app/completed/page.tsx:171
-#: app/anilist-login/page.tsx:214
+#: app/anilist-login/page.tsx:207
 msgid "button.home"
 msgstr "ホーム"
 
 #. js-lingui-explicit-id
-#: app/anilist-login/page.tsx:166
+#: app/anilist-login/page.tsx:159
 msgid "button.login_with_anilist"
 msgstr "AniListでログイン"
 
@@ -162,7 +142,7 @@ msgstr "リストの管理"
 
 #. js-lingui-explicit-id
 #: app/custom-list-manager/page.tsx:878
-#: app/anilist-login/page.tsx:229
+#: app/anilist-login/page.tsx:222
 msgid "button.next"
 msgstr "次へ"
 
@@ -230,12 +210,12 @@ msgid "description.cache_cleared_description"
 msgstr "キャッシュがクリアされました。"
 
 #. js-lingui-explicit-id
-#: app/anilist-login/page.tsx:147
+#: app/anilist-login/page.tsx:140
 msgid "description.connect_account"
 msgstr "AniList アカウントに接続して、カスタムリストを簡単に管理しましょう。"
 
 #. js-lingui-explicit-id
-#: app/faq/page.tsx:195
+#: app/faq/page.tsx:198
 msgid "description.find_answers"
 msgstr "AniList カスタムリストマネージャーに関するよくある質問と回答をご覧ください。"
 
@@ -276,37 +256,33 @@ msgstr "ビューアIDの取得に失敗しました。"
 msgid "error.generic_error"
 msgstr "エラー"
 
-#: app/custom-list-manager/update/page.tsx:641
-#~ msgid "toast.updating_title"
-#~ msgstr "更新中"
-
 #. js-lingui-explicit-id
-#: app/page.tsx:109
+#: app/page.tsx:95
 msgid "feature.move_entries"
 msgstr "エントリーの移動"
 
 #. js-lingui-explicit-id
-#: app/page.tsx:112
+#: app/page.tsx:98
 msgid "feature.move_entries_description"
 msgstr "エントリーを特定のカスタムリストに簡単に移動できます。"
 
 #. js-lingui-explicit-id
-#: app/page.tsx:126
+#: app/page.tsx:112
 msgid "feature.sort_entries"
 msgstr "エントリーの並べ替え"
 
 #. js-lingui-explicit-id
-#: app/page.tsx:129
+#: app/page.tsx:115
 msgid "feature.sort_entries_description"
 msgstr "ステータス、スコア、再読、ジャンル、タグ、タイプに基づいてエントリを並べ替え、探しているものをすばやく見つけることができます。"
 
 #. js-lingui-explicit-id
-#: app/page.tsx:143
+#: app/page.tsx:129
 msgid "feature.update_entries"
 msgstr "エントリーの更新"
 
 #. js-lingui-explicit-id
-#: app/page.tsx:146
+#: app/page.tsx:132
 msgid "feature.update_entries_description"
 msgstr "設定した条件に基づいて自動的にエントリーを更新し、リストを常に最新の状態に保ちます。"
 
@@ -314,11 +290,6 @@ msgstr "設定した条件に基づいて自動的にエントリーを更新し
 #: app/completed/page.tsx:182
 msgid "header.check_out_projects"
 msgstr "私の他のプロジェクトをチェック"
-
-#. js-lingui-explicit-id
-#: app/anilist-login/page.tsx:125
-msgid "illustration.anilist"
-msgstr "AniListイラスト"
 
 #. js-lingui-explicit-id
 #: app/custom-list-manager/page.tsx:758
@@ -351,7 +322,7 @@ msgid "languageSelector.warning"
 msgstr "選択された言語は機械翻訳であり、一部のコンテンツは完全に正確または完全ではない可能性があります。"
 
 #. js-lingui-explicit-id
-#: app/faq/page.tsx:324
+#: app/faq/page.tsx:333
 msgid "link.back_to_home"
 msgstr "ホームへ戻る"
 
@@ -369,11 +340,6 @@ msgstr "AniListのエントリーを簡単に整理・管理できます。"
 #: app/custom-list-manager/page.tsx:703
 msgid "page.custom_list_manager.title"
 msgstr "カスタムリストマネージャー"
-
-#. js-lingui-explicit-id
-#: components/rename-modal.tsx:59
-msgid "placeholder.enter_new_list_name"
-msgstr "新しいリスト名を入力"
 
 #. js-lingui-explicit-id
 #: app/custom-list-manager/page.tsx:823
@@ -421,7 +387,7 @@ msgid "question.what_is_anilist_custom_list_manager"
 msgstr "AniList カスタムリストマネージャーとは何ですか？"
 
 #. js-lingui-explicit-id
-#: app/anilist-login/page.tsx:194
+#: app/anilist-login/page.tsx:187
 msgid "status.logged_in"
 msgstr "ログインしています。"
 
@@ -431,12 +397,12 @@ msgid "status.no_update_info"
 msgstr "最近の更新情報が見つかりません。"
 
 #. js-lingui-explicit-id
-#: app/anilist-login/page.tsx:196
+#: app/anilist-login/page.tsx:189
 msgid "status.not_logged_in"
 msgstr "ログインしていません。"
 
 #. js-lingui-explicit-id
-#: app/anilist-login/page.tsx:258
+#: app/anilist-login/page.tsx:251
 msgid "status.processing"
 msgstr "処理中..."
 
@@ -461,7 +427,6 @@ msgid "text.loading"
 msgstr "読み込み中..."
 
 #. js-lingui-explicit-id
-#: app/custom-list-manager/update/page.tsx:913
 #: components/media-card.tsx:82
 msgid "text.not_available"
 msgstr "該当なし"
@@ -507,7 +472,7 @@ msgid "title.anilist_custom_list_manager"
 msgstr "カスタムリストマネージャー"
 
 #. js-lingui-explicit-id
-#: app/anilist-login/page.tsx:144
+#: app/anilist-login/page.tsx:137
 msgid "title.anilist_login"
 msgstr "AniList ログイン"
 
@@ -522,7 +487,7 @@ msgid "title.custom_list_changes"
 msgstr "カスタムリストの変更"
 
 #. js-lingui-explicit-id
-#: app/faq/page.tsx:189
+#: app/faq/page.tsx:192
 msgid "title.frequently_asked_questions"
 msgstr "よくある質問"
 
