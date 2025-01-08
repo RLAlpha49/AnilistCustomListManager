@@ -39,17 +39,19 @@ function PageData() {
 
 	return (
 		<Layout>
-			<Card
-				className="w-full max-w-md mx-auto bg-gray-800 text-gray-100"
-				role="alert"
-				aria-live="polite"
-			>
-				<CardContent className="p-6">
-					<p className="text-center text-lg">
-						<Trans id="status.processing_login" message="Processing login..." />
-					</p>
-				</CardContent>
-			</Card>
+			<div className="flex items-center justify-center px-4 py-12 bg-gray-100 dark:bg-gray-900">
+				<Card
+					className="w-full max-w-md mx-auto bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 shadow-2xl rounded-lg transition-colors duration-300"
+					role="alert"
+					aria-live="polite"
+				>
+					<CardContent className="p-6">
+						<p className="text-center text-lg">
+							<Trans id="status.processing_login" message="Processing login..." />
+						</p>
+					</CardContent>
+				</Card>
+			</div>
 			<ToastContainer />
 		</Layout>
 	);

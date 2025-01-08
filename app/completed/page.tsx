@@ -76,8 +76,8 @@ function PageData({ summary }: CompletedPageProps): JSX.Element {
 	return (
 		<Layout>
 			<Breadcrumbs breadcrumbs={breadcrumbs} />
-			<div className="flex items-center justify-center bg-gray-900 text-gray-100 px-4">
-				<Card className="w-full max-w-lg bg-gray-800 shadow-xl rounded-lg overflow-hidden">
+			<div className="flex items-center justify-center px-4 py-12 bg-gray-100 dark:bg-gray-900">
+				<Card className="w-full max-w-lg bg-white dark:bg-gray-800 shadow-xl rounded-lg overflow-hidden transition-colors duration-300">
 					<CardHeader className="text-center">
 						<motion.div
 							initial={{ scale: 0 }}
@@ -86,14 +86,14 @@ function PageData({ summary }: CompletedPageProps): JSX.Element {
 							className="flex justify-center"
 						>
 							<FaCheckCircle
-								className="text-green-500 w-16 h-16"
+								className="text-green-500 dark:text-green-400 w-16 h-16"
 								aria-hidden="true"
 							/>
 						</motion.div>
-						<CardTitle className="mt-4 text-3xl font-bold text-white">
+						<CardTitle className="mt-4 text-3xl font-bold text-gray-900 dark:text-white">
 							<Trans id="status.update_completed_title" message="Update Completed!" />
 						</CardTitle>
-						<CardDescription className="mt-2 text-gray-300">
+						<CardDescription className="mt-2 text-gray-600 dark:text-gray-300">
 							<Trans
 								id="description.update_completed"
 								message="Your custom lists have been successfully updated."
@@ -120,21 +120,21 @@ function PageData({ summary }: CompletedPageProps): JSX.Element {
 							) : (
 								<>
 									<div className="flex justify-between">
-										<span className="text-white">
+										<span className="text-gray-900 dark:text-gray-100">
 											<Trans id="text.total_lists" message="Total Lists:" />
 										</span>
-										<span className="font-semibold text-white">
+										<span className="font-semibold text-gray-900 dark:text-gray-100">
 											{localSummary.totalListsUpdated}
 										</span>
 									</div>
 									<div className="flex justify-between">
-										<span className="text-white">
+										<span className="text-gray-900 dark:text-gray-100">
 											<Trans
 												id="text.total_entries_updated"
 												message="Total Entries Updated:"
 											/>
 										</span>
-										<span className="font-semibold text-white">
+										<span className="font-semibold text-gray-900 dark:text-gray-100">
 											{localSummary.totalEntriesUpdated}
 										</span>
 									</div>
@@ -149,23 +149,22 @@ function PageData({ summary }: CompletedPageProps): JSX.Element {
 							>
 								<Button
 									onClick={handleManageLists}
-									className="flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white w-full sm:w-auto"
+									className="flex items-center justify-center bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white w-full sm:w-auto transition-colors duration-300"
 									aria-label="Manage Lists Again"
 								>
-									<FaList className="mr-2" aria-hidden="true" />
+									<FaList
+										className="mr-2 text-white dark:text-white"
+										aria-hidden="true"
+									/>
 									<Trans id="button.manage_lists" message="Manage Lists" />
 								</Button>
 							</motion.div>
-							<motion.div
-								whileHover={{ scale: 1.05 }}
-								whileTap={{ scale: 0.95 }}
-								className="w-full sm:w-auto"
-							>
+							<motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
 								<Button
-									onClick={handleGoHome}
 									variant="outline"
-									className="text-black hover:text-white border-gray-600 hover:bg-gray-700 transition-colors flex items-center"
-									aria-label="Go to Home"
+									onClick={handleGoHome}
+									className="bg-gray-700 dark:bg-white text-white dark:text-black hover:text-white hover:bg-gray-600 dark:hover:text-gray-800 dark:hover:bg-gray-200 transition-colors flex items-center"
+									aria-label="Navigate to Home"
 								>
 									<FaHome className="mr-2" aria-hidden="true" />
 									<Trans id="button.home" message="Home" />
@@ -178,7 +177,7 @@ function PageData({ summary }: CompletedPageProps): JSX.Element {
 							transition={{ delay: 0.6, duration: 0.5 }}
 							className="mt-8 text-center"
 						>
-							<h2 className="text-2xl font-semibold text-white mb-4">
+							<h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
 								<Trans
 									id="header.check_out_projects"
 									message="Check Out My Other Projects"
@@ -194,7 +193,7 @@ function PageData({ summary }: CompletedPageProps): JSX.Element {
 									className="w-full sm:w-auto mt-2 ml-2"
 									aria-label="View AniCards project on GitHub"
 								>
-									<Button className="flex items-center justify-center bg-purple-600 hover:bg-purple-700 text-white">
+									<Button className="flex items-center justify-center bg-purple-600 hover:bg-purple-700 dark:bg-purple-500 dark:hover:bg-purple-600 text-white transition-colors duration-300">
 										<FaGithub className="mr-2" aria-hidden="true" />
 										<Trans id="button.anicards" message="AniCards" />
 									</Button>
@@ -208,7 +207,7 @@ function PageData({ summary }: CompletedPageProps): JSX.Element {
 									className="w-full sm:w-auto"
 									aria-label="View AniSearchModel project on GitHub"
 								>
-									<Button className="flex items-center justify-center bg-green-600 hover:bg-green-700 text-white">
+									<Button className="flex items-center justify-center bg-green-600 hover:bg-green-700 dark:bg-green-500 dark:hover:bg-green-600 text-white transition-colors duration-300">
 										<FaGithub className="mr-2" aria-hidden="true" />
 										<Trans
 											id="button.anisearchmodel"
@@ -225,7 +224,7 @@ function PageData({ summary }: CompletedPageProps): JSX.Element {
 									className="w-full sm:w-auto"
 									aria-label="View AniSearch project on GitHub"
 								>
-									<Button className="flex items-center justify-center bg-yellow-600 hover:bg-yellow-700 text-white">
+									<Button className="flex items-center justify-center bg-yellow-600 hover:bg-yellow-700 dark:bg-yellow-500 dark:hover:bg-yellow-600 text-white transition-colors duration-300">
 										<FaGithub className="mr-2" aria-hidden="true" />
 										<Trans id="button.anisearch" message="AniSearch" />
 									</Button>
@@ -239,7 +238,7 @@ function PageData({ summary }: CompletedPageProps): JSX.Element {
 									className="w-full sm:w-auto"
 									aria-label="View SpotifySkipTracker project on GitHub"
 								>
-									<Button className="flex items-center justify-center bg-indigo-600 hover:bg-indigo-700 text-white">
+									<Button className="flex items-center justify-center bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 text-white transition-colors duration-300">
 										<FaGithub className="mr-2" aria-hidden="true" />
 										<Trans
 											id="button.spotifyskiptracker"
@@ -256,7 +255,7 @@ function PageData({ summary }: CompletedPageProps): JSX.Element {
 									className="w-full sm:w-auto"
 									aria-label="View Anilist-Manga-Updater project on GitHub"
 								>
-									<Button className="flex items-center justify-center bg-red-600 hover:bg-red-700 text-white">
+									<Button className="flex items-center justify-center bg-red-600 hover:bg-red-700 dark:bg-red-500 dark:hover:bg-red-600 text-white transition-colors duration-300">
 										<FaGithub className="mr-2" aria-hidden="true" />
 										<Trans
 											id="button.anilistmangaupdater"

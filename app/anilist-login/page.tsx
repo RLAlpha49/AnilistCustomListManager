@@ -109,14 +109,14 @@ function PageData() {
 	return (
 		<Layout>
 			<Breadcrumbs breadcrumbs={breadcrumbs} />
-			<div className="flex items-center justify-center px-4">
-				<Card className="w-full max-w-4xl bg-gray-800 text-gray-100 shadow-2xl flex flex-col md:flex-row overflow-hidden rounded-lg">
+			<div className="flex items-center justify-center px-4 py-12 bg-gray-100 dark:bg-gray-900">
+				<Card className="w-full max-w-4xl bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 shadow-2xl flex flex-col md:flex-row overflow-hidden rounded-lg transition-colors duration-300">
 					{/* Left Side - Animated Illustration */}
 					<motion.div
 						initial={{ opacity: 0, x: -50 }}
 						animate={{ opacity: 1, x: 0 }}
 						transition={{ duration: 1 }}
-						className="md:w-1/2 bg-indigo-700 flex items-center justify-center p-8"
+						className="md:w-1/2 bg-indigo-100 dark:bg-indigo-700 flex items-center justify-center p-8"
 					>
 						<motion.img
 							src="/images/anilist-illustration.png"
@@ -130,13 +130,13 @@ function PageData() {
 						initial={{ opacity: 0, x: 50 }}
 						animate={{ opacity: 1, x: 0 }}
 						transition={{ duration: 1 }}
-						className="md:w-1/2 p-8"
+						className="md:w-1/2 p-8 bg-white dark:bg-gray-800"
 					>
 						<CardHeader>
-							<CardTitle className="text-2xl font-bold text-white">
+							<CardTitle className="text-2xl font-bold text-gray-900 dark:text-white">
 								<Trans id="title.anilist_login" message="AniList Login" />
 							</CardTitle>
-							<CardDescription className="text-gray-300 mt-2">
+							<CardDescription className="text-gray-600 dark:text-gray-300 mt-2">
 								<Trans
 									id="description.connect_account"
 									message="Connect your AniList account to manage your custom lists effortlessly."
@@ -152,7 +152,7 @@ function PageData() {
 								>
 									<Button
 										onClick={handleLogin}
-										className="bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center w-full py-3 rounded-md shadow-md transition-transform"
+										className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white flex items-center justify-center w-full py-3 rounded-md shadow-md transition-transform"
 										aria-label="Login with AniList"
 									>
 										<FaSignInAlt className="mr-2" aria-hidden="true" />
@@ -171,7 +171,7 @@ function PageData() {
 										<Button
 											variant="outline"
 											onClick={logout}
-											className="text-black hover:text-white border-gray-600 hover:bg-gray-700 transition-colors flex items-center justify-center w-full py-3 rounded-md shadow-md"
+											className="text-gray-900 dark:text-gray-100 hover:text-white dark:hover:text-white border-gray-300 dark:border-gray-600 hover:bg-gray-700 dark:hover:bg-gray-700 transition-colors flex items-center justify-center w-full py-3 rounded-md shadow-md"
 											aria-label="Clear Cached Token"
 										>
 											<FaTimesCircle className="mr-2" aria-hidden="true" />
@@ -182,7 +182,7 @@ function PageData() {
 										</Button>
 									</motion.div>
 								)}
-								<p className="text-center text-gray-200">
+								<p className="text-center text-gray-700 dark:text-gray-200">
 									{isLoggedIn ? (
 										<Trans id="status.logged_in" message="You are logged in." />
 									) : (
@@ -200,7 +200,7 @@ function PageData() {
 										<Button
 											variant="outline"
 											onClick={handleHome}
-											className="text-black hover:text-white border-gray-600 hover:bg-gray-700 transition-colors flex items-center"
+											className="bg-gray-700 dark:bg-white text-white dark:text-black hover:text-white hover:bg-gray-600 dark:hover:text-gray-800 dark:hover:bg-gray-200 transition-colors flex items-center"
 											aria-label="Navigate to Home"
 										>
 											<FaHome className="mr-2" aria-hidden="true" />
@@ -214,7 +214,7 @@ function PageData() {
 										<Button
 											onClick={handleNext}
 											disabled={!isLoggedIn}
-											className={`bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center ${
+											className={`bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white flex items-center justify-center ${
 												!isLoggedIn && "opacity-50 cursor-not-allowed"
 											} w-full py-3 rounded-md shadow-md transition-transform`}
 											aria-label="Proceed to Next Step"
@@ -227,7 +227,7 @@ function PageData() {
 									{isProcessing && (
 										<>
 											<svg
-												className="animate-spin h-5 w-5 text-white"
+												className="animate-spin h-5 w-5 text-blue-600 dark:text-blue-400"
 												xmlns="http://www.w3.org/2000/svg"
 												fill="none"
 												viewBox="0 0 24 24"
@@ -247,7 +247,7 @@ function PageData() {
 													d="M4 12a8 8 0 018-8v8H4z"
 												></path>
 											</svg>
-											<span className="text-gray-300">
+											<span className="text-gray-600 dark:text-gray-300">
 												<Trans
 													id="status.processing"
 													message="Processing..."

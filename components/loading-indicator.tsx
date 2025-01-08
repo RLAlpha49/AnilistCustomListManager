@@ -21,7 +21,7 @@ export default function LoadingIndicator() {
 				aria-label="Loading"
 			>
 				<svg
-					className="animate-spin h-10 w-10 text-blue-500"
+					className="animate-spin h-10 w-10 dark:text-blue-500 text-blue-400 transition-colors duration-300"
 					xmlns="http://www.w3.org/2000/svg"
 					fill="none"
 					viewBox="0 0 24 24"
@@ -40,7 +40,7 @@ export default function LoadingIndicator() {
 						d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
 					></path>
 				</svg>
-				<span className="ml-3 text-lg font-semibold text-blue-500">
+				<span className="ml-3 text-lg font-semibold dark:text-blue-500 text-blue-400 transition-colors duration-300">
 					<Trans id="text.loading" message="Loading..." />
 				</span>
 			</div>

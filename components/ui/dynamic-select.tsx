@@ -14,7 +14,6 @@ import {
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { FaSearch } from "react-icons/fa";
-import { cn } from "@/lib/utils";
 import { useTextWidth } from "@/hooks/use-text-width";
 
 interface SelectOption {
@@ -85,23 +84,26 @@ export const DynamicSelect = forwardRef<HTMLButtonElement, DynamicSelectProps>(
 			<Select value={value} onValueChange={handleSelectChange} onOpenChange={setIsOpen}>
 				<SelectTrigger
 					ref={ref}
-					className={`bg-gray-700 text-gray-200 ${className}`}
+					className={`bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 ${className} transition-colors duration-300`}
 					style={{ width: `${currentWidth + 32}px` }}
 					aria-haspopup="listbox"
 					aria-expanded={isOpen}
 				>
 					<SelectValue placeholder={placeholder} />
 				</SelectTrigger>
-				<SelectContent className="bg-gray-700 text-gray-200" role="listbox">
-					<div className="px-2 py-2">
-						<div className="flex items-center px-2 py-1 bg-gray-600 rounded">
-							<FaSearch className="text-gray-400 mr-2" />
+				<SelectContent
+					className="bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 shadow-lg rounded-md"
+					role="listbox"
+				>
+					<div className="px-4 py-3">
+						<div className="flex items-center px-3 py-2 bg-gray-100 dark:bg-gray-600 rounded-md">
+							<FaSearch className="text-gray-500 dark:text-gray-300 mr-2" />
 							<Input
 								ref={inputRef}
 								value={searchQuery}
 								onChange={(e) => setSearchQuery(e.target.value)}
 								placeholder="Search..."
-								className="bg-gray-600 text-gray-200 border-none focus:ring-0"
+								className="bg-gray-100 dark:bg-gray-600 text-gray-900 dark:text-gray-200 border-none focus:ring-2 focus:ring-blue-500 focus:outline-none transition-colors duration-300"
 								aria-label="Search options"
 								onMouseDown={(e) => e.stopPropagation()}
 								onClick={(e) => e.stopPropagation()}
@@ -109,15 +111,18 @@ export const DynamicSelect = forwardRef<HTMLButtonElement, DynamicSelectProps>(
 							/>
 						</div>
 					</div>
-					<div className="p-1">
+					<div className="px-4 py-2">
 						{filteredOptions.length > 0 ? (
 							filteredOptions.map((group) => (
 								<SelectGroup key={group.label}>
-									<SelectLabel>{group.label}</SelectLabel>
+									<SelectLabel className="text-gray-700 dark:text-gray-300">
+										{group.label}
+									</SelectLabel>
 									{group.items.map((item) => (
 										<SelectItem
 											key={item.value}
 											value={item.value}
+											className="text-gray-900 dark:text-gray-200 hover:bg-blue-100 dark:hover:bg-blue-600"
 											role="option"
 										>
 											{item.label}
@@ -126,11 +131,13 @@ export const DynamicSelect = forwardRef<HTMLButtonElement, DynamicSelectProps>(
 								</SelectGroup>
 							))
 						) : (
-							<div className="px-4 py-2 text-gray-300">No results found.</div>
+							<div className="px-4 py-2 text-gray-500 dark:text-gray-400">
+								No results found.
+							</div>
 						)}
 					</div>
-					<SelectScrollUpButton />
-					<SelectScrollDownButton />
+					<SelectScrollUpButton className="bg-white dark:bg-gray-700 text-gray-500 dark:text-gray-300" />
+					<SelectScrollDownButton className="bg-white dark:bg-gray-700 text-gray-500 dark:text-gray-300" />
 				</SelectContent>
 			</Select>
 		);

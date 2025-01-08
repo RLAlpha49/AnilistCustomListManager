@@ -696,13 +696,16 @@ function PageData() {
 	return (
 		<Layout>
 			<Breadcrumbs breadcrumbs={breadcrumbs} />
-			<Card className="w-full max-w-5xl mx-auto bg-gray-800 text-gray-100 shadow-2xl p-6 rounded-lg">
+			<Card className="w-full max-w-5xl mx-auto bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 shadow-2xl p-6 rounded-lg transition-colors duration-300">
 				<CardHeader>
-					<CardTitle className="text-2xl font-bold flex items-center">
-						<FaSort className="mr-2 text-blue-400" aria-hidden="true" />
+					<CardTitle className="text-2xl font-bold flex items-center text-gray-900 dark:text-white">
+						<FaSort
+							className="mr-2 text-blue-400 dark:text-blue-300"
+							aria-hidden="true"
+						/>
 						<Trans id="page.custom_list_manager.title" message="Custom List Manager" />
 					</CardTitle>
-					<CardDescription className="text-gray-300 mt-1">
+					<CardDescription className="text-gray-600 dark:text-gray-300 mt-1">
 						<Trans
 							id="page.custom_list_manager.description"
 							message="Organize and manage your AniList entries effortlessly."
@@ -716,27 +719,36 @@ function PageData() {
 						<div className="flex space-x-4 mb-4 sm:mb-0">
 							<Button
 								onClick={() => fetchLists("ANIME")}
-								className="bg-blue-600 hover:bg-blue-700 text-white flex items-center"
+								className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white flex items-center transition-colors duration-300"
 								aria-label="Fetch Anime Lists"
 							>
-								<FaArrowDown className="mr-2" aria-hidden="true" />
+								<FaArrowDown
+									className="mr-2 text-white dark:text-gray-100"
+									aria-hidden="true"
+								/>
 								<Trans id="button.fetch_anime_lists" message="Fetch Anime Lists" />
 							</Button>
 							<Button
 								onClick={() => fetchLists("MANGA")}
-								className="bg-blue-600 hover:bg-blue-700 text-white flex items-center"
+								className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white flex items-center transition-colors duration-300"
 								aria-label="Fetch Manga Lists"
 							>
-								<FaArrowDown className="mr-2" aria-hidden="true" />
+								<FaArrowDown
+									className="mr-2 text-white dark:text-gray-100"
+									aria-hidden="true"
+								/>
 								<Trans id="button.fetch_manga_lists" message="Fetch Manga Lists" />
 							</Button>
 							{!isListEmpty && (
 								<Button
 									onClick={addNewList}
-									className="bg-green-600 hover:bg-green-700 text-white flex items-center"
+									className="bg-green-600 hover:bg-green-700 dark:bg-green-500 dark:hover:bg-green-600 text-white flex items-center transition-colors duration-300"
 									aria-label="Add New List"
 								>
-									<FaPlus className="mr-2" aria-hidden="true" />
+									<FaPlus
+										className="mr-2 text-white dark:text-gray-100"
+										aria-hidden="true"
+									/>
 									<Trans id="button.add_new_list" message="Add New List" />
 								</Button>
 							)}
@@ -754,7 +766,10 @@ function PageData() {
 								}
 								aria-label="Hide Default Status Lists"
 							/>
-							<label htmlFor="hideDefaultStatusLists" className="text-gray-200">
+							<label
+								htmlFor="hideDefaultStatusLists"
+								className="text-gray-800 dark:text-gray-200"
+							>
 								<Trans
 									id="label.hide_default_status_lists"
 									message="Hide Default Status Lists"
@@ -788,17 +803,17 @@ function PageData() {
 														initial={{ opacity: 0, y: -10 }}
 														animate={{ opacity: 1, y: 0 }}
 														exit={{ opacity: 0, y: -10 }}
-														className="flex items-center justify-between bg-gray-700 p-4 rounded-lg shadow-md"
+														className="flex items-center justify-between bg-gray-200 dark:bg-gray-700 p-4 rounded-lg shadow-md transition-colors duration-300"
 													>
 														<div className="flex items-center space-x-2">
-															<span className="text-gray-200 font-semibold">
+															<span className="text-gray-900 dark:text-gray-100 font-semibold">
 																{list.name}
 															</span>
 														</div>
 														<div className="flex items-center space-x-2">
 															<Button
 																variant="ghost"
-																className="text-gray-400 hover:text-black"
+																className="text-gray-400 hover:text-gray-600 dark:text-gray-300 dark:hover:text-white"
 																onClick={() => {
 																	const newLists = [...lists];
 																	newLists[index].selectedOption =
@@ -830,7 +845,7 @@ function PageData() {
 															/>
 															<Button
 																variant="ghost"
-																className="text-yellow-400 hover:text-yellow-600"
+																className="text-yellow-400 hover:text-yellow-600 dark:text-yellow-300 dark:hover:text-yellow-500"
 																onClick={() =>
 																	openRenameModal(list)
 																}
@@ -840,7 +855,7 @@ function PageData() {
 															</Button>
 															<Button
 																variant="ghost"
-																className="text-red-400 hover:text-red-600"
+																className="text-red-400 hover:text-red-600 dark:text-red-300 dark:hover:text-red-500"
 																onClick={() =>
 																	handleDelete(list.name)
 																}
@@ -864,14 +879,14 @@ function PageData() {
 						<Button
 							variant="outline"
 							onClick={() => router.push("/anilist-login")}
-							className="text-black hover:text-white border-gray-600 hover:bg-gray-700 transition-colors flex items-center"
+							className="bg-gray-700 dark:bg-white text-white dark:text-black hover:text-white hover:bg-gray-600 dark:hover:text-gray-800 dark:hover:bg-gray-200 transition-colors flex items-center"
 							aria-label="Back to Login"
 						>
 							<Trans id="button.back" message="Back" />
 						</Button>
 						<Button
 							onClick={confirmAndNavigate}
-							className="bg-blue-600 hover:bg-blue-700 text-white flex items-center"
+							className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white flex items-center transition-colors duration-300"
 							disabled={!dataLoaded}
 							aria-label="Proceed to Update"
 						>
@@ -894,7 +909,7 @@ function PageData() {
 						) as unknown as string
 					}
 				>
-					<ul className="list-disc list-inside text-gray-200 mb-4">
+					<ul className="list-disc list-inside text-gray-800 dark:text-gray-200 mb-4">
 						{lists
 							.filter((list) => list.selectedOption)
 							.map((list) => (

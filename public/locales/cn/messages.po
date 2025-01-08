@@ -54,33 +54,33 @@ msgid "answer.what_is_anilist_custom_list_manager"
 msgstr "AniList 自定义列表管理器是一款可让您轻松组织和管理 AniList 上的动画和漫画列表的工具。它提供创建自定义列表、条目排序和设置条件以自动更新列表等高级功能。"
 
 #. js-lingui-explicit-id
-#: app/custom-list-manager/page.tsx:740
+#: app/custom-list-manager/page.tsx:752
 msgid "button.add_new_list"
 msgstr "添加新列表"
 
 #. js-lingui-explicit-id
-#: app/completed/page.tsx:199
+#: app/completed/page.tsx:198
 msgid "button.anicards"
 msgstr "AniCards"
 
 #. js-lingui-explicit-id
-#: app/completed/page.tsx:261
+#: app/completed/page.tsx:260
 msgid "button.anilistmangaupdater"
 msgstr "Anilist-Manga-Updater"
 
 #. js-lingui-explicit-id
-#: app/completed/page.tsx:230
+#: app/completed/page.tsx:229
 msgid "button.anisearch"
 msgstr "搜索"
 
 #. js-lingui-explicit-id
-#: app/completed/page.tsx:213
+#: app/completed/page.tsx:212
 msgid "button.anisearchmodel"
 msgstr "搜索模型"
 
 #. js-lingui-explicit-id
-#: app/custom-list-manager/page.tsx:870
-#: app/custom-list-manager/update/page.tsx:844
+#: app/custom-list-manager/page.tsx:885
+#: app/custom-list-manager/update/page.tsx:847
 msgid "button.back"
 msgstr "返回"
 
@@ -100,22 +100,22 @@ msgid "button.faq"
 msgstr "常见问题"
 
 #. js-lingui-explicit-id
-#: app/custom-list-manager/page.tsx:723
+#: app/custom-list-manager/page.tsx:729
 msgid "button.fetch_anime_lists"
 msgstr "获取动漫列表"
 
 #. js-lingui-explicit-id
-#: app/custom-list-manager/page.tsx:731
+#: app/custom-list-manager/page.tsx:740
 msgid "button.fetch_manga_lists"
 msgstr "获取漫画列表"
 
 #. js-lingui-explicit-id
-#: app/custom-list-manager/update/page.tsx:854
+#: app/custom-list-manager/update/page.tsx:857
 msgid "button.finish"
 msgstr "完成"
 
 #. js-lingui-explicit-id
-#: app/custom-list-manager/update/page.tsx:783
+#: app/custom-list-manager/update/page.tsx:786
 msgid "button.finished"
 msgstr "完成"
 
@@ -125,7 +125,7 @@ msgid "button.get_started"
 msgstr "开始"
 
 #. js-lingui-explicit-id
-#: app/completed/page.tsx:171
+#: app/completed/page.tsx:170
 #: app/anilist-login/page.tsx:207
 msgid "button.home"
 msgstr "首页"
@@ -136,28 +136,28 @@ msgid "button.login_with_anilist"
 msgstr "登录 AniList"
 
 #. js-lingui-explicit-id
-#: app/completed/page.tsx:156
+#: app/completed/page.tsx:159
 msgid "button.manage_lists"
 msgstr "管理列表"
 
 #. js-lingui-explicit-id
-#: app/custom-list-manager/page.tsx:878
+#: app/custom-list-manager/page.tsx:893
 #: app/anilist-login/page.tsx:222
 msgid "button.next"
 msgstr "下一步"
 
 #. js-lingui-explicit-id
-#: app/custom-list-manager/update/page.tsx:775
+#: app/custom-list-manager/update/page.tsx:778
 msgid "button.pause"
 msgstr "暂停"
 
 #. js-lingui-explicit-id
-#: app/custom-list-manager/update/page.tsx:753
+#: app/custom-list-manager/update/page.tsx:756
 msgid "button.rate_limited"
 msgstr "费率限制"
 
 #. js-lingui-explicit-id
-#: app/custom-list-manager/update/page.tsx:768
+#: app/custom-list-manager/update/page.tsx:771
 msgid "button.resume"
 msgstr "简历"
 
@@ -167,12 +167,12 @@ msgid "button.save"
 msgstr "保存"
 
 #. js-lingui-explicit-id
-#: app/completed/page.tsx:244
+#: app/completed/page.tsx:243
 msgid "button.spotifyskiptracker"
 msgstr "SpotifySkipTracker"
 
 #. js-lingui-explicit-id
-#: app/custom-list-manager/update/page.tsx:760
+#: app/custom-list-manager/update/page.tsx:763
 msgid "button.start"
 msgstr "开始"
 
@@ -215,7 +215,7 @@ msgid "description.connect_account"
 msgstr "连接您的 AniList 帐户，轻松管理自定义列表。"
 
 #. js-lingui-explicit-id
-#: app/faq/page.tsx:198
+#: app/faq/page.tsx:199
 msgid "description.find_answers"
 msgstr "查找有关 AniList 自定义列表管理器最常见问题的答案。"
 
@@ -287,12 +287,12 @@ msgid "feature.update_entries_description"
 msgstr "根据你设定的条件自动更新条目，确保你的列表始终是最新的。"
 
 #. js-lingui-explicit-id
-#: app/completed/page.tsx:182
+#: app/completed/page.tsx:181
 msgid "header.check_out_projects"
 msgstr "查看我的其他项目"
 
 #. js-lingui-explicit-id
-#: app/custom-list-manager/page.tsx:758
+#: app/custom-list-manager/page.tsx:773
 msgid "label.hide_default_status_lists"
 msgstr "隐藏默认状态列表"
 
@@ -302,17 +302,17 @@ msgid "label.new_list_name"
 msgstr "新列表名称："
 
 #. js-lingui-explicit-id
-#: components/media-card.tsx:87
+#: components/media-card.tsx:94
 msgid "label.repeat_count"
 msgstr "重复次数"
 
 #. js-lingui-explicit-id
-#: components/media-card.tsx:77
+#: components/media-card.tsx:84
 msgid "label.score"
 msgstr "分数"
 
 #. js-lingui-explicit-id
-#: components/media-card.tsx:71
+#: components/media-card.tsx:78
 msgid "label.status"
 msgstr "状态"
 
@@ -322,27 +322,27 @@ msgid "languageSelector.warning"
 msgstr "所选语言为机器翻译，某些内容可能不完全准确或完整。"
 
 #. js-lingui-explicit-id
-#: app/faq/page.tsx:333
+#: app/faq/page.tsx:340
 msgid "link.back_to_home"
 msgstr "返回首页"
 
 #. js-lingui-explicit-id
-#: app/custom-list-manager/page.tsx:890
+#: app/custom-list-manager/page.tsx:905
 msgid "modal.confirm_conditions_title"
 msgstr "确认条件"
 
 #. js-lingui-explicit-id
-#: app/custom-list-manager/page.tsx:706
+#: app/custom-list-manager/page.tsx:709
 msgid "page.custom_list_manager.description"
 msgstr "轻松组织和管理您的 AniList 条目。"
 
 #. js-lingui-explicit-id
-#: app/custom-list-manager/page.tsx:703
+#: app/custom-list-manager/page.tsx:706
 msgid "page.custom_list_manager.title"
 msgstr "自定义列表管理器"
 
 #. js-lingui-explicit-id
-#: app/custom-list-manager/page.tsx:823
+#: app/custom-list-manager/page.tsx:838
 msgid "placeholder.select_condition"
 msgstr "选择条件"
 
@@ -407,7 +407,7 @@ msgid "status.processing"
 msgstr "处理中..."
 
 #. js-lingui-explicit-id
-#: app/anilist-redirect/page.tsx:49
+#: app/anilist-redirect/page.tsx:50
 msgid "status.processing_login"
 msgstr "处理登录..."
 
@@ -417,7 +417,7 @@ msgid "status.update_completed_title"
 msgstr "更新已完成！"
 
 #. js-lingui-explicit-id
-#: app/custom-list-manager/update/page.tsx:828
+#: app/custom-list-manager/update/page.tsx:831
 msgid "text.all_entries_updated"
 msgstr "所有条目均已更新！"
 
@@ -427,27 +427,24 @@ msgid "text.loading"
 msgstr "正在加载..."
 
 #. js-lingui-explicit-id
-#: components/media-card.tsx:82
+#: components/media-card.tsx:89
 msgid "text.not_available"
 msgstr "不适用"
 
 #. js-lingui-explicit-id
-#: app/custom-list-manager/update/page.tsx:870
+#: app/custom-list-manager/update/page.tsx:873
 msgid "text.notice_hidden_entries"
-msgstr ""
-"注：媒体条目带有\n"
-"hiddenFromStatusLists\n"
-"设置为 “true ”且未与任何自定义列表关联的媒体条目不会被查询返回，也不会在此显示。"
+msgstr "注：带有"
 
 #. js-lingui-explicit-id
-#: app/custom-list-manager/update/page.tsx:875
+#: app/custom-list-manager/update/page.tsx:878
 msgid "text.notice_hidden_from_status_lists"
-msgstr "隐藏默认状态列表"
+msgstr "hiddenFromStatusLists"
 
 #. js-lingui-explicit-id
-#: app/custom-list-manager/update/page.tsx:880
+#: app/custom-list-manager/update/page.tsx:883
 msgid "text.notice_set_true"
-msgstr "设置为 “true ”"
+msgstr "设置为 “true ”且未与任何自定义列表关联的媒体条目将不会被查询返回，也不会在此显示。"
 
 #. js-lingui-explicit-id
 #: app/completed/page.tsx:132
@@ -460,12 +457,12 @@ msgid "text.total_lists"
 msgstr "列表总数"
 
 #. js-lingui-explicit-id
-#: app/custom-list-manager/update/page.tsx:804
+#: app/custom-list-manager/update/page.tsx:807
 msgid "text.updated"
 msgstr "已更新"
 
 #. js-lingui-explicit-id
-#: app/custom-list-manager/update/page.tsx:815
+#: app/custom-list-manager/update/page.tsx:818
 msgid "text.updating_entry"
 msgstr "更新："
 
@@ -485,12 +482,12 @@ msgid "title.cache_cleared"
 msgstr "清除缓存！"
 
 #. js-lingui-explicit-id
-#: components/media-card.tsx:95
+#: components/media-card.tsx:102
 msgid "title.custom_list_changes"
 msgstr "自定义列表更改："
 
 #. js-lingui-explicit-id
-#: app/faq/page.tsx:192
+#: app/faq/page.tsx:193
 msgid "title.frequently_asked_questions"
 msgstr "常见问题"
 

@@ -54,33 +54,33 @@ msgid "answer.what_is_anilist_custom_list_manager"
 msgstr "AniList Custom List Manager est un outil qui vous permet d'organiser et de gérer vos listes d'anime et de manga sur AniList avec facilité. Il offre des fonctionnalités avancées telles que la création de listes personnalisées, le tri des entrées et la définition de conditions pour automatiser les mises à jour des listes."
 
 #. js-lingui-explicit-id
-#: app/custom-list-manager/page.tsx:740
+#: app/custom-list-manager/page.tsx:752
 msgid "button.add_new_list"
 msgstr "Ajouter une nouvelle liste"
 
 #. js-lingui-explicit-id
-#: app/completed/page.tsx:199
+#: app/completed/page.tsx:198
 msgid "button.anicards"
 msgstr "AniCards"
 
 #. js-lingui-explicit-id
-#: app/completed/page.tsx:261
+#: app/completed/page.tsx:260
 msgid "button.anilistmangaupdater"
 msgstr "Anilist-Manga-Updater"
 
 #. js-lingui-explicit-id
-#: app/completed/page.tsx:230
+#: app/completed/page.tsx:229
 msgid "button.anisearch"
 msgstr "AniSearch"
 
 #. js-lingui-explicit-id
-#: app/completed/page.tsx:213
+#: app/completed/page.tsx:212
 msgid "button.anisearchmodel"
 msgstr "AniSearchModel"
 
 #. js-lingui-explicit-id
-#: app/custom-list-manager/page.tsx:870
-#: app/custom-list-manager/update/page.tsx:844
+#: app/custom-list-manager/page.tsx:885
+#: app/custom-list-manager/update/page.tsx:847
 msgid "button.back"
 msgstr "Retour"
 
@@ -100,22 +100,22 @@ msgid "button.faq"
 msgstr "FAQ"
 
 #. js-lingui-explicit-id
-#: app/custom-list-manager/page.tsx:723
+#: app/custom-list-manager/page.tsx:729
 msgid "button.fetch_anime_lists"
 msgstr "Récupérer les listes d'anime"
 
 #. js-lingui-explicit-id
-#: app/custom-list-manager/page.tsx:731
+#: app/custom-list-manager/page.tsx:740
 msgid "button.fetch_manga_lists"
 msgstr "Récupérer les listes de manga"
 
 #. js-lingui-explicit-id
-#: app/custom-list-manager/update/page.tsx:854
+#: app/custom-list-manager/update/page.tsx:857
 msgid "button.finish"
 msgstr "Terminer"
 
 #. js-lingui-explicit-id
-#: app/custom-list-manager/update/page.tsx:783
+#: app/custom-list-manager/update/page.tsx:786
 msgid "button.finished"
 msgstr "Terminé"
 
@@ -125,7 +125,7 @@ msgid "button.get_started"
 msgstr "Commencer"
 
 #. js-lingui-explicit-id
-#: app/completed/page.tsx:171
+#: app/completed/page.tsx:170
 #: app/anilist-login/page.tsx:207
 msgid "button.home"
 msgstr "Accueil"
@@ -136,28 +136,28 @@ msgid "button.login_with_anilist"
 msgstr "Se connecter avec AniList"
 
 #. js-lingui-explicit-id
-#: app/completed/page.tsx:156
+#: app/completed/page.tsx:159
 msgid "button.manage_lists"
 msgstr "Gérer les listes"
 
 #. js-lingui-explicit-id
-#: app/custom-list-manager/page.tsx:878
+#: app/custom-list-manager/page.tsx:893
 #: app/anilist-login/page.tsx:222
 msgid "button.next"
 msgstr "Suivant"
 
 #. js-lingui-explicit-id
-#: app/custom-list-manager/update/page.tsx:775
+#: app/custom-list-manager/update/page.tsx:778
 msgid "button.pause"
 msgstr "Pause"
 
 #. js-lingui-explicit-id
-#: app/custom-list-manager/update/page.tsx:753
+#: app/custom-list-manager/update/page.tsx:756
 msgid "button.rate_limited"
 msgstr "Limite de taux"
 
 #. js-lingui-explicit-id
-#: app/custom-list-manager/update/page.tsx:768
+#: app/custom-list-manager/update/page.tsx:771
 msgid "button.resume"
 msgstr "Reprendre"
 
@@ -167,12 +167,12 @@ msgid "button.save"
 msgstr "Enregistrer"
 
 #. js-lingui-explicit-id
-#: app/completed/page.tsx:244
+#: app/completed/page.tsx:243
 msgid "button.spotifyskiptracker"
 msgstr "SpotifySkipTracker"
 
 #. js-lingui-explicit-id
-#: app/custom-list-manager/update/page.tsx:760
+#: app/custom-list-manager/update/page.tsx:763
 msgid "button.start"
 msgstr "Démarrer"
 
@@ -215,7 +215,7 @@ msgid "description.connect_account"
 msgstr "Connectez votre compte AniList pour gérer vos listes personnalisées sans effort."
 
 #. js-lingui-explicit-id
-#: app/faq/page.tsx:198
+#: app/faq/page.tsx:199
 msgid "description.find_answers"
 msgstr "Trouvez des réponses aux questions les plus courantes concernant AniList Custom List Manager."
 
@@ -287,12 +287,12 @@ msgid "feature.update_entries_description"
 msgstr "Mettez automatiquement à jour les entrées en fonction des conditions que vous avez définies, afin que vos listes soient toujours à jour."
 
 #. js-lingui-explicit-id
-#: app/completed/page.tsx:182
+#: app/completed/page.tsx:181
 msgid "header.check_out_projects"
 msgstr "Découvrez mes autres projets"
 
 #. js-lingui-explicit-id
-#: app/custom-list-manager/page.tsx:758
+#: app/custom-list-manager/page.tsx:773
 msgid "label.hide_default_status_lists"
 msgstr "Masquer les listes de statut par défaut"
 
@@ -302,17 +302,17 @@ msgid "label.new_list_name"
 msgstr "Nouveau nom de la liste"
 
 #. js-lingui-explicit-id
-#: components/media-card.tsx:87
+#: components/media-card.tsx:94
 msgid "label.repeat_count"
 msgstr "Nombre de répétitions :"
 
 #. js-lingui-explicit-id
-#: components/media-card.tsx:77
+#: components/media-card.tsx:84
 msgid "label.score"
 msgstr "Score :"
 
 #. js-lingui-explicit-id
-#: components/media-card.tsx:71
+#: components/media-card.tsx:78
 msgid "label.status"
 msgstr "Statut :"
 
@@ -322,27 +322,27 @@ msgid "languageSelector.warning"
 msgstr "La langue sélectionnée est traduite mécaniquement et certains contenus peuvent ne pas être totalement exacts ou complets."
 
 #. js-lingui-explicit-id
-#: app/faq/page.tsx:333
+#: app/faq/page.tsx:340
 msgid "link.back_to_home"
 msgstr "Retour à l'accueil"
 
 #. js-lingui-explicit-id
-#: app/custom-list-manager/page.tsx:890
+#: app/custom-list-manager/page.tsx:905
 msgid "modal.confirm_conditions_title"
 msgstr "Confirmer les conditions"
 
 #. js-lingui-explicit-id
-#: app/custom-list-manager/page.tsx:706
+#: app/custom-list-manager/page.tsx:709
 msgid "page.custom_list_manager.description"
 msgstr "Organisez et gérez vos entrées AniList sans effort."
 
 #. js-lingui-explicit-id
-#: app/custom-list-manager/page.tsx:703
+#: app/custom-list-manager/page.tsx:706
 msgid "page.custom_list_manager.title"
 msgstr "Gestionnaire de listes personnalisées"
 
 #. js-lingui-explicit-id
-#: app/custom-list-manager/page.tsx:823
+#: app/custom-list-manager/page.tsx:838
 msgid "placeholder.select_condition"
 msgstr "Sélectionnez une condition"
 
@@ -407,7 +407,7 @@ msgid "status.processing"
 msgstr "Traitement en cours..."
 
 #. js-lingui-explicit-id
-#: app/anilist-redirect/page.tsx:49
+#: app/anilist-redirect/page.tsx:50
 msgid "status.processing_login"
 msgstr "Traitement de la connexion en cours..."
 
@@ -417,7 +417,7 @@ msgid "status.update_completed_title"
 msgstr "Mise à jour terminée !"
 
 #. js-lingui-explicit-id
-#: app/custom-list-manager/update/page.tsx:828
+#: app/custom-list-manager/update/page.tsx:831
 msgid "text.all_entries_updated"
 msgstr "Toutes les entrées ont été mises à jour avec succès !"
 
@@ -427,24 +427,24 @@ msgid "text.loading"
 msgstr "Chargement..."
 
 #. js-lingui-explicit-id
-#: components/media-card.tsx:82
+#: components/media-card.tsx:89
 msgid "text.not_available"
 msgstr "N/D"
 
 #. js-lingui-explicit-id
-#: app/custom-list-manager/update/page.tsx:870
+#: app/custom-list-manager/update/page.tsx:873
 msgid "text.notice_hidden_entries"
 msgstr "Remarque : Les entrées média avec "
 
 #. js-lingui-explicit-id
-#: app/custom-list-manager/update/page.tsx:875
+#: app/custom-list-manager/update/page.tsx:878
 msgid "text.notice_hidden_from_status_lists"
 msgstr "hiddenFromStatusLists"
 
 #. js-lingui-explicit-id
-#: app/custom-list-manager/update/page.tsx:880
+#: app/custom-list-manager/update/page.tsx:883
 msgid "text.notice_set_true"
-msgstr " définies sur vrai et non associées à aucune liste personnalisée ne seront pas retournées par la requête et ne seront pas affichées ici."
+msgstr "sont définies sur true et ne sont pas associées à des listes personnalisées ne seront pas renvoyées par la requête et ne seront pas affichées ici."
 
 #. js-lingui-explicit-id
 #: app/completed/page.tsx:132
@@ -457,12 +457,12 @@ msgid "text.total_lists"
 msgstr "Listes totales :"
 
 #. js-lingui-explicit-id
-#: app/custom-list-manager/update/page.tsx:804
+#: app/custom-list-manager/update/page.tsx:807
 msgid "text.updated"
 msgstr "Mis à jour"
 
 #. js-lingui-explicit-id
-#: app/custom-list-manager/update/page.tsx:815
+#: app/custom-list-manager/update/page.tsx:818
 msgid "text.updating_entry"
 msgstr "Mise à jour : "
 
@@ -482,12 +482,12 @@ msgid "title.cache_cleared"
 msgstr "Cache effacé!"
 
 #. js-lingui-explicit-id
-#: components/media-card.tsx:95
+#: components/media-card.tsx:102
 msgid "title.custom_list_changes"
 msgstr "Modifications de la liste personnalisée :"
 
 #. js-lingui-explicit-id
-#: app/faq/page.tsx:192
+#: app/faq/page.tsx:193
 msgid "title.frequently_asked_questions"
 msgstr "Questions Fréquemment Posées"
 

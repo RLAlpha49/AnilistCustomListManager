@@ -184,40 +184,45 @@ function PageData() {
 					{ name: "FAQ", href: "/faq" },
 				]}
 			/>
-			<div className="flex flex-col items-center justify-center bg-gray-900 text-gray-100 px-4 py-12">
+			<div className="flex flex-col items-center justify-center bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 px-4 py-12">
 				<div className="w-full max-w-xl">
+					{/* Header Section */}
 					<div className="mb-8 text-center">
-						<FaQuestionCircle className="mx-auto mb-4 text-blue-500 w-16 h-16" />
+						<FaQuestionCircle className="mx-auto mb-4 text-blue-500 dark:text-blue-400 w-16 h-16" />
 						<h1 className="text-4xl font-bold">
 							<Trans
 								id="title.frequently_asked_questions"
 								message="Frequently Asked Questions"
 							/>
 						</h1>
-						<p className="text-gray-300 mt-2">
+						<p className="text-gray-600 dark:text-gray-300 mt-2">
 							<Trans
 								id="description.find_answers"
 								message="Find answers to the most common questions about AniList Custom List Manager."
 							/>
 						</p>
 					</div>
+
+					{/* Search Bar */}
 					<div className="mb-6">
 						<div className="relative">
-							<FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+							<FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500" />
 							<input
 								type="text"
 								placeholder="Search FAQs..."
 								value={searchTerm}
 								onChange={(e) => setSearchTerm(e.target.value)}
-								className="w-full pl-10 pr-4 py-2 rounded-md bg-gray-800 text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+								className="w-full pl-10 pr-4 py-2 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition-colors"
 							/>
 						</div>
 					</div>
+
+					{/* FAQ Categories */}
 					<div className="space-y-4">
 						{categories.map((category, catIndex) => (
 							<div
 								key={catIndex}
-								className="bg-gray-800 rounded-lg shadow-md overflow-hidden"
+								className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden transition-colors duration-300"
 							>
 								<button
 									onClick={() => toggleCategory(category as string)}
@@ -228,15 +233,15 @@ function PageData() {
 									}
 									aria-controls={`category-${catIndex}`}
 								>
-									<span className="text-xl font-semibold flex items-center">
-										<FaQuestionCircle className="mr-2" />
+									<span className="text-xl font-semibold flex items-center text-gray-900 dark:text-white">
+										<FaQuestionCircle className="mr-2 text-blue-500 dark:text-blue-400" />
 										{category}
 									</span>
 									{expandedCategories.has(category) ||
 									activeCategory === category ? (
-										<FaChevronUp className="w-5 h-5 text-gray-400" />
+										<FaChevronUp className="w-5 h-5 text-gray-400 dark:text-gray-500" />
 									) : (
-										<FaChevronDown className="w-5 h-5 text-gray-400" />
+										<FaChevronDown className="w-5 h-5 text-gray-400 dark:text-gray-500" />
 									)}
 								</button>
 								<AnimatePresence>
@@ -248,7 +253,7 @@ function PageData() {
 											animate={{ height: "auto", opacity: 1 }}
 											exit={{ height: 0, opacity: 0 }}
 											transition={{ duration: 0.3 }}
-											className="px-6 py-4 border-t border-gray-700"
+											className="px-6 py-4 border-t border-gray-200 dark:border-gray-700"
 										>
 											<div className="space-y-2">
 												{filteredFAQ
@@ -270,7 +275,7 @@ function PageData() {
 													.map((item, index) => (
 														<div
 															key={index}
-															className="bg-gray-700 rounded-md shadow-sm overflow-hidden"
+															className="bg-gray-50 dark:bg-gray-700 rounded-md shadow-sm overflow-hidden transition-colors duration-300"
 														>
 															<button
 																onClick={() => toggleFAQ(index)}
@@ -281,14 +286,14 @@ function PageData() {
 																}
 																aria-controls={`faq-${catIndex}-${index}`}
 															>
-																<span className="text-lg font-medium">
+																<span className="text-lg font-medium text-gray-900 dark:text-white">
 																	{item.question}
 																</span>
 																{expandedFAQs.has(index) ||
 																activeIndex === index ? (
-																	<FaChevronUp className="w-5 h-5 text-gray-400" />
+																	<FaChevronUp className="w-5 h-5 text-gray-400 dark:text-gray-500" />
 																) : (
-																	<FaChevronDown className="w-5 h-5 text-gray-400" />
+																	<FaChevronDown className="w-5 h-5 text-gray-400 dark:text-gray-500" />
 																)}
 															</button>
 															<AnimatePresence>
@@ -311,9 +316,9 @@ function PageData() {
 																		transition={{
 																			duration: 0.3,
 																		}}
-																		className="px-4 py-2 bg-gray-600 max-w-full"
+																		className="px-4 py-2 bg-gray-100 dark:bg-gray-600 max-w-full"
 																	>
-																		<p className="text-gray-200 break-words">
+																		<p className="text-gray-700 dark:text-gray-200 break-words">
 																			{item.answer}
 																		</p>
 																	</motion.div>
@@ -328,6 +333,8 @@ function PageData() {
 							</div>
 						))}
 					</div>
+
+					{/* Back to Home Link */}
 					<div className="mt-8 text-center">
 						<Link href="/" className="text-blue-500 hover:underline">
 							<Trans id="link.back_to_home" message="Back to Home" />

@@ -14,6 +14,32 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
 		<html lang="en">
+			<head>
+				{/* Inline Theme Setter Script */}
+				<script
+					dangerouslySetInnerHTML={{
+						__html: `
+							(function() {
+								try {
+									const theme = localStorage.getItem('theme');
+									if (theme === 'dark') {
+										document.documentElement.classList.add('dark');
+									} else if (theme === 'light') {
+										document.documentElement.classList.remove('dark');
+									} else {
+										// If no preference, check system preference
+										if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+											document.documentElement.classList.add('dark');
+										}
+									}
+								} catch (e) {
+									console.error('Failed to set theme:', e);
+								}
+							})();
+						`,
+					}}
+				></script>
+			</head>
 			<body className={inter.className}>
 				<AuthProvider>{children}</AuthProvider>
 				<Script src="/googleAnalytics.js" strategy="afterInteractive" />

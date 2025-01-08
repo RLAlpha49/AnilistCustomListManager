@@ -718,12 +718,12 @@ function PageData() {
 	return (
 		<Layout>
 			<Breadcrumbs breadcrumbs={breadcrumbs} />
-			<Card className="w-full max-w-4xl mx-auto bg-gray-800 text-gray-100 rounded-lg shadow-lg">
+			<Card className="w-full max-w-4xl mx-auto bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg shadow-lg transition-colors duration-300">
 				<CardHeader>
-					<CardTitle className="text-2xl">
+					<CardTitle className="text-2xl text-gray-900 dark:text-gray-100">
 						🚀 <Trans id="title.update_custom_lists" message="Update Custom Lists" />
 					</CardTitle>
-					<CardDescription className="text-gray-300">
+					<CardDescription className="text-gray-600 dark:text-gray-300">
 						<Trans
 							id="description.update_custom_lists"
 							message="Start updating your AniList with customized conditions. You can pause or resume the update process at any time."
@@ -731,11 +731,14 @@ function PageData() {
 					</CardDescription>
 				</CardHeader>
 				<CardContent>
+					{/* Controls Section */}
 					<div className="flex flex-col items-center space-y-6">
+						{/* Fetch Buttons */}
 						<Button
 							onClick={toggleUpdate}
 							disabled={done || isRateLimited}
-							className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full flex items-center space-x-2 shadow-md transition-transform transform hover:scale-105"
+							className="bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700 text-white px-6 py-3 rounded-full flex items-center space-x-2 shadow-md transition-transform 
+                            transform hover:scale-105"
 							aria-label={
 								isRateLimited
 									? "Rate limited. Please wait."
@@ -786,7 +789,7 @@ function PageData() {
 							)}
 						</Button>
 						<div className="w-full px-4">
-							<div className="relative w-full h-4 bg-gray-700 rounded-full">
+							<div className="relative w-full h-4 dark:bg-gray-700 bg-gray-200 rounded-full">
 								<motion.div
 									initial={{ width: 0 }}
 									animate={{
@@ -799,7 +802,7 @@ function PageData() {
 									className="h-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full border border-gray-500"
 								/>
 							</div>
-							<p className="mt-2 text-center text-gray-300">
+							<p className="mt-2 text-center dark:text-gray-300 text-gray-700">
 								{updatedEntries.size} / {totalEntries}{" "}
 								<Trans id="text.updated" message="Updated" />
 							</p>
@@ -809,9 +812,9 @@ function PageData() {
 								initial={{ opacity: 0, y: -10 }}
 								animate={{ opacity: 1, y: 0 }}
 								exit={{ opacity: 0, y: -10 }}
-								className="w-full bg-gray-700 p-4 rounded-lg shadow-inner"
+								className="w-full dark:bg-gray-700 bg-gray-200 p-4 rounded-lg shadow-inner"
 							>
-								<p className="text-gray-200">
+								<p className="dark:text-gray-200 text-gray-700">
 									<Trans id="text.updating_entry" message="Updating: " />
 									<strong>{currentEntry.media.title.romaji}</strong>
 								</p>
@@ -836,7 +839,7 @@ function PageData() {
 							<Button
 								variant="outline"
 								asChild
-								className="text-black hover:text-white border-gray-600 hover:bg-gray-700 transition-colors flex items-center space-x-2 px-4 py-2 rounded-md shadow-sm"
+								className="text-gray-900 dark:text-black hover:text-white dark:hover:text-white border-gray-300 dark:border-gray-600 hover:bg-gray-700 dark:hover:bg-gray-700 transition-colors flex items-center"
 								aria-label="Back to Custom List Manager"
 							>
 								<Link href="/custom-list-manager">
@@ -847,7 +850,7 @@ function PageData() {
 							</Button>
 							<Button
 								onClick={handleFinish}
-								className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md shadow-sm flex items-center space-x-2"
+								className="bg-purple-500 hover:bg-purple-600 dark:bg-purple-600 dark:hover:bg-purple-700 text-white px-4 py-2 rounded-md shadow-sm flex items-center space-x-2"
 								aria-label="Finish updating"
 							>
 								<span>
@@ -858,14 +861,14 @@ function PageData() {
 					</div>
 
 					{retryCountdown > 0 && (
-						<div className="mt-6 px-4 py-3 bg-yellow-700 text-yellow-100 rounded-lg flex items-center justify-between">
+						<div className="mt-6 px-4 py-3 bg-yellow-600 text-yellow-100 dark:bg-yellow-700 dark:text-yellow-200 rounded-lg flex items-center justify-between">
 							<span>
 								⚠️ Rate limit exceeded. Retrying in {retryCountdown - 1} seconds...
 							</span>
 						</div>
 					)}
 					{showNotice && (
-						<div className="mt-6 px-4 py-3 bg-yellow-100 text-yellow-800 rounded-lg flex justify-between items-center">
+						<div className="mt-6 px-4 py-3 bg-yellow-100 text-yellow-700 dark:bg-yellow-200 dark:text-yellow-800 rounded-lg flex justify-between items-center">
 							<span>
 								<Trans
 									id="text.notice_hidden_entries"
