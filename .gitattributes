@@ -1,1 +1,1 @@
-public/locales/**/*.mjs export-ignore
+public/locales/**/*.mjs linguist-vendored=false
