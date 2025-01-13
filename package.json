@@ -20,7 +20,7 @@
 		"@radix-ui/react-toast": "^1.2.4",
 		"@types/node": "22.10.5",
 		"@types/react": "19.0.4",
-		"@types/react-dom": "19.0.2",
+		"@types/react-dom": "19.0.3",
 		"@vercel/analytics": "^1.4.1",
 		"anilist-custom-list-manager": "file:",
 		"autoprefixer": "10.4.20",
